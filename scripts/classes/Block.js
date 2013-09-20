@@ -9,7 +9,7 @@ function Block(index, state, x, y, w, z){
 		y: y,
 		width: w,
 		height: z,
-		fill: this.primaryColor
+		fill: this.primaryColor,
 	});
 	this.assignColor();
 }

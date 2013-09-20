@@ -1,8 +1,10 @@
 //MAZE CLASS
-function Maze(maze, blockSize){
+function Maze(maze, blockSize, startLocation, endLocation){
 	this.width = maze[0].length;
 	this.height = maze.length;
 	this.blockSize = blockSize;
+	this.begin = beginLocation;
+	this.end =  endLocation;
 	this.blocks = [];
 	var xPos = 0;
 	var yPos = 0;
@@ -25,6 +27,18 @@ Maze.prototype.draw = function(layer){
 		for(var x = 0; x < this.blocks[0].length; x++){
 			var block = this.blocks[y][x];
 			layer.add(block.rect);
+		}
+	}
+}
+
+Maze.prototype.toggleBlock = function(rectIndex, layer){
+	for(var y = 1; y < this.blocks.length-1; y++){
+		for(var x = 1; x < this.blocks[0].length-1; x++){
+			if(this.blocks[y][x].rect.index == rectIndex){
+				this.blocks[y][x].toggleState();
+				layer.draw();
+				break;
+			}
 		}
 	}
 }
