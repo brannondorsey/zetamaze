@@ -1,5 +1,5 @@
 //MAZE CLASS
-function Maze(maze, blockSize, startLocation, endLocation){
+function Maze(maze, blockSize, beginLocation, endLocation){
 	this.width = maze[0].length;
 	this.height = maze.length;
 	this.blockSize = blockSize;
