@@ -23,8 +23,24 @@ function Maze(maze, blockSize){
 Maze.prototype.draw = function(layer){
 	for(var y = 0; y < this.blocks.length; y++){
 		for(var x = 0; x < this.blocks[0].length; x++){
-			var block = blocks[y][x];
-			if(block.state) layer.add(block.rect);
+			var block = this.blocks[y][x];
+			layer.add(block.rect);
 		}
 	}
 }
+
+Maze.prototype.export = function(){
+	for(var y = 0; y < this.blocks.length; y++){
+		for(var x = 0; x < this.blocks[0].length; x++){
+			var block = this.blocks[y][x];
+		}
+	}
+}
+
+//make sure the maze is solvable
+Maze.prototype.isSolvable = function(){
+
+}
+
+//------------------------------------------------------------------
+//protected methods
