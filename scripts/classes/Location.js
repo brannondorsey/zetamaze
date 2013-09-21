@@ -8,7 +8,21 @@ function Location(config){
 		width: config.w,
 		height: config.h,
 		fill: this.primaryColor,
-		draggable: true
+		draggable: true,
+		dragBoundFunc: function(pos){
+			var xBound;
+			var yBound;
+			if(pos.x < config.blockSize) xBound = config.blockSize;
+			else if(pos.x+config.blockSize > config.mazeSize-config.blockSize) xBound = config.mazeSize-config.blockSize*2;
+			else xBound = pos.x;
+			if(pos.y < config.blockSize) yBound = config.blockSize;
+			else if(pos.y+config.blockSize > config.mazeSize-config.blockSize) yBound = config.mazeSize-config.blockSize*2;
+			else yBound = pos.y;
+			return{
+				x: xBound,
+				y: yBound
+			}
+		}
 	});
 }
 

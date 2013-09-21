@@ -73,8 +73,6 @@ Maze.prototype.getLocations = function(){
 
 	//set config constants
 	var config = {
-		mazeOffsetX: 0,
-	 	mazeOffsetY: 0,
 	 	w: this.blockSize,
 		h: this.blockSize,
 	 	blockSize: this.blockSize,
