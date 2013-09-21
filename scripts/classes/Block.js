@@ -1,4 +1,4 @@
-function Block(index, state, x, y, w, z){
+function Block(index, state, x, y, w, h){
 	this.primaryColor   = 'black';
 	this.secondaryColor = 'white';
 
@@ -8,7 +8,7 @@ function Block(index, state, x, y, w, z){
 		x: x,
 		y: y,
 		width: w,
-		height: z,
+		height: h,
 		fill: this.primaryColor,
 	});
 	this.assignColor();

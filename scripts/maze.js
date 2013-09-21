@@ -16,7 +16,7 @@ bindEvents();
 stage.add(layer);
 
 function bindEvents(){
-    //for each block...
+    //bind events for each block...
     for(var y = 1; y < maze.blocks.length-1; y++){
         for(var x = 1; x < maze.blocks[0].length-1; x++){
 
@@ -36,5 +36,14 @@ function bindEvents(){
             });
             
         }
+    }
+
+    //bind events for locations
+    for(var key in maze.locations){
+        var locationRect = maze.locations[key].rect;
+
+        locationRect.on('dragend', function(){ maze.recalculateLocation(this.id); console.log("COME BACK")});
+        locationRect.on('mouseover', function(){ document.body.style.cursor = 'move'; });
+        locationRect.on('mouseout', function(){ document.body.style.cursor = 'default'; });
     }
 }

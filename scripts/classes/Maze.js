@@ -3,8 +3,8 @@ function Maze(maze, blockSize, beginLocation, endLocation){
 	this.width = maze[0].length;
 	this.height = maze.length;
 	this.blockSize = blockSize;
-	this.begin = beginLocation;
-	this.end =  endLocation;
+
+	//construct maze
 	this.blocks = [];
 	var xPos = 0;
 	var yPos = 0;
@@ -20,6 +20,8 @@ function Maze(maze, blockSize, beginLocation, endLocation){
 		xPos = 0;
 		yPos += this.blockSize;
 	}
+	
+	this.locations = this.getLocations();
 }
 
 Maze.prototype.draw = function(layer){
@@ -29,6 +31,8 @@ Maze.prototype.draw = function(layer){
 			layer.add(block.rect);
 		}
 	}
+	layer.add(this.locations['begin'].rect);
+	layer.add(this.locations['end'].rect);
 }
 
 Maze.prototype.toggleBlock = function(rectIndex, layer){
@@ -41,6 +45,10 @@ Maze.prototype.toggleBlock = function(rectIndex, layer){
 			}
 		}
 	}
+}
+
+Maze.prototype.recalculateLocation = function(rectIndex){
+
 }
 
 Maze.prototype.export = function(){
@@ -58,3 +66,36 @@ Maze.prototype.isSolvable = function(){
 
 //------------------------------------------------------------------
 //protected methods
+
+//returns an assoc array of all of the mazes location objects
+Maze.prototype.getLocations = function(){
+	var locations = [];
+
+	//set config constants
+	var config = {
+		mazeOffsetX: 0,
+	 	mazeOffsetY: 0,
+	 	w: this.blockSize,
+		h: this.blockSize,
+	 	blockSize: this.blockSize,
+	 	mazeSize: this.blockSize * this.width
+	}
+
+	//set begin location
+	config.x = this.blockSize+10;
+	config.y = 10;
+	config.mazeX = 1;
+	config.mazeY = 0;
+	config.primaryColor = 'green'
+	locations['begin'] = new Location(config);
+
+	//set end location
+	config.x = this.blockSize*8;
+	config.y = this.blockSize*6;
+	config.mazeX = 1;
+	config.mazeY = 0;
+	config.primaryColor = 'red'
+	locations['end'] = new Location(config);
+
+	return locations;
+}
