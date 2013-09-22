@@ -1,5 +1,5 @@
 //MAZE CLASS
-function Maze(maze, blockSize, beginLocation, endLocation){
+function Maze(maze, blockSize){
 	this.width = maze[0].length;
 	this.height = maze.length;
 	this.blockSize = blockSize;
@@ -36,19 +36,21 @@ Maze.prototype.draw = function(layer){
 }
 
 Maze.prototype.toggleBlock = function(rectIndex, layer){
-	for(var y = 1; y < this.blocks.length-1; y++){
-		for(var x = 1; x < this.blocks[0].length-1; x++){
-			if(this.blocks[y][x].rect.index == rectIndex){
-				this.blocks[y][x].toggleState();
-				layer.draw();
-				break;
-			}
-		}
-	}
+	var block = this.getBlockByIndex(rectIndex);
+	block.toggleState();
+	layer.draw();
 }
 
 Maze.prototype.recalculateLocation = function(rectIndex){
-
+	var location;
+	//find the location with the rectIndex
+	for(var key in this.locations){
+		if(this.locations[key].rect.index == rectIndex){
+			location = this.locations[key];
+			break;
+		}
+	}
+	location.recalculate(this.width, this.blockSize);
 }
 
 Maze.prototype.export = function(){
@@ -97,3 +99,15 @@ Maze.prototype.getLocations = function(){
 
 	return locations;
 }
+
+//returns an object from blocks if its rect.id matches the parameter passed
+Maze.prototype.getBlockByIndex = function(rectIndex){
+	for(var y = 0; y < this.blocks.length; y++){
+		for(var x = 0; x < this.blocks[0].length; x++){
+			if(this.blocks[y][x].rect.index == rectIndex){
+				return this.blocks[y][x];
+			}
+		}
+	}
+}
+

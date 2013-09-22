@@ -26,3 +26,12 @@ function Location(config){
 	});
 }
 
+//recalculates the mazeX and mazeY positions
+Location.prototype.recalculate = function(mazeSize, blockSize){
+	var centerX = this.rect.getX()+blockSize/2;
+	var centerY = this.rect.getY()+blockSize/2;
+	this.mazeX = Math.round(mapRange(centerX, 0, mazeSize*blockSize, 0, mazeSize));
+	this.mazeY = Math.round(mapRange(centerY, 0, mazeSize*blockSize, 0, mazeSize));
+	console.log("Maze coordinates: "+this.mazeX+", "+this.mazeY);
+	console.log("Literal coordinates: "+this.rect.getX()+", "+this.rect.getY());
+}

@@ -5,9 +5,7 @@ var stage = new Kinetic.Stage({
 });
 var layer = new Kinetic.Layer();
 
-var begin = new Location(1, 0);
-var end   = new Location(7, 8);
-var maze  = new Maze(maze, 40, begin, end);
+var maze  = new Maze(maze, 40);
 
 maze.draw(layer);
 bindEvents();
@@ -42,8 +40,12 @@ function bindEvents(){
     for(var key in maze.locations){
         var locationRect = maze.locations[key].rect;
 
-        locationRect.on('dragend', function(){ maze.recalculateLocation(this.id); console.log("COME BACK")});
+        locationRect.on('dragend', function(){ maze.recalculateLocation(this.index)});
         locationRect.on('mouseover', function(){ document.body.style.cursor = 'move'; });
         locationRect.on('mouseout', function(){ document.body.style.cursor = 'default'; });
     }
+}
+
+function mapRange(value, low1, high1, low2, high2){
+    return low2 + (high2 - low2) * ((value - low1) / (high1 - low1));
 }

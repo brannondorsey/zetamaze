@@ -1,8 +1,3 @@
-//create replaceAt function
-String.prototype.replaceAt=function(index, character) {
-  return this.substr(0, index) + character + this.substr(index+character.length);
-}
-
 var mazeHeight = 9;
 var mazeWidth = 9;
 
@@ -32,7 +27,6 @@ function printMaze()
 function solve(x, y)
 {
     // Make the move (if it's wrong, we will backtrack later.
-    //maze[y] = maze[y].replaceAt(x, player);
     maze[y][x] = player;
     // If you want progressive update, uncomment these lines...
     
