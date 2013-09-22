@@ -31,8 +31,11 @@ Maze.prototype.draw = function(layer){
 			layer.add(block.rect);
 		}
 	}
-	layer.add(this.locations['begin'].rect);
-	layer.add(this.locations['end'].rect);
+
+	for(var key in this.locations){
+		layer.add(this.locations[key].rect);
+	}
+	
 }
 
 Maze.prototype.toggleBlock = function(rectIndex, layer){
