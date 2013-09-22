@@ -16,7 +16,7 @@ function Location(config){
 			else if(pos.x+config.blockSize > config.mazeSize-config.blockSize) xBound = config.mazeSize-config.blockSize*2;
 			else xBound = pos.x;
 			if(pos.y < config.blockSize) yBound = config.blockSize;
-			else if(pos.y+config.blockSize > config.mazeSize-config.blockSize) yBound = config.mazeSize-config.blockSize*2;
+			else if(pos.y+config.blockSize > config.mazeSize-config.blockSize*2) yBound = config.mazeSize-config.blockSize*3;
 			else yBound = pos.y;
 			return{
 				x: xBound,

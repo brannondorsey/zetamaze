@@ -1,8 +1,8 @@
 //MAZE CLASS
-function Maze(maze, blockSize){
+function Maze(maze, stageWidth, stageHeight){
 	this.width = maze[0].length;
 	this.height = maze.length;
-	this.blockSize = blockSize;
+	this.blockSize = stageWidth/this.width;
 
 	//construct maze
 	this.blocks = [];
@@ -14,7 +14,7 @@ function Maze(maze, blockSize){
 		for(var x = 0; x < this.width; x++){
 			var index = x.toString()+","+y.toString();
 			var state = (maze[y][x] == 1) ? true: false;
-			this.blocks[y][x] = new Block(index, state, xPos, yPos, blockSize, blockSize);
+			this.blocks[y][x] = new Block(index, state, xPos, yPos, this.blockSize, this.blockSize);
 			xPos += this.blockSize;
 		}
 		xPos = 0;

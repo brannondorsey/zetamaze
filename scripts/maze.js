@@ -5,7 +5,7 @@ var stage = new Kinetic.Stage({
 });
 var layer = new Kinetic.Layer();
 
-var maze  = new Maze(maze, 40);
+var maze  = new Maze(maze, stage.getWidth(), stage.getHeight());
 
 maze.draw(layer);
 bindEvents();
