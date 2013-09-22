@@ -1,5 +1,6 @@
 //MAZE CLASS
 function Maze(maze, stageWidth, stageHeight){
+	this.data = maze;
 	this.width = maze[0].length;
 	this.height = maze.length;
 	this.blockSize = stageWidth/this.width;
@@ -56,17 +57,46 @@ Maze.prototype.recalculateLocation = function(rectIndex){
 	location.recalculate(this.width, this.blockSize);
 }
 
+//checks to make sure that the maze is solvable and then exports the data to the hidden form
 Maze.prototype.export = function(){
-	for(var y = 0; y < this.blocks.length; y++){
-		for(var x = 0; x < this.blocks[0].length; x++){
-			var block = this.blocks[y][x];
-		}
+	if(this.isSolvable()){
+		//maze data
+		$("#maze-form input[name='maze']").val(this.getNewMazeData());
+
+		//begin
+		$("#maze-form input[name='begin_x']").val(this.locations["begin"].rect.getX());
+		$("#maze-form input[name='begin_y']").val(this.locations["begin"].rect.getY());
+		$("#maze-form input[name='begin_maze_x']").val(this.locations["begin"].mazeX);
+		$("#maze-form input[name='begin_maze_y']").val(this.locations["begin"].mazeY);
+
+		//end
+		$("#maze-form input[name='end_x']").val(this.locations["end"].rect.getX());
+		$("#maze-form input[name='end_y']").val(this.locations["end"].rect.getY());
+		$("#maze-form input[name='end_maze_x']").val(this.locations["end"].mazeX);
+		$("#maze-form input[name='end_maze_y']").val(this.locations["end"].mazeY);
+
+		//files
+		var i = 0;
+		$("#maze-form input#file").each(function(locations){
+			this.val(locations["file"+i.toString()].rect.getX());
+			this.val(locations["file"+i.toString()].rect.getY());
+			this.val(locations["file"+i.toString()].mazeX);
+			this.val(locations["file"+i.toString()].mazeY);
+			i++;
+		});
+		return true;
 	}
+	else return false;
 }
 
 //make sure the maze is solvable
 Maze.prototype.isSolvable = function(){
-
+	solver = new MazeSolver(this.data, 
+							this.locations['begin'].mazeX,
+							this.locations['begin'].mazeY,
+							this.locations['end'].mazeX,
+							this.locations['end'].mazeY);
+	return solver.isSolvable();
 }
 
 //------------------------------------------------------------------
@@ -113,4 +143,18 @@ Maze.prototype.getBlockByIndex = function(rectIndex){
 		}
 	}
 }
+
+Maze.prototype.getNewMazeData = function(){
+	var mazeData = [];
+	for(var y = 0; y < this.blocks.length; y++){
+		mazeData[y] = [];
+		for(var x = 0; x < this.blocks[0].length; x++){
+			var block = this.blocks[y][x];
+			mazeData[y][x] = block.state ? 1 : 0;  
+		}
+	}
+	return JSON.stringify(mazeData);
+}
+
+
 

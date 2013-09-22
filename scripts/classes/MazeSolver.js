@@ -4,7 +4,7 @@ function Point(x, y){
 }  
 
 function MazeSolver(data, beginMazeX, beginMazeY, endMazeX, endMazeY){
-    this.maze = data.slice(0); //make a copy not reference 
+    this.maze = data.slice(0); //make a copy not reference
     this.mazeHeight = data.length;
     this.mazeWidth = data[0].length;
     this.startingPoint = new Point(beginMazeX, beginMazeY);
@@ -15,13 +15,13 @@ function MazeSolver(data, beginMazeX, beginMazeY, endMazeX, endMazeY){
     this.player = 2;
 }
 
-maze.prototype.isSolvable = function(){
-    if(this.solve(this.startingPoint.x, this.startingPoint.y)) console.log("Maze solveable");
-    else console.log("Maze unsolvable");
+MazeSolver.prototype.isSolvable = function(){
+    if(this.solve(this.startingPoint.x, this.startingPoint.y)) return true;
+    else return false;
 }
   
 //prints the state of the maze solver to the console
-Maze.prototype.print = function(){
+MazeSolver.prototype.print = function(){
     for (var y = 0; y < this.mazeHeight; y++){
         var row = "";
         for(var x = 0; x < this.mazeWidth; x++){
@@ -32,10 +32,10 @@ Maze.prototype.print = function(){
     console.log();
 }
 
-Maze.prototype.solve = function(x, y)
+MazeSolver.prototype.solve = function(x, y)
 {
     // Make the move (if it's wrong, we will backtrack later.
-    this.maze[y][x] = player;
+    this.maze[y][x] = this.player;
     // If you want progressive update, uncomment these lines...
     
     //printMaze();
@@ -51,21 +51,21 @@ Maze.prototype.solve = function(x, y)
     {
         return true;
     }
-    if (x < this.mazeWidth && maze[y][x+1] == free && solve(x + 1, y))
+    if (x < this.mazeWidth && this.maze[y][x+1] == free && this.solve(x + 1, y))
     {
         return true;
     }
-    if (y > 0 && maze[y-1][x] == free && solve(x, y - 1))
+    if (y > 0 && this.maze[y-1][x] == this.free && this.solve(x, y - 1))
     {
         return true;
     }
-    if (y < this.mazeHeight && maze[y + 1][x] == free && solve(x, y + 1))
+    if (y < this.mazeHeight && this.maze[y + 1][x] == this.free && solve(x, y + 1))
     {
         return true;
     }
 
     // Otherwise we need to backtrack and find another solution.
-    maze[y][x] = free;
+    this.maze[y][x] = this.free;
 
     // If you want progressive update, uncomment these lines...
     //printMaze();

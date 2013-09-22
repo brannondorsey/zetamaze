@@ -5,13 +5,14 @@ var stage = new Kinetic.Stage({
 });
 var layer = new Kinetic.Layer();
 
-var maze  = new Maze(maze, stage.getWidth(), stage.getHeight());
+var maze  = new Maze(mazeData, stage.getWidth(), stage.getHeight());
 
 maze.draw(layer);
 bindEvents();
 
 // add the layer to the stage
 stage.add(layer);
+exportMaze() //COME BACK
 
 function bindEvents(){
     //bind events for each block...
@@ -48,4 +49,13 @@ function bindEvents(){
 
 function mapRange(value, low1, high1, low2, high2){
     return low2 + (high2 - low2) * ((value - low1) / (high1 - low1));
+}
+
+function exportMaze(){
+    var result = maze.export();
+    console.log(result ? "maze passes" : "maze fails"
+
+
+        );
+    return result;
 }

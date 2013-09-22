@@ -2,6 +2,8 @@
 	require_once 'includes/classes/api_builder_includes/class.API.inc.php';
 	require_once 'includes/classes/api_builder_includes/class.Database.inc.php';
 
+	require_once 'includes/api_columns.include.php';
+
 	if(isset($_POST) &&
 	   !empty($_POST)){
 
@@ -15,7 +17,10 @@
 ?>
 <html>
 	<head>
+		
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
 		<script type="text/javascript" src="scripts/kinetic-v4.7.0.min.js">//load kinetic</script>
+		<script type="text/javascript" src="scripts/classes/MazeSolver.js"></script>
 		<script type="text/javascript" src="scripts/classes/Block.js"></script>
 		<script type="text/javascript" src="scripts/classes/Maze.js"></script>
 		<script type="text/javascript" src="scripts/classes/Location.js"></script>
@@ -23,18 +28,17 @@
 	<body>
 		<div id="container"></div>
 		<script type="text/javascript">
-			var maze = <?php echo file_get_contents("mazedata/mazes/maze1.json")?>
+			var mazeData = <?php echo file_get_contents("mazedata/mazes/maze1.json") . ";"?>
 		</script>
 		<script defer="defer" type="text/javascript" src="scripts/maze.js"></script>
-		<form method="post" action="" onsubmit="return maze.export()">
-			<input id="maze" type="hidden" value="">
-			<input id="begin" type="hidden" value="">
-			<input id="end" type="hidden" value="">
-			<input id="file1" type="hidden" value="">
-			<input id="file2" type="hidden" value="">
-			<input id="file3" type="hidden" value="">
-			<input id="file4" type="hidden" value="">
-			<input id="file5" type="hidden" value="">
+		<form id="maze-form" method="post" action="" onsubmit="return exportMaze()">
+			<?php 
+			$input_columns = explode(", ", API::format_comma_delimited($columns));
+			unset($input_columns[0]);
+			unset($input_columns[1]);
+			foreach ($input_columns as $column) { ?>
+				<input <?php if(strstr($column, "file") !== false) echo "id='file'"; ?>name="<?php echo $column ?>" type="hidden" value="">
+			<?php }?>
 			<input type="submit" value="Submit">
 		</form>
 	</div>

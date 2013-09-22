@@ -72,7 +72,7 @@ class API {
 	 * @return void
 	 */
 	public function setup($columns){
-		$this->columns_to_provide = $this->format_comma_delimited($columns);
+		$this->columns_to_provide = self::format_comma_delimited($columns);
 		$this->columns_to_provide_array = explode(', ', $this->columns_to_provide);
 	}
 
@@ -180,7 +180,7 @@ class API {
 	 * @return void/boolean
 	 */
 	public function set_searchable($columns){
-		$this->full_text_columns = $this->format_comma_delimited($columns);
+		$this->full_text_columns = self::format_comma_delimited($columns);
 		$this->full_text_columns_array = explode(', ', $this->full_text_columns);
 		$columns_correct = true;
 
@@ -537,6 +537,15 @@ class API {
 //------------------------------------------------------------------------------
 //HELPERS
 
+	public static function format_comma_delimited($list){
+		$array = explode(",", $list);
+		$string_to_return = "";
+		foreach($array as $list_item){
+			$string_to_return .= trim($list_item) . ", ";
+		}
+		return rtrim($string_to_return, ", ");
+	}
+
 	//appends and prepends slashes to string for WHERE statement values
 	protected function append_prepend(&$string, $char){
 		$string = $char . $string . $char;
@@ -545,15 +554,6 @@ class API {
 	//checks if a parameter string is also the name of a SELECT statement's requested column
 	protected function is_column_parameter($parameter_name, $columns_to_provide_array){
 		return in_array ($parameter_name, $columns_to_provide_array);
-	}
-
-	protected function format_comma_delimited($list){
-		$array = explode(",", $list);
-		$string_to_return = "";
-		foreach($array as $list_item){
-			$string_to_return .= trim($list_item) . ", ";
-		}
-		return rtrim($string_to_return, ", ");
 	}
 
 	//used inside API::set_searchable().
