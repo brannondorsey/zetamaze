@@ -5,8 +5,8 @@ function Point(x, y){
 
 function MazeSolver(data, beginMazeX, beginMazeY, endMazeX, endMazeY){
     this.maze = data.slice(0); //make a copy not reference
-    this.mazeHeight = data.length;
-    this.mazeWidth = data[0].length;
+    this.mazeHeight = this.maze.length;
+    this.mazeWidth = this.maze[0].length;
     this.startingPoint = new Point(beginMazeX, beginMazeY);
     this.endingPoint = new Point(endMazeX, endMazeY);
 
@@ -16,6 +16,12 @@ function MazeSolver(data, beginMazeX, beginMazeY, endMazeX, endMazeY){
 }
 
 MazeSolver.prototype.isSolvable = function(){
+    // console.log("Begin mazeX: " + this.startingPoint.x);
+    // console.log("Begin mazeY: " + this.startingPoint.y);
+    // console.log("End mazeX: " + this.endingPoint.x);
+    // console.log("End mazeY: " + this.endingPoint.y);
+    // console.log("Maze width: " + this.mazeWidth);
+    // console.log("End Height: " + this.mazeHeight);
     if(this.solve(this.startingPoint.x, this.startingPoint.y)) return true;
     else return false;
 }
@@ -51,7 +57,7 @@ MazeSolver.prototype.solve = function(x, y)
     {
         return true;
     }
-    if (x < this.mazeWidth && this.maze[y][x+1] == free && this.solve(x + 1, y))
+    if (x < this.mazeWidth && this.maze[y][x+1] == this.free && this.solve(x + 1, y))
     {
         return true;
     }
@@ -59,7 +65,7 @@ MazeSolver.prototype.solve = function(x, y)
     {
         return true;
     }
-    if (y < this.mazeHeight && this.maze[y + 1][x] == this.free && solve(x, y + 1))
+    if (y < this.mazeHeight && this.maze[y + 1][x] == this.free && this.solve(x, y + 1))
     {
         return true;
     }
@@ -68,7 +74,8 @@ MazeSolver.prototype.solve = function(x, y)
     this.maze[y][x] = this.free;
 
     // If you want progressive update, uncomment these lines...
-    //printMaze();
+    //this.print();
+    //console.log(x+", "+y+" didnt work");
     //
     return false;
 }

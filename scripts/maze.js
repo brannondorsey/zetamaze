@@ -41,7 +41,7 @@ function bindEvents(){
     for(var key in maze.locations){
         var locationRect = maze.locations[key].rect;
 
-        locationRect.on('dragend', function(){ maze.recalculateLocation(this.index)});
+        locationRect.on('dragend', function(){ maze.recalculateLocation(this.index); exportMaze()});
         locationRect.on('mouseover', function(){ document.body.style.cursor = 'move'; });
         locationRect.on('mouseout', function(){ document.body.style.cursor = 'default'; });
     }
@@ -53,9 +53,6 @@ function mapRange(value, low1, high1, low2, high2){
 
 function exportMaze(){
     var result = maze.export();
-    console.log(result ? "maze passes" : "maze fails"
-
-
-        );
+    console.log(result ? "maze passes" : "maze fails");
     return result;
 }

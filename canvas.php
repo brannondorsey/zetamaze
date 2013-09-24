@@ -36,8 +36,9 @@
 			$input_columns = explode(", ", API::format_comma_delimited($columns));
 			unset($input_columns[0]);
 			unset($input_columns[1]);
-			foreach ($input_columns as $column) { ?>
-				<input <?php if(strstr($column, "file") !== false) echo "id='file'"; ?>name="<?php echo $column ?>" type="hidden" value="">
+			$i = 1;
+			foreach ($input_columns as $column) {?>
+				<input <?php if(strstr($column, "file") !== false){ echo "id='file" . ceil($i/4) . "'"; $i++; }?>name="<?php echo $column ?>" type="hidden" value="">
 			<?php }?>
 			<input type="submit" value="Submit">
 		</form>

@@ -16,7 +16,7 @@ function Location(config){
 			else if(pos.x+config.blockSize > config.mazeSize-config.blockSize) xBound = config.mazeSize-config.blockSize*2;
 			else xBound = pos.x;
 			if(pos.y < config.blockSize) yBound = config.blockSize;
-			else if(pos.y+config.blockSize > config.mazeSize-config.blockSize*2) yBound = config.mazeSize-config.blockSize*3;
+			else if(pos.y+config.blockSize > config.mazeSize-config.blockSize) yBound = config.mazeSize-config.blockSize*2;
 			else yBound = pos.y;
 			return{
 				x: xBound,
@@ -30,8 +30,8 @@ function Location(config){
 Location.prototype.recalculate = function(mazeSize, blockSize){
 	var centerX = this.rect.getX()+blockSize/2;
 	var centerY = this.rect.getY()+blockSize/2;
-	this.mazeX = Math.round(mapRange(centerX, 0, mazeSize*blockSize, 0, mazeSize));
-	this.mazeY = Math.round(mapRange(centerY, 0, mazeSize*blockSize, 0, mazeSize));
+	this.mazeX = Math.round(mapRange(centerX, 0, mazeSize*blockSize, 0, mazeSize) - 0.5);
+	this.mazeY = Math.round(mapRange(centerY, 0, mazeSize*blockSize, 0, mazeSize) - 0.5);
 	console.log("Maze coordinates: "+this.mazeX+", "+this.mazeY);
 	console.log("Literal coordinates: "+this.rect.getX()+", "+this.rect.getY());
 }

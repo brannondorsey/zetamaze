@@ -17,8 +17,9 @@ $columns = "id,
 			file_2_x,
 			file_2_y,
 			file_2_maze_x,
-			file_2_maze_y,
-			file_3_x,
+			file_2_maze_y";
+
+			/*file_3_x,
 			file_3_y,
 			file_3_maze_x,
 			file_3_maze_y,
@@ -29,5 +30,5 @@ $columns = "id,
 			file_5_x,
 			file_5_y,
 			file_5_maze_x,
-			file_5_maze_y,";
+			file_5_maze_y,"*/
 ?>

@@ -23,6 +23,8 @@ function Maze(maze, stageWidth, stageHeight){
 	}
 	
 	this.locations = this.getLocations();
+	console.log("The locations are: ");
+	console.log(this.locations);
 }
 
 Maze.prototype.draw = function(layer){
@@ -76,17 +78,20 @@ Maze.prototype.export = function(){
 		$("#maze-form input[name='end_maze_y']").val(this.locations["end"].mazeY);
 
 		//files
-		var i = 0;
-		$("#maze-form input#file").each(function(locations){
-			this.val(locations["file"+i.toString()].rect.getX());
-			this.val(locations["file"+i.toString()].rect.getY());
-			this.val(locations["file"+i.toString()].mazeX);
-			this.val(locations["file"+i.toString()].mazeY);
+		for(var i = 0; i < this.locations.length; i++){
+			console.log("got here mother fucker");
+			//$("#maze-form input#file"+i.toString()+":nth-of-type(0)").val(locations["file"+i.toString()].rect.getX());
+			var result = $("#maze-form input#file"+i.toString()+":nth-of-type(0)");
+			console.log(result);
+			//this.val(locations["file"+i.toString()].rect.getX());
+			// this.val(locations["file"+i.toString()].rect.getY());
+			// this.val(locations["file"+i.toString()].mazeX);
+			// this.val(locations["file"+i.toString()].mazeY);
 			i++;
-		});
+		}
 		return true;
 	}
-	else return false;
+	return false;
 }
 
 //make sure the maze is solvable
@@ -95,7 +100,8 @@ Maze.prototype.isSolvable = function(){
 							this.locations['begin'].mazeX,
 							this.locations['begin'].mazeY,
 							this.locations['end'].mazeX,
-							this.locations['end'].mazeY);
+							this.locations['end'].mazeY)
+	//solver.print();
 	return solver.isSolvable();
 }
 
@@ -118,17 +124,33 @@ Maze.prototype.getLocations = function(){
 	config.x = this.blockSize+10;
 	config.y = 10;
 	config.mazeX = 1;
-	config.mazeY = 0;
+	config.mazeY = 1;
 	config.primaryColor = 'green'
 	locations['begin'] = new Location(config);
 
 	//set end location
 	config.x = this.blockSize*8;
 	config.y = this.blockSize*6;
-	config.mazeX = 1;
-	config.mazeY = 0;
+	config.mazeX = 5;
+	config.mazeY = 5;
 	config.primaryColor = 'red'
 	locations['end'] = new Location(config);
+
+	//set begin location
+	config.x = this.blockSize+100;
+	config.y = this.blockSize;
+	config.mazeX = 1;
+	config.mazeY = 0;
+	config.primaryColor = 'grey'
+	locations['file1'] = new Location(config);
+
+	//set begin location
+	config.x = this.blockSize*3+100;
+	config.y = this.blockSize*5;
+	config.mazeX = 1;
+	config.mazeY = 0;
+	config.primaryColor = 'grey'
+	locations['file2'] = new Location(config);
 
 	return locations;
 }
