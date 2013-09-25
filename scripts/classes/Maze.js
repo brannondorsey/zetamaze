@@ -23,8 +23,6 @@ function Maze(maze, stageWidth, stageHeight){
 	}
 	
 	this.locations = this.getLocations();
-	console.log("The locations are: ");
-	console.log(this.locations);
 }
 
 Maze.prototype.draw = function(layer){
@@ -62,33 +60,34 @@ Maze.prototype.recalculateLocation = function(rectIndex){
 //checks to make sure that the maze is solvable and then exports the data to the hidden form
 Maze.prototype.export = function(){
 	if(this.isSolvable()){
-		//maze data
-		$("#maze-form input[name='maze']").val(this.getNewMazeData());
+		//COME BACK AND UNCOMMENT BELOW
+		// //maze data
+		// $("#maze-form input[name='maze']").val(this.getNewMazeData());
 
-		//begin
-		$("#maze-form input[name='begin_x']").val(this.locations["begin"].rect.getX());
-		$("#maze-form input[name='begin_y']").val(this.locations["begin"].rect.getY());
-		$("#maze-form input[name='begin_maze_x']").val(this.locations["begin"].mazeX);
-		$("#maze-form input[name='begin_maze_y']").val(this.locations["begin"].mazeY);
+		// //begin
+		// $("#maze-form input[name='begin_x']").val(this.locations["begin"].rect.getX());
+		// $("#maze-form input[name='begin_y']").val(this.locations["begin"].rect.getY());
+		// $("#maze-form input[name='begin_maze_x']").val(this.locations["begin"].mazeX);
+		// $("#maze-form input[name='begin_maze_y']").val(this.locations["begin"].mazeY);
 
-		//end
-		$("#maze-form input[name='end_x']").val(this.locations["end"].rect.getX());
-		$("#maze-form input[name='end_y']").val(this.locations["end"].rect.getY());
-		$("#maze-form input[name='end_maze_x']").val(this.locations["end"].mazeX);
-		$("#maze-form input[name='end_maze_y']").val(this.locations["end"].mazeY);
+		// //end
+		// $("#maze-form input[name='end_x']").val(this.locations["end"].rect.getX());
+		// $("#maze-form input[name='end_y']").val(this.locations["end"].rect.getY());
+		// $("#maze-form input[name='end_maze_x']").val(this.locations["end"].mazeX);
+		// $("#maze-form input[name='end_maze_y']").val(this.locations["end"].mazeY);
 
-		//files
-		for(var i = 0; i < this.locations.length; i++){
-			console.log("got here mother fucker");
-			//$("#maze-form input#file"+i.toString()+":nth-of-type(0)").val(locations["file"+i.toString()].rect.getX());
-			var result = $("#maze-form input#file"+i.toString()+":nth-of-type(0)");
-			console.log(result);
-			//this.val(locations["file"+i.toString()].rect.getX());
-			// this.val(locations["file"+i.toString()].rect.getY());
-			// this.val(locations["file"+i.toString()].mazeX);
-			// this.val(locations["file"+i.toString()].mazeY);
-			i++;
-		}
+		// //files
+		// for(var i = 0; i < this.locations.length; i++){
+		// 	console.log("got here mother fucker");
+		// 	//$("#maze-form input#file"+i.toString()+":nth-of-type(0)").val(locations["file"+i.toString()].rect.getX());
+		// 	var result = $("#maze-form input#file"+i.toString()+":nth-of-type(0)");
+		// 	console.log(result);
+		// 	//this.val(locations["file"+i.toString()].rect.getX());
+		// 	// this.val(locations["file"+i.toString()].rect.getY());
+		// 	// this.val(locations["file"+i.toString()].mazeX);
+		// 	// this.val(locations["file"+i.toString()].mazeY);
+		// 	i++;
+		// }
 		return true;
 	}
 	return false;
@@ -166,6 +165,7 @@ Maze.prototype.getBlockByIndex = function(rectIndex){
 	}
 }
 
+//exports the state of the maze walls in a 2D JSON array
 Maze.prototype.getNewMazeData = function(){
 	var mazeData = [];
 	for(var y = 0; y < this.blocks.length; y++){
