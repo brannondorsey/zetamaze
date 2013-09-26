@@ -81,19 +81,40 @@ Maze.prototype.export = function(){
 		$("#maze-form input[name='endMazeX']").val(this.locations["end"].mazeX);
 		$("#maze-form input[name='endMazeY']").val(this.locations["end"].mazeY);
 
-		var arraySize = getAssocSize(this.locations);
 		//files
-		for(var i = 0; i < arraySize; i++){
-			console.log("got here mother fucker");
-			//$("#maze-form input#file"+i.toString()+":nth-of-type(0)").val(locations["file"+i.toString()].rect.getX());
-			var result = $("#maze-form input#file"+i.toString()+":nth-of-type(0)");
-			console.log(result);
-			// result.val(locations["file"+i.toString()].rect.getX());
-			// result.val(locations["file"+i.toString()].rect.getY());
-			// result.val(locations["file"+i.toString()].mazeX);
-			// result.val(locations["file"+i.toString()].mazeY);
-			i++;
+		var arraySize = getAssocSize(this.locations);
+		for(var i = 1; i < arraySize-1; i++){
+			
+			var result = $("#maze-form input#file"+i.toString());
+			//console.log(this.locations["file"+i.toString()]);
+			//
+			console.log(result.attr("id"));
+			console.log(result.attr("type"));
+			console.log();
+			result.val(this.locations["file"+i.toString()].rect.getX());
+			result = result.next();
+
+			console.log(result.attr("id"));
+			console.log(result.attr("type"));
+			console.log();
+			result.val(this.locations["file"+i.toString()].rect.getY());
+			result = result.next();
+			
+			console.log(result.attr("id"));
+			console.log(result.attr("type"));
+			console.log();
+			result.val(this.locations["file"+i.toString()].mazeX);
+			result = result.next();
+
+			console.log(result.attr("id"));
+			console.log(result.attr("type"));
+			console.log();
+			result.val(this.locations["file"+i.toString()].mazeY);
+			result = result.next();
 		}
+
+		//for some reason the value of the submit button is affected by the above code...
+		$("#maze-form input[type='submit']").val("Submit"); //COME BACK
 		return true;
 	}
 	return false;
@@ -153,7 +174,7 @@ Maze.prototype.getLocations = function(){
 	config.x = this.blockSize*3+100;
 	config.y = this.blockSize*5;
 	config.mazeX = 1;
-	config.mazeY = 0;
+	config.mazeY = 5;
 	config.primaryColor = 'grey'
 	locations['file2'] = new Location(config);
 
