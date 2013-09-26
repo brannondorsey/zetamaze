@@ -61,7 +61,7 @@ class API {
 			$json_obj = new StdClass();
 			$json_obj->config_errors[] = "database connection failed, make sure the connection info passed into API::__construct(\$host, \$db, \$table, \$username, \$password) is correct";
 			die(json_encode($json_obj));
-		} ;
+		};
 	}
 
 	//-------------------------------Setup Methods-------------------------------------

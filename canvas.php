@@ -2,18 +2,30 @@
 	require_once 'includes/classes/api_builder_includes/class.API.inc.php';
 	require_once 'includes/classes/api_builder_includes/class.Database.inc.php';
 
+	//setup and instantiate the api
 	require_once 'includes/api_columns.include.php';
+	require_once 'includes/api_setup.include.php';
 
+	//if POST...
 	if(isset($_POST) &&
 	   !empty($_POST)){
 
-		//setup and instantiate the api
-		require_once 'includes/api_setup.include.php';
-		$post_array = Database::clean($_POST);
-		var_dump($post_array);
 		
-		//enter data into database and then use it to build the reloaded page...
+		$post_array = Database::clean($_POST);
+
+		//validate here!
+		if(!Database::execute_from_assoc($post_array, Database::$table)){
+			echo "There was a problem inserting into the database";
+		} 
 	}
+
+	$query_array = array("limit" => 1,
+						 "pretty_print" => false);
+
+	if($results = $api->get_json_from_assoc($query_array)){
+		$json = json_decode($results);
+		$mazeData = json_encode($json->data[0]);
+	}else die("Database error");
 
 ?>
 <html>
@@ -30,7 +42,29 @@
 	<body>
 		<div id="container"></div>
 		<script type="text/javascript">
-			var mazeData = <?php echo file_get_contents("mazedata/mazes/maze1.json") . ";"?>
+			var mazeData = <?php echo $mazeData; ?>;
+			// var mazeData = {
+			// 	id: 1,
+			// 	timestame: "arbitrary",
+			// 	maze: <?php //echo file_get_contents("mazedata/mazes/maze1.json"); ?>,
+			// 	beginX: 100,
+			// 	beginY: 200,
+			// 	beginMazeX: 10,
+			// 	beginMazeY: 20,
+			// 	endX: 300,
+			// 	endY: 400,
+			// 	endMazeX: 30,
+			// 	endMazeY: 40,
+			// 	file1X: 50,
+			// 	file1Y: 250,
+			// 	file1MazeX: 5,
+			// 	file1MazeY: 25,
+			// 	file2X: 250,
+			// 	file2Y: 350,
+			// 	file2MazeX: 25,
+			// 	file2MazeY: 35
+			// }
+			
 		</script>
 		<script defer="defer" type="text/javascript" src="scripts/maze.js"></script>
 		<form id="maze-form" method="post" action="" onsubmit="return exportMaze()">

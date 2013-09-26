@@ -1,3 +1,17 @@
+/*
+Example Location config...
+{
+	x: 100,
+	y: 200,
+	mazeX: 1,
+	mazeY: 2,
+	blockSize: 50,
+	primaryColor: 'blue',
+	mazeSize: 2000
+}
+
+ */
+
 function Location(config){
     this.mazeX = config.mazeX;
     this.mazeY = config.mazeY;
@@ -5,8 +19,8 @@ function Location(config){
     this.rect  = new Kinetic.Rect({
 		x: config.x,
 		y: config.y,
-		width: config.w,
-		height: config.h,
+		width: config.blockSize,
+		height: config.blockSize,
 		fill: this.primaryColor,
 		draggable: true,
 		dragBoundFunc: function(pos){

@@ -22,12 +22,50 @@ function Maze(maze, stageWidth, stageHeight){
 		yPos += this.blockSize;
 	}
 	
-	this.locations = this.getLocations();
+	//this.locations = this.getLocations();
 }
 
 //loads the state of the maze from the database into the maze object
-Maze.prototype.initMazeProperties = function(config){
+Maze.prototype.initLocations = function(mazeData){
+	this.locations = [];
 
+	//set config constants
+	var config = {
+	 	blockSize: this.blockSize,
+	 	mazeSize: this.blockSize * this.width
+	}
+
+	//set begin location
+	config.x = parseFloat(mazeData.beginX);
+	config.y = parseFloat(mazeData.beginY);
+	config.mazeX = parseInt(mazeData.beginMazeX);
+	config.mazeY = parseInt(mazeData.beginMazeY);
+	config.primaryColor = 'green'
+	this.locations['begin'] = new Location(config);
+
+	//set end location
+	config.x = parseFloat(mazeData.endX);
+	config.y = parseFloat(mazeData.endY);
+	config.mazeX = parseInt(mazeData.endMazeX);
+	config.mazeY = parseInt(mazeData.endMazeY);
+	config.primaryColor = 'red'
+	this.locations['end'] = new Location(config);
+
+	//set begin location
+	config.x = parseFloat(mazeData.file1X);
+	config.y = parseFloat(mazeData.file1Y);
+	config.mazeX = parseInt(mazeData.file1MazeX);
+	config.mazeY = parseInt(mazeData.file1MazeY);
+	config.primaryColor = 'grey'
+	this.locations['file1'] = new Location(config);
+
+	//set begin location
+	config.x = parseFloat(mazeData.file2X);
+	config.y = parseFloat(mazeData.file2Y);
+	config.mazeX = parseInt(mazeData.file2MazeX);
+	config.mazeY = parseInt(mazeData.file2MazeY);
+	config.primaryColor = 'grey'
+	this.locations['file2'] = new Location(config);
 }
 
 Maze.prototype.draw = function(layer){
@@ -65,7 +103,10 @@ Maze.prototype.recalculateLocation = function(rectIndex){
 //checks to make sure that the maze is solvable and then exports the data to the hidden form
 Maze.prototype.export = function(){
 	if(this.isSolvable()){
-		//COME BACK AND UNCOMMENT BELOW
+
+		//save the submit value because it gets changed by the below
+		var submitValue = $("#maze-form input[type='submit']").val();
+		
 		//maze data
 		$("#maze-form input[name='maze']").val(this.getNewMazeData());
 
@@ -114,7 +155,7 @@ Maze.prototype.export = function(){
 		}
 
 		//for some reason the value of the submit button is affected by the above code...
-		$("#maze-form input[type='submit']").val("Submit"); //COME BACK
+		$("#maze-form input[type='submit']").val(submitValue); //COME BACK
 		return true;
 	}
 	return false;
@@ -136,49 +177,49 @@ Maze.prototype.isSolvable = function(){
 
 //returns an assoc array of all of the mazes location objects
 Maze.prototype.getLocations = function(){
-	var locations = [];
+	// var locations = [];
 
-	//set config constants
-	var config = {
-	 	w: this.blockSize,
-		h: this.blockSize,
-	 	blockSize: this.blockSize,
-	 	mazeSize: this.blockSize * this.width
-	}
+	// //set config constants
+	// var config = {
+	//  	w: this.blockSize,
+	// 	h: this.blockSize,
+	//  	blockSize: this.blockSize,
+	//  	mazeSize: this.blockSize * this.width
+	// }
 
-	//set begin location
-	config.x = this.blockSize+10;
-	config.y = 10;
-	config.mazeX = 1;
-	config.mazeY = 1;
-	config.primaryColor = 'green'
-	locations['begin'] = new Location(config);
+	// //set begin location
+	// config.x = this.blockSize+10;
+	// config.y = 10;
+	// config.mazeX = 1;
+	// config.mazeY = 1;
+	// config.primaryColor = 'green'
+	// locations['begin'] = new Location(config);
 
-	//set end location
-	config.x = this.blockSize*8;
-	config.y = this.blockSize*6;
-	config.mazeX = 5;
-	config.mazeY = 5;
-	config.primaryColor = 'red'
-	locations['end'] = new Location(config);
+	// //set end location
+	// config.x = this.blockSize*8;
+	// config.y = this.blockSize*6;
+	// config.mazeX = 5;
+	// config.mazeY = 5;
+	// config.primaryColor = 'red'
+	// locations['end'] = new Location(config);
 
-	//set begin location
-	config.x = this.blockSize+100;
-	config.y = this.blockSize;
-	config.mazeX = 1;
-	config.mazeY = 0;
-	config.primaryColor = 'grey'
-	locations['file1'] = new Location(config);
+	// //set begin location
+	// config.x = this.blockSize+100;
+	// config.y = this.blockSize;
+	// config.mazeX = 1;
+	// config.mazeY = 0;
+	// config.primaryColor = 'grey'
+	// locations['file1'] = new Location(config);
 
-	//set begin location
-	config.x = this.blockSize*3+100;
-	config.y = this.blockSize*5;
-	config.mazeX = 1;
-	config.mazeY = 5;
-	config.primaryColor = 'grey'
-	locations['file2'] = new Location(config);
+	// //set begin location
+	// config.x = this.blockSize*3+100;
+	// config.y = this.blockSize*5;
+	// config.mazeX = 1;
+	// config.mazeY = 5;
+	// config.primaryColor = 'grey'
+	// locations['file2'] = new Location(config);
 
-	return locations;
+	// return locations;
 }
 
 //returns an object from blocks if its rect.id matches the parameter passed

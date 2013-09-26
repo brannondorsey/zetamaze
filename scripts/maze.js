@@ -5,10 +5,17 @@ var stage = new Kinetic.Stage({
 });
 var layer = new Kinetic.Layer();
 
-var maze  = new Maze(mazeData, stage.getWidth(), stage.getHeight());
+//-----------------------------------------------------------------------
 
+var maze  = new Maze(JSON.parse(mazeData.maze), stage.getWidth(), stage.getHeight());
+maze.initLocations(mazeData);
 maze.draw(layer);
+
+//-----------------------------------------------------------------------
+
 bindEvents();
+
+//-----------------------------------------------------------------------
 
 // add the layer to the stage
 stage.add(layer);
