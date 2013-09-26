@@ -36,11 +36,7 @@
 	  				file_4_x,
 	  				file_4_y,
 	  				file_4_maze_x,
-	  				file_4_maze_y,
-	  				file_5_x,
-	  				file_5_y,
-	  				file_5_maze_x,
-	  				file_5_maze_y,";
+	  				file_4_maze_y";
 
 	  	//setup the API
 	  	$api = new API("localhost", 

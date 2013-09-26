@@ -51,7 +51,7 @@ Maze.prototype.initLocations = function(mazeData){
 	config.primaryColor = 'red'
 	this.locations['end'] = new Location(config);
 
-	//set begin location
+	//set file1 location
 	config.x = parseFloat(mazeData.file1X);
 	config.y = parseFloat(mazeData.file1Y);
 	config.mazeX = parseInt(mazeData.file1MazeX);
@@ -59,13 +59,29 @@ Maze.prototype.initLocations = function(mazeData){
 	config.primaryColor = 'grey'
 	this.locations['file1'] = new Location(config);
 
-	//set begin location
+	//set file2 location
 	config.x = parseFloat(mazeData.file2X);
 	config.y = parseFloat(mazeData.file2Y);
 	config.mazeX = parseInt(mazeData.file2MazeX);
 	config.mazeY = parseInt(mazeData.file2MazeY);
 	config.primaryColor = 'grey'
 	this.locations['file2'] = new Location(config);
+
+	//set file3 location
+	config.x = parseFloat(mazeData.file3X);
+	config.y = parseFloat(mazeData.file3Y);
+	config.mazeX = parseInt(mazeData.file3MazeX);
+	config.mazeY = parseInt(mazeData.file3MazeY);
+	config.primaryColor = 'grey'
+	this.locations['file3'] = new Location(config);
+
+	//set file4 location
+	config.x = parseFloat(mazeData.file4X);
+	config.y = parseFloat(mazeData.file4Y);
+	config.mazeX = parseInt(mazeData.file4MazeX);
+	config.mazeY = parseInt(mazeData.file4MazeY);
+	config.primaryColor = 'grey'
+	this.locations['file4'] = new Location(config);
 }
 
 Maze.prototype.draw = function(layer){

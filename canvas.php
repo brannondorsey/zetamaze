@@ -30,7 +30,7 @@
 ?>
 <html>
 	<head>
-		
+		<link rel="stylesheet" type="text/css" href="styles/base.css"g>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
 		<script type="text/javascript" src="scripts/kinetic-v4.7.0.min.js">//load kinetic</script>
 		<script type="text/javascript" src="scripts/helpers.js"></script>
@@ -40,7 +40,7 @@
 		<script type="text/javascript" src="scripts/classes/Location.js"></script>
 	</head>
 	<body>
-		<div id="container"></div>
+		<div id="container" class="canvas"></div>
 		<script type="text/javascript">
 			var mazeData = <?php echo $mazeData; ?>;
 			// var mazeData = {

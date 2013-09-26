@@ -17,5 +17,13 @@ $columns = "id,
 			file2X,
 			file2Y,
 			file2MazeX,
-			file2MazeY";
+			file2MazeY,
+			file3X,
+			file3Y,
+			file3MazeX,
+			file3MazeY,
+			file4X,
+			file4Y,
+			file4MazeX,
+			file4MazeY";
 ?>
