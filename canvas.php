@@ -10,6 +10,7 @@
 		//setup and instantiate the api
 		require_once 'includes/api_setup.include.php';
 		$post_array = Database::clean($_POST);
+		var_dump($post_array);
 		
 		//enter data into database and then use it to build the reloaded page...
 	}

@@ -25,6 +25,11 @@ function Maze(maze, stageWidth, stageHeight){
 	this.locations = this.getLocations();
 }
 
+//loads the state of the maze from the database into the maze object
+Maze.prototype.initMazeProperties = function(config){
+
+}
+
 Maze.prototype.draw = function(layer){
 	for(var y = 0; y < this.blocks.length; y++){
 		for(var x = 0; x < this.blocks[0].length; x++){
@@ -61,33 +66,34 @@ Maze.prototype.recalculateLocation = function(rectIndex){
 Maze.prototype.export = function(){
 	if(this.isSolvable()){
 		//COME BACK AND UNCOMMENT BELOW
-		// //maze data
-		// $("#maze-form input[name='maze']").val(this.getNewMazeData());
+		//maze data
+		$("#maze-form input[name='maze']").val(this.getNewMazeData());
 
-		// //begin
-		// $("#maze-form input[name='begin_x']").val(this.locations["begin"].rect.getX());
-		// $("#maze-form input[name='begin_y']").val(this.locations["begin"].rect.getY());
-		// $("#maze-form input[name='begin_maze_x']").val(this.locations["begin"].mazeX);
-		// $("#maze-form input[name='begin_maze_y']").val(this.locations["begin"].mazeY);
+		//begin
+		$("#maze-form input[name='beginX']").val(this.locations["begin"].rect.getX());
+		$("#maze-form input[name='beginY']").val(this.locations["begin"].rect.getY());
+		$("#maze-form input[name='beginMazeX']").val(this.locations["begin"].mazeX);
+		$("#maze-form input[name='beginMazeY']").val(this.locations["begin"].mazeY);
 
-		// //end
-		// $("#maze-form input[name='end_x']").val(this.locations["end"].rect.getX());
-		// $("#maze-form input[name='end_y']").val(this.locations["end"].rect.getY());
-		// $("#maze-form input[name='end_maze_x']").val(this.locations["end"].mazeX);
-		// $("#maze-form input[name='end_maze_y']").val(this.locations["end"].mazeY);
+		//end
+		$("#maze-form input[name='endX']").val(this.locations["end"].rect.getX());
+		$("#maze-form input[name='endY']").val(this.locations["end"].rect.getY());
+		$("#maze-form input[name='endMazeX']").val(this.locations["end"].mazeX);
+		$("#maze-form input[name='endMazeY']").val(this.locations["end"].mazeY);
 
-		// //files
-		// for(var i = 0; i < this.locations.length; i++){
-		// 	console.log("got here mother fucker");
-		// 	//$("#maze-form input#file"+i.toString()+":nth-of-type(0)").val(locations["file"+i.toString()].rect.getX());
-		// 	var result = $("#maze-form input#file"+i.toString()+":nth-of-type(0)");
-		// 	console.log(result);
-		// 	//this.val(locations["file"+i.toString()].rect.getX());
-		// 	// this.val(locations["file"+i.toString()].rect.getY());
-		// 	// this.val(locations["file"+i.toString()].mazeX);
-		// 	// this.val(locations["file"+i.toString()].mazeY);
-		// 	i++;
-		// }
+		var arraySize = getAssocSize(this.locations);
+		//files
+		for(var i = 0; i < arraySize; i++){
+			console.log("got here mother fucker");
+			//$("#maze-form input#file"+i.toString()+":nth-of-type(0)").val(locations["file"+i.toString()].rect.getX());
+			var result = $("#maze-form input#file"+i.toString()+":nth-of-type(0)");
+			console.log(result);
+			// result.val(locations["file"+i.toString()].rect.getX());
+			// result.val(locations["file"+i.toString()].rect.getY());
+			// result.val(locations["file"+i.toString()].mazeX);
+			// result.val(locations["file"+i.toString()].mazeY);
+			i++;
+		}
 		return true;
 	}
 	return false;

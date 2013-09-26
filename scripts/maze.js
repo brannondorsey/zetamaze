@@ -41,7 +41,7 @@ function bindEvents(){
     for(var key in maze.locations){
         var locationRect = maze.locations[key].rect;
 
-        locationRect.on('dragend', function(){ maze.recalculateLocation(this.index); exportMaze()});
+        locationRect.on('dragend', function(){ maze.recalculateLocation(this.index); maze.export()});
         locationRect.on('mouseover', function(){ document.body.style.cursor = 'move'; });
         locationRect.on('mouseout', function(){ document.body.style.cursor = 'default'; });
     }
@@ -49,6 +49,15 @@ function bindEvents(){
 
 function mapRange(value, low1, high1, low2, high2){
     return low2 + (high2 - low2) * ((value - low1) / (high1 - low1));
+}
+
+//returns the size of an assosciative array
+function getAssocSize(array){
+    var size = 0, key;
+    for (key in array) {
+        if (array.hasOwnProperty(key)) size++;
+    }
+    return size;
 }
 
 function exportMaze(){
