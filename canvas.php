@@ -10,7 +10,6 @@
 	if(isset($_POST) &&
 	   !empty($_POST)){
 
-		
 		$post_array = Database::clean($_POST);
 
 		//validate here!
@@ -38,6 +37,7 @@
 		<script type="text/javascript" src="scripts/classes/Block.js"></script>
 		<script type="text/javascript" src="scripts/classes/Maze.js"></script>
 		<script type="text/javascript" src="scripts/classes/Location.js"></script>
+		<script type="text/javascript" src="scripts/classes/ErrorHandler.js"></script>
 	</head>
 	<body>
 		<div id="container" class="canvas"></div>
@@ -67,6 +67,10 @@
 			
 		</script>
 		<script defer="defer" type="text/javascript" src="scripts/maze.js"></script>
+		<div class="error-box">
+			<ul>
+			</ul>
+		</div>
 		<form id="maze-form" method="post" action="" onsubmit="return exportMaze()">
 			<?php 
 			$input_columns = explode(", ", API::format_comma_delimited($columns));

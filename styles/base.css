@@ -7,3 +7,7 @@ div#container.canvas{
 	margin: auto;
 	width: 800px;
 }
+
+div.error-box ul li{
+	color: 'red';
+}

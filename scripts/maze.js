@@ -8,6 +8,7 @@ var layer = new Kinetic.Layer();
 //-----------------------------------------------------------------------
 
 var maze  = new Maze(JSON.parse(mazeData.maze), stage.getWidth(), stage.getHeight());
+
 maze.initLocations(mazeData);
 maze.draw(layer);
 
@@ -48,7 +49,18 @@ function bindEvents(){
     for(var key in maze.locations){
         var locationRect = maze.locations[key].rect;
 
-        locationRect.on('dragend', function(){ maze.recalculateLocation(this.index); maze.export()});
+        locationRect.on('dragend', function(){ 
+            maze.recalculateLocation(this.index);
+            
+            var errorHand = new ErrorHandler(); 
+            errorHand.clearErrorBox("div.error-box ul");
+            if(errorHand.checkErrors(maze.data, maze.locations)){
+               errorHand.outputErrors("div.error-box ul", "li");
+            }else{
+                errorHand.reset();
+                maze.export();
+            }
+        });
         locationRect.on('mouseover', function(){ document.body.style.cursor = 'move'; });
         locationRect.on('mouseout', function(){ document.body.style.cursor = 'default'; });
     }

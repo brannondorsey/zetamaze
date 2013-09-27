@@ -143,29 +143,16 @@ Maze.prototype.export = function(){
 		for(var i = 1; i < arraySize-1; i++){
 			
 			var result = $("#maze-form input#file"+i.toString());
-			//console.log(this.locations["file"+i.toString()]);
-			//
-			console.log(result.attr("id"));
-			console.log(result.attr("type"));
-			console.log();
+	
 			result.val(this.locations["file"+i.toString()].rect.getX());
 			result = result.next();
 
-			console.log(result.attr("id"));
-			console.log(result.attr("type"));
-			console.log();
 			result.val(this.locations["file"+i.toString()].rect.getY());
 			result = result.next();
 			
-			console.log(result.attr("id"));
-			console.log(result.attr("type"));
-			console.log();
 			result.val(this.locations["file"+i.toString()].mazeX);
 			result = result.next();
-
-			console.log(result.attr("id"));
-			console.log(result.attr("type"));
-			console.log();
+			
 			result.val(this.locations["file"+i.toString()].mazeY);
 			result = result.next();
 		}

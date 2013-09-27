@@ -1,3 +1,7 @@
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 function mapRange(value, low1, high1, low2, high2){
     return low2 + (high2 - low2) * ((value - low1) / (high1 - low1));
 }
