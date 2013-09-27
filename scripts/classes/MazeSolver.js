@@ -25,9 +25,7 @@ MazeSolver.prototype.isSolvable = function(){
     var startX = this.startingPoint.x;
     var startY = this.startingPoint.y;
     if(this.solve(startX, startY)) return true;
-    else{
-        return false;
-    } 
+    else return false;
 }
   
 //prints the state of the maze solver to the console

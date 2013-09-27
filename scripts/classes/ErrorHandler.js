@@ -27,25 +27,39 @@ ErrorHandler.prototype.outputErrors = function(containerSelector, tagName){
 	container.attr("visibility", "hidden");
 }
 
-ErrorHandler.prototype.errorsExist = function(){
-	return (this.errors.length > 0) ? true : false;
-}
-
-//boolean that checks if errors exist and 
+//boolean that checks if errors exist and returns true if they do
 ErrorHandler.prototype.checkErrors = function(maze, locations){
 	this.maze = maze;
 	this.locations = locations;
 	this.checkLocationValidaty(this.locations);
-	return this.errorsExist();
+	if(this.errorsExist()) return true;
+	else{ //check for more errors
+		for(var key in this.locations){
+			if(key == 'begin') continue; //skip begin because begin point doesnt need to be compared to itself
+			var solver = new MazeSolver(this.maze,
+										this.locations['begin'].mazeX,
+										this.locations['begin'].mazeY,
+										this.locations[key].mazeX,
+										this.locations[key].mazeY);
+			if(!solver.isSolvable()){
+				this.addError(key + " cannot be reached");	
+			}else console.log(key + " can be reached"); 
+		}
+		if(this.errorsExist()) return true;
+	}
+	return false; //no errors were found
 }
 
 ErrorHandler.prototype.checkLocationValidaty = function(locations){
 	for(var key in locations){
 		var location = locations[key];
-		console.log("tried");
 		if(this.maze[location.mazeY][location.mazeX] == 1){
 			this.addError("This location is not allowed");
 		}
 	}
+}
+
+ErrorHandler.prototype.errorsExist = function(){
+	return (this.errors.length > 0) ? true : false;
 }
 
