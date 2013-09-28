@@ -40,37 +40,15 @@
 		<script type="text/javascript" src="scripts/classes/ErrorHandler.js"></script>
 	</head>
 	<body>
-		<div id="container" class="canvas"></div>
+		<div class="maze-container">
+			<div id="container" class="canvas"></div>
+			<div class="error-box"></div>
+		</div>
 		<script type="text/javascript">
-			var mazeData = <?php echo $mazeData; ?>;
-			// var mazeData = {
-			// 	id: 1,
-			// 	timestame: "arbitrary",
-			// 	maze: <?php //echo file_get_contents("mazedata/mazes/maze1.json"); ?>,
-			// 	beginX: 100,
-			// 	beginY: 200,
-			// 	beginMazeX: 10,
-			// 	beginMazeY: 20,
-			// 	endX: 300,
-			// 	endY: 400,
-			// 	endMazeX: 30,
-			// 	endMazeY: 40,
-			// 	file1X: 50,
-			// 	file1Y: 250,
-			// 	file1MazeX: 5,
-			// 	file1MazeY: 25,
-			// 	file2X: 250,
-			// 	file2Y: 350,
-			// 	file2MazeX: 25,
-			// 	file2MazeY: 35
-			// }
+			var mazeData = <?php echo $mazeData; ?>
 			
 		</script>
 		<script defer="defer" type="text/javascript" src="scripts/maze.js"></script>
-		<div class="error-box">
-			<ul>
-			</ul>
-		</div>
 		<form id="maze-form" method="post" action="" onsubmit="return saveMaze()">
 			<?php 
 			$input_columns = explode(", ", API::format_comma_delimited($columns));

@@ -3,11 +3,25 @@ body{
 	margin: 20px auto;
 }
 
-div#container.canvas{
+div.maze-container{
+	position: relative;
 	margin: auto;
 	width: 800px;
 }
 
-div.error-box ul li{
-	color: 'red';
+div.error-box ul{
+	background: #ffffff;
+	color: #ff0000;
+	border: 2px solid #ff0000;
+	padding: 10px;
+	position: absolute;
+	z-index: 2;
+	top: 350px;
+	left: 300px;
+}
+
+div.error-box ul{
+	list-style-type: none;
+	display: inline-block;
+	padding: 10px 10px;
 }

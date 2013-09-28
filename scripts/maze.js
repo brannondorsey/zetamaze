@@ -62,9 +62,9 @@ function bindEvents(){
 
 function saveMaze(){
     var errorHand = new ErrorHandler(); 
-    errorHand.clearErrorBox("div.error-box ul");
+    errorHand.clearErrorBox();
     if(errorHand.checkErrors(maze.data, maze.locations)){
-       errorHand.outputErrors("div.error-box ul", "li");
+       errorHand.outputErrors();
        console.log("maze not saved");
        return false;
     }else{

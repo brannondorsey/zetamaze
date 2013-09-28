@@ -1,30 +1,27 @@
 function ErrorHandler(){
 	this.errors = [];
+	this.errorHtmlParent = $("div.maze-container div.error-box");
 }
 
 ErrorHandler.prototype.addError = function(message){
 	this.errors.push(message);
 }
 
-ErrorHandler.prototype.reset = function(containerSelector){
+ErrorHandler.prototype.reset = function(){
 	this.errors = [];
-	if(typeof containerSelector !== 'undefined'){
-		$(containerSelector).removeAttr("visibility");
-	}
 }
 
 ErrorHandler.prototype.clearErrorBox = function(containerSelector){
 	var container = $(containerSelector);
-	container.empty(); //clear content
+	this.errorHtmlParent.children("ul").remove(); //clear content
 }
 
-ErrorHandler.prototype.outputErrors = function(containerSelector, tagName){
-	var container = $(containerSelector);
+ErrorHandler.prototype.outputErrors = function(){
+	var container = this.errorHtmlParent.append("<ul></ul>").children("ul");
 	for(var i = 0; i < this.errors.length; i++){
-		var html = "<" + tagName + ">" + this.errors[i] + "</" + tagName + ">";
+		var html = "<li>" + this.errors[i] + "</li>";
 		container.append(html);
 	}
-	container.attr("visibility", "hidden");
 }
 
 //boolean that checks if errors exist and returns true if they do
@@ -41,7 +38,7 @@ ErrorHandler.prototype.checkErrors = function(maze, locations){
 										this.locations['begin'].mazeY,
 										this.locations[key].mazeX,
 										this.locations[key].mazeY);
-			if(!solver.isSolvable()) this.addError(key + " cannot be reached");	
+			if(!solver.isSolvable()) this.addError(key.capitalize() + " cannot be reached");	
 		}
 		if(this.errorsExist()) return true;
 	}
