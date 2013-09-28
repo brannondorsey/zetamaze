@@ -20,7 +20,7 @@ bindEvents();
 
 // add the layer to the stage
 stage.add(layer);
-exportMaze() //COME BACK
+// exportMaze() //COME BACK
 
 function bindEvents(){
     //bind events for each block...
@@ -31,11 +31,7 @@ function bindEvents(){
             maze.blocks[y][x].rect.on('click', function(){
                 maze.toggleBlock(this.index, layer);
                 maze.update();
-                if(errorHand.checkErrors(maze.data, maze.locations)){
-                    errorHand.outputErrors("div.error-box ul", "li");
-                }else{
-                    errorHand.reset();
-                }
+                saveMaze();
             });
 
             //on mouseover
@@ -57,23 +53,24 @@ function bindEvents(){
 
         locationRect.on('dragend', function(){ 
             maze.recalculateLocation(this.index);
-            
-            var errorHand = new ErrorHandler(); 
-            errorHand.clearErrorBox("div.error-box ul");
-            if(errorHand.checkErrors(maze.data, maze.locations)){
-               errorHand.outputErrors("div.error-box ul", "li");
-            }else{
-                errorHand.reset();
-                maze.export();
-            }
+            saveMaze();
         });
         locationRect.on('mouseover', function(){ document.body.style.cursor = 'move'; });
         locationRect.on('mouseout', function(){ document.body.style.cursor = 'default'; });
     }
 }
 
-function exportMaze(){
-    var result = maze.export();
-    console.log(result ? "maze passes" : "maze fails");
-    return result;
+function saveMaze(){
+    var errorHand = new ErrorHandler(); 
+    errorHand.clearErrorBox("div.error-box ul");
+    if(errorHand.checkErrors(maze.data, maze.locations)){
+       errorHand.outputErrors("div.error-box ul", "li");
+       console.log("maze not saved");
+       return false;
+    }else{
+        errorHand.reset();
+        maze.save();
+        console.log("maze saved");
+        return true;
+    }
 }

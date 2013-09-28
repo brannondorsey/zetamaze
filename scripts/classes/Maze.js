@@ -21,8 +21,6 @@ function Maze(maze, stageWidth, stageHeight){
 		xPos = 0;
 		yPos += this.blockSize;
 	}
-	
-	//this.locations = this.getLocations();
 }
 
 //loads the state of the maze from the database into the maze object
@@ -131,9 +129,8 @@ Maze.prototype.recalculateLocation = function(rectIndex){
 	location.recalculate(this.width, this.blockSize);
 }
 
-//checks to make sure that the maze is solvable and then exports the data to the hidden form
-Maze.prototype.export = function(){
-	if(this.isSolvable()){
+//saves the maze data to the hidden form
+Maze.prototype.save = function(){
 
 		//save the submit value because it gets changed by the below
 		var submitValue = $("#maze-form input[type='submit']").val();
@@ -174,9 +171,6 @@ Maze.prototype.export = function(){
 
 		//for some reason the value of the submit button is affected by the above code...
 		$("#maze-form input[type='submit']").val(submitValue); //COME BACK
-		return true;
-	}
-	return false;
 }
 
 //make sure the maze is solvable
@@ -193,53 +187,6 @@ Maze.prototype.isSolvable = function(){
 //------------------------------------------------------------------
 //protected methods
 
-//returns an assoc array of all of the mazes location objects
-Maze.prototype.getLocations = function(){
-	// var locations = [];
-
-	// //set config constants
-	// var config = {
-	//  	w: this.blockSize,
-	// 	h: this.blockSize,
-	//  	blockSize: this.blockSize,
-	//  	mazeSize: this.blockSize * this.width
-	// }
-
-	// //set begin location
-	// config.x = this.blockSize+10;
-	// config.y = 10;
-	// config.mazeX = 1;
-	// config.mazeY = 1;
-	// config.primaryColor = 'green'
-	// locations['begin'] = new Location(config);
-
-	// //set end location
-	// config.x = this.blockSize*8;
-	// config.y = this.blockSize*6;
-	// config.mazeX = 5;
-	// config.mazeY = 5;
-	// config.primaryColor = 'red'
-	// locations['end'] = new Location(config);
-
-	// //set begin location
-	// config.x = this.blockSize+100;
-	// config.y = this.blockSize;
-	// config.mazeX = 1;
-	// config.mazeY = 0;
-	// config.primaryColor = 'grey'
-	// locations['file1'] = new Location(config);
-
-	// //set begin location
-	// config.x = this.blockSize*3+100;
-	// config.y = this.blockSize*5;
-	// config.mazeX = 1;
-	// config.mazeY = 5;
-	// config.primaryColor = 'grey'
-	// locations['file2'] = new Location(config);
-
-	// return locations;
-}
-
 //returns an object from blocks if its rect.id matches the parameter passed
 Maze.prototype.getBlockByIndex = function(rectIndex){
 	for(var y = 0; y < this.blocks.length; y++){
@@ -250,19 +197,5 @@ Maze.prototype.getBlockByIndex = function(rectIndex){
 		}
 	}
 }
-
-//exports the state of the maze walls in a 2D JSON array
-Maze.prototype.getNewMazeData = function(){
-	// var mazeData = [];
-	// for(var y = 0; y < this.blocks.length; y++){
-	// 	mazeData[y] = [];
-	// 	for(var x = 0; x < this.blocks[0].length; x++){
-	// 		var block = this.blocks[y][x];
-	// 		mazeData[y][x] = block.state ? 1 : 0;  
-	// 	}
-	// }
-	// return JSON.stringify(mazeData);
-}
-
 
 

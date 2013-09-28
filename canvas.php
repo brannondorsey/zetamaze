@@ -71,7 +71,7 @@
 			<ul>
 			</ul>
 		</div>
-		<form id="maze-form" method="post" action="" onsubmit="return exportMaze()">
+		<form id="maze-form" method="post" action="" onsubmit="return saveMaze()">
 			<?php 
 			$input_columns = explode(", ", API::format_comma_delimited($columns));
 			unset($input_columns[0]);
