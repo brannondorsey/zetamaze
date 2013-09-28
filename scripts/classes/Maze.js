@@ -84,6 +84,21 @@ Maze.prototype.initLocations = function(mazeData){
 	this.locations['file4'] = new Location(config);
 }
 
+//recalculates the state of the maze and returns the maze as a 
+//2D array string
+Maze.prototype.update = function(){
+	var mazeData = [];
+	for(var y = 0; y < this.blocks.length; y++){
+		mazeData[y] = [];
+		for(var x = 0; x < this.blocks[0].length; x++){
+			var block = this.blocks[y][x];
+			mazeData[y][x] = block.state ? 1 : 0;  
+		}
+	}
+	this.data = mazeData;
+	return JSON.stringify(this.data);
+}
+
 Maze.prototype.draw = function(layer){
 	for(var y = 0; y < this.blocks.length; y++){
 		for(var x = 0; x < this.blocks[0].length; x++){
@@ -124,7 +139,7 @@ Maze.prototype.export = function(){
 		var submitValue = $("#maze-form input[type='submit']").val();
 		
 		//maze data
-		$("#maze-form input[name='maze']").val(this.getNewMazeData());
+		$("#maze-form input[name='maze']").val(this.update());
 
 		//begin
 		$("#maze-form input[name='beginX']").val(this.locations["begin"].rect.getX());
@@ -238,15 +253,15 @@ Maze.prototype.getBlockByIndex = function(rectIndex){
 
 //exports the state of the maze walls in a 2D JSON array
 Maze.prototype.getNewMazeData = function(){
-	var mazeData = [];
-	for(var y = 0; y < this.blocks.length; y++){
-		mazeData[y] = [];
-		for(var x = 0; x < this.blocks[0].length; x++){
-			var block = this.blocks[y][x];
-			mazeData[y][x] = block.state ? 1 : 0;  
-		}
-	}
-	return JSON.stringify(mazeData);
+	// var mazeData = [];
+	// for(var y = 0; y < this.blocks.length; y++){
+	// 	mazeData[y] = [];
+	// 	for(var x = 0; x < this.blocks[0].length; x++){
+	// 		var block = this.blocks[y][x];
+	// 		mazeData[y][x] = block.state ? 1 : 0;  
+	// 	}
+	// }
+	// return JSON.stringify(mazeData);
 }
 
 

@@ -41,9 +41,7 @@ ErrorHandler.prototype.checkErrors = function(maze, locations){
 										this.locations['begin'].mazeY,
 										this.locations[key].mazeX,
 										this.locations[key].mazeY);
-			if(!solver.isSolvable()){
-				this.addError(key + " cannot be reached");	
-			}else console.log(key + " can be reached"); 
+			if(!solver.isSolvable()) this.addError(key + " cannot be reached");	
 		}
 		if(this.errorsExist()) return true;
 	}

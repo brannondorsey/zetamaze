@@ -30,6 +30,12 @@ function bindEvents(){
             //on click
             maze.blocks[y][x].rect.on('click', function(){
                 maze.toggleBlock(this.index, layer);
+                maze.update();
+                if(errorHand.checkErrors(maze.data, maze.locations)){
+                    errorHand.outputErrors("div.error-box ul", "li");
+                }else{
+                    errorHand.reset();
+                }
             });
 
             //on mouseover
