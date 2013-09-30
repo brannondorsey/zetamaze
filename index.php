@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<script language="javascript" type="text/javascript" src="scripts/maze_solver_2.js"></script>
+		<script language="javascript" type="text/javascript" src="scripts/canvas/maze_solver_2.js"></script>
 		<script type="text/javascript">
 			var maze =
 			   [[1,0,1,1,1,1,1,1,1],

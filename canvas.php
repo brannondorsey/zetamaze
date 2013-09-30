@@ -31,13 +31,13 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="styles/base.css"g>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
-		<script type="text/javascript" src="scripts/kinetic-v4.7.0.min.js">//load kinetic</script>
-		<script type="text/javascript" src="scripts/helpers.js"></script>
-		<script type="text/javascript" src="scripts/classes/MazeSolver.js"></script>
-		<script type="text/javascript" src="scripts/classes/Block.js"></script>
-		<script type="text/javascript" src="scripts/classes/Maze.js"></script>
-		<script type="text/javascript" src="scripts/classes/Location.js"></script>
-		<script type="text/javascript" src="scripts/classes/ErrorHandler.js"></script>
+		<script type="text/javascript" src="scripts/canvas/kinetic-v4.7.0.min.js">//load kinetic</script>
+		<script type="text/javascript" src="scripts/canvas/helpers.js"></script>
+		<script type="text/javascript" src="scripts/canvas/classes/MazeSolver.js"></script>
+		<script type="text/javascript" src="scripts/canvas/classes/Block.js"></script>
+		<script type="text/javascript" src="scripts/canvas/classes/Maze.js"></script>
+		<script type="text/javascript" src="scripts/canvas/classes/Location.js"></script>
+		<script type="text/javascript" src="scripts/canvas/classes/ErrorHandler.js"></script>
 	</head>
 	<body>
 		<div class="maze-container">
@@ -48,7 +48,7 @@
 			var mazeData = <?php echo $mazeData; ?>
 			
 		</script>
-		<script defer="defer" type="text/javascript" src="scripts/maze.js"></script>
+		<script defer="defer" type="text/javascript" src="scripts/canvas/maze.js"></script>
 		<form id="maze-form" method="post" action="" onsubmit="return saveMaze()">
 			<?php 
 			$input_columns = explode(", ", API::format_comma_delimited($columns));
