@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>My first Three.js app</title>
+		<style>canvas { width: 100%; height: 100% }</style>
+	</head>
+	<body>
+		<script src="scripts/three/three.js"></script>
+		<script src="scripts/three/classes/Maze3D.js"></script>
+		<script src="scripts/three/classes/Block3D.js"></script>
+		<script src="scripts/three/classes/controls/PointerLockControls.js"></script>
+		<script>
+
+			var scene = new THREE.Scene();
+			
+			var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+
+			var mazeData = [[1,1,1,1,1],
+							[1,0,0,1,1],
+							[1,1,0,0,1],
+							[1,1,0,0,1],
+							[1,1,1,1,1]];
+			var block3Dsize = 1;
+			var maze3D = new Maze3D(mazeData, block3Dsize);
+			maze3D.draw(scene);
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			document.body.appendChild(renderer.domElement);
+
+
+			camera.position.z = 10;
+			camera.position.y = 3;
+
+			// controls = new THREE.FirstPersonControls(camera);
+   //              controls.movementSpeed = 70;
+   //              controls.lookSpeed = 0.05;
+   //              controls.noFly = false;
+   //              controls.lookVertical = false;
+   			// controls = new THREE.PointerLockControls(camera);
+   			// scene.add(controls.getObject());
+
+			var render = function () {
+				requestAnimationFrame(render);
+				//controls.update();
+				renderer.render(scene, camera);
+			};
+
+			render();
+		</script>
+	</body>
+</html>
