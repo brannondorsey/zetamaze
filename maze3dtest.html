@@ -1,0 +1,170 @@
+<html>
+	<head>
+		<title>My first Three.js app</title>
+		<style>canvas { width: 100%; height: 100% }</style>
+		<script src="scripts/three/three.js"></script>
+		<script src="scripts/jquery-1.10.2.min.js"></script>
+		<script src="scripts/three/classes/Maze3D.js"></script>
+		<script src="scripts/three/classes/Block3D.js"></script>
+		<script src="scripts/three/classes/controls/PointerLockControls.js"></script>
+	</head>
+	<body>
+		<div id="blocker">
+
+			<div id="instructions">
+				<span style="font-size:40px">Click to play</span>
+				<br />
+				(W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)
+			</div>
+
+		</div>
+
+		<script>
+
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+			var controls = new THREE.PointerLockControls(camera);
+			var ray = new THREE.Raycaster();
+			var renderer = new THREE.WebGLRenderer();
+			var clock = new THREE.Clock();
+			var objects = [];
+			var block3Dsize = 1;
+
+			var blocker = document.getElementById( 'blocker' );
+			var instructions = document.getElementById( 'instructions' );
+
+			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
+
+			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+
+			if ( havePointerLock ) {
+
+				var element = document.body;
+
+				var pointerlockchange = function ( event ) {
+
+					if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
+						controls.enabled = true;
+						blocker.style.display = 'none';
+					} else {
+						controls.enabled = false;
+						blocker.style.display = '-webkit-box';
+						blocker.style.display = '-moz-box';
+						blocker.style.display = 'box';
+						instructions.style.display = '';
+					}
+				}
+
+				var pointerlockerror = function ( event ) {
+
+					instructions.style.display = '';
+				}
+
+				// Hook pointer lock state change events
+				document.addEventListener( 'pointerlockchange', pointerlockchange, false );
+				document.addEventListener( 'mozpointerlockchange', pointerlockchange, false );
+				document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false );
+
+				document.addEventListener( 'pointerlockerror', pointerlockerror, false );
+				document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
+				document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
+
+				instructions.addEventListener( 'click', function ( event ) {
+
+					instructions.style.display = 'none';
+
+					// Ask the browser to lock the pointer
+					element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+
+					if ( /Firefox/i.test( navigator.userAgent ) ) {
+
+						var fullscreenchange = function ( event ) {
+							if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
+
+								document.removeEventListener( 'fullscreenchange', fullscreenchange );
+								document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
+								element.requestPointerLock();
+							}
+						}
+
+						document.addEventListener( 'fullscreenchange', fullscreenchange, false );
+						document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
+
+						element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+
+						element.requestFullscreen();
+
+					} else {
+
+						element.requestPointerLock();
+					}
+
+				}, false );
+
+			} else {
+
+				instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
+			}
+
+			$.ajax({
+				url: "http://localhost:8888/zeta/api.php",
+				type: "get",
+				dataType: "json",
+				error: function(err){
+					console.log(err);
+				},
+				success: function(response){
+					
+					var mazeData = response.data[0].maze;
+					mazeData = JSON.parse(mazeData);
+					var maze3D = new Maze3D(mazeData, block3Dsize);
+					maze3D.draw(scene);
+
+					//do it!
+					init();
+					animate();
+				}
+			});
+			
+
+			function init(){
+
+				renderer.setSize(window.innerWidth, window.innerHeight);
+				document.body.appendChild(renderer.domElement);
+
+				// camera.position.z = 28;
+				// camera.position.y = 5;
+				// camera.position.x = 8;
+				
+				scene.add( controls.getObject() );
+				ray.ray.direction.set( 0, -1, 0 );
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				controls.isOnObject( false );
+				ray.ray.origin.copy( controls.getObject().position );
+				ray.ray.origin.y -= 10;
+
+				var intersections = ray.intersectObjects( objects );
+
+				if ( intersections.length > 0 ) {
+
+					var distance = intersections[ 0 ].distance;
+
+					if ( distance > 0 && distance < 10 ) {
+
+						controls.isOnObject( true );
+					}
+				}
+
+				controls.update( clock.getDelta() );
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+	</body>
+</html>

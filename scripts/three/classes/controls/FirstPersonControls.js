@@ -56,8 +56,6 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 
 	}
 
-	//
-
 	this.handleResize = function () {
 
 		if ( this.domElement === document ) {

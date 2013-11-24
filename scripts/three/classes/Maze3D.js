@@ -28,7 +28,6 @@ Maze3D.prototype.draw = function(scene){
 		for(var x = 0; x < this.blocks3D[0].length; x++){
 			var block3D = this.blocks3D[z][x];
 			if(typeof block3D !== 'undefined'){
-				console.log(block3D);
 				scene.add(block3D.cube);
 			}
 		}
