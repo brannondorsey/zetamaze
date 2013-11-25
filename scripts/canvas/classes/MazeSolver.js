@@ -99,9 +99,52 @@ MazeSolver.prototype.getCopy = function(maze){
     return arrayToReturn;
 }
 
-//
-MazeSolver.prototype._getWallFaceData = function(mazeTravelData){
 
+MazeSolver.prototype._getWallFaceData = function(mazeTravelData){
+    //get a copy of the maze so that we can overwrite the 1s and 0s
+    //with arrays containting the image names of their textures
+    var wallFaceData = this.getCopy(this.maze);
+    
+    //loop through each wall/rect in the maze
+    for(var y = 0; y < this.mazeHeight; y++){
+        for(var x = 0; x < this.mazeWidth; x++){
+            
+
+            var fillerImage = 0;
+            wallFaceData[y][x] = [fillerImage,
+                                  fillerImage,
+                                  fillerImage,
+                                  fillerImage,
+                                  fillerImage,
+                                  fillerImage];
+
+            for(var i = 0; i < mazeTravelData.length; i++){
+               
+                var travelDataObj = mazeTravelData[i];
+                // console.log("dir is " + travelDataObj.dir);
+                // console.log("i is " + i);
+                // console.log(travelDataObj);
+                //if this x and y equal the x and y to the right of this travelDataObj
+                if(travelDataObj.rightX == x &&
+                   travelDataObj.rightY == y){
+
+                    //calculate face index using dir
+                    var faceIndex = this._getFaceIndex(travelDataObj.dir);
+                    //console.log(faceIndex);
+
+                    //overwrite filler image with imageIndex
+                    var nextImage = travelDataObj.imageIndex;
+                    wallFaceData[y][x][faceIndex] = nextImage;
+
+                    //remove this travelDataObj from mazeTravelData array
+                    mazeTravelData.splice(i, 1);
+                }
+            }
+        }
+    }
+   
+   //console.log(wallFaceData);
+   return wallFaceData;
 }
 
 //returns an array of mazeTravelData objs representing each location and dir
@@ -157,8 +200,6 @@ MazeSolver.prototype._getMazeTravelData = function(){
         var forwardX = forward.x;
         var forwardY = forward.y;
 
-        console.log(currentX + ", " + currentY);
-        console.log(currentDir);
         var right = this._getForward(currentX, currentY, currentDir + 1);
         var rightX = right.x;
         var rightY = right.y;
@@ -207,10 +248,13 @@ MazeSolver.prototype._getMazeTravelData = function(){
             // console.log("This maze uses " + imageIndex + " images");
             done = true;
         }else if(wallToRight){
+            var blockToRight = this._getForward(currentX, currentY, currentDir + 1);
             mazeTravelData.push({
                 imageIndex: imageIndex,
-                x: currentX,
-                y: currentY,
+                currentX: currentX,
+                currentY: currentY,
+                rightX: blockToRight.x,
+                rightY: blockToRight.y,
                 dir: currentDir
             });
             imageIndex++;
@@ -275,4 +319,10 @@ MazeSolver.prototype._getForward = function(currentX, currentY, currentDir){
             forwardY   = currentY;
         }
         return new Point(forwardX, forwardY);
+}
+
+//returns an index 1-6 that corresponds with the in threejs
+MazeSolver.prototype._getFaceIndex = function(dir){
+    var faceIndexes = [4, 1, 3, 6]; //not sure if this is right
+    return faceIndexes[dir - 1] - 1;
 }

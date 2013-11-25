@@ -2,6 +2,7 @@
 $columns = "id,
 			timestamp,
 			maze,
+			textureData,
 			beginX,
 			beginY,
 			beginMazeX,
