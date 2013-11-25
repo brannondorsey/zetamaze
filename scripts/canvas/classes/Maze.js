@@ -80,6 +80,9 @@ Maze.prototype.initLocations = function(mazeData){
 	config.mazeY = parseInt(mazeData.file4MazeY);
 	config.primaryColor = 'grey'
 	this.locations['file4'] = new Location(config);
+
+	//test
+	this.getTextureData();
 }
 
 //recalculates the state of the maze and returns the maze as a 
@@ -137,6 +140,7 @@ Maze.prototype.save = function(){
 		
 		//maze data
 		$("#maze-form input[name='maze']").val(this.update());
+		$("#maze-form input[name='textureData']").val(JSON.stringify(this.getTextureData()));
 
 		//begin
 		$("#maze-form input[name='beginX']").val(this.locations["begin"].rect.getX());
@@ -175,13 +179,22 @@ Maze.prototype.save = function(){
 
 //make sure the maze is solvable
 Maze.prototype.isSolvable = function(){
-	solver = new MazeSolver(this.data, 
+	var solver = new MazeSolver(this.data, 
 							this.locations['begin'].mazeX,
 							this.locations['begin'].mazeY,
 							this.locations['end'].mazeX,
 							this.locations['end'].mazeY)
 	//solver.print();
 	return solver.isSolvable();
+}
+
+Maze.prototype.getTextureData = function(){
+	var solver = new MazeSolver(this.data,
+								this.locations['begin'].mazeX,
+								this.locations['begin'].mazeY,
+								this.locations['end'].mazeX,
+								this.locations['end'].mazeY);
+	return solver.getTextureData();
 }
 
 //------------------------------------------------------------------

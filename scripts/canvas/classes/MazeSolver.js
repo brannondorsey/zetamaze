@@ -13,6 +13,11 @@ function MazeSolver(data, beginMazeX, beginMazeY, endMazeX, endMazeY){
     this.wall = 1;
     this.free = 0;
     this.player = 2;
+
+    this.up = 1;
+    this.right = 2;
+    this.down = 3;
+    this.left = 4;
 }
 
 MazeSolver.prototype.isSolvable = function(){
@@ -80,6 +85,10 @@ MazeSolver.prototype.solve = function(x, y)
     return false;
 }
 
+MazeSolver.prototype.getTextureData = function(){
+    var mazeTravelData = this._getMazeTravelData();
+    return this._getWallFaceData(mazeTravelData);
+}
 
 //because 2D arrays are passed by reference this function copies the maze
 MazeSolver.prototype.getCopy = function(maze){
@@ -88,4 +97,182 @@ MazeSolver.prototype.getCopy = function(maze){
         arrayToReturn[i] = maze[i].slice();
     }
     return arrayToReturn;
+}
+
+//
+MazeSolver.prototype._getWallFaceData = function(mazeTravelData){
+
+}
+
+//returns an array of mazeTravelData objs representing each location and dir
+//where a wall segment is to the right of dir
+MazeSolver.prototype._getMazeTravelData = function(){
+
+    var mazeTravelData = [];
+    var done = false;
+    var imageIndex = 1;
+
+    var startX = this.startingPoint.x;
+    var startY = this.startingPoint.y;
+    var currentX;
+    var currentY;
+    var startDir;
+    var currentDir;
+
+    //sets the initial direction only
+   if(this.maze[startY - 1][startX] == this.free) {  
+         startDir = this.up; 
+   }else if(this.maze[startY][startX + 1] == this.free) {
+         startDir = this.right; 
+   }else if(this.maze[startY + 1][startX] == this.free) {
+         startDir = this.down; 
+   }else if(this.maze[startY][startX - 1] == this.free) {
+         startDir = this.left;
+   }
+
+   currentDir = startDir;
+   currentX = startX;
+   currentY = startY;
+   var test = 0;
+
+    while(!done){
+        
+        /*
+        Three possibilities:
+        1. There is a wall to your right and no wall in front of you.
+        2. There is a wall to your right and a wall in front of you.
+        3. There is no wall to your right.
+        */
+       
+        var rightX;
+        var rightY;
+        var forwardX;
+        var forwardY;
+        var targetX;
+        var targetY;
+        var targetDir;
+        var wallToRight = true;
+
+        var forward = this._getForward(currentX, currentY, currentDir);
+        var forwardX = forward.x;
+        var forwardY = forward.y;
+
+        console.log(currentX + ", " + currentY);
+        console.log(currentDir);
+        var right = this._getForward(currentX, currentY, currentDir + 1);
+        var rightX = right.x;
+        var rightY = right.y;
+    
+        //1. there is a wall to your right and no wall in front of you
+        if(this.maze[rightY][rightX] == this.wall &&
+           this.maze[forwardY][forwardX] == this.free){
+            //maintain the direction and walk forward
+            // console.log("1. There is a wall to my right and no wall in front of me.");
+            // console.log("I am maintaining my direction and walking forward.");
+            targetDir = currentDir;
+            targetX = forwardX;
+            targetY = forwardY;
+        }//2. there is a wall to your right and a wall in front of you
+        else if(this.maze[rightY][rightX] == this.wall &&
+                this.maze[forwardY][forwardX] == this.wall){
+            //maintain the position and change the direction
+            // console.log("2. There is a wall to my right and a wall in front of me.");
+            // console.log("I am rotating left only.");
+            targetDir = currentDir - 1; //turn left
+            if(targetDir < 1) targetDir = 4;
+
+            targetX = currentX;
+            targetY = currentY;
+        }//3. there is no wall to your right
+        else{
+            //turn right and walk 1 position forward
+            // console.log("3. There is no wall to my right.");
+            // console.log("I am rotating right and then walking forward.");
+            targetDir = currentDir + 1;
+            if(targetDir > 4) targetDir = 1;
+            //walk forward
+
+            targetX = rightX;
+            targetY = rightY;
+            wallToRight = false;
+        }
+        console.log("");
+
+        //if we all faces have been indexed
+        if(imageIndex > 1 && 
+           currentX == startX &&
+           currentY == startY &&
+           currentDir == startDir){
+            // console.log("I finished!!!");
+            // console.log("This maze uses " + imageIndex + " images");
+            done = true;
+        }else if(wallToRight){
+            mazeTravelData.push({
+                imageIndex: imageIndex,
+                x: currentX,
+                y: currentY,
+                dir: currentDir
+            });
+            imageIndex++;
+        }
+
+        currentX = targetX;
+        currentY = targetY;
+        currentDir = targetDir;
+        
+        //prevent a browser crashing infinite loop if I mess something up
+        test++;
+        if(test > 10000) done = true;
+            
+    }
+
+    // //print the findings
+    // for(var obj in mazeTravelData){
+    //     var dirString = "";
+
+    //     switch(mazeTravelData[obj].dir){
+    //         case 1:
+    //             dirString = "up";
+    //             break;
+    //         case 2:
+    //             dirString = "right";
+    //             break;
+    //         case 3:
+    //             dirString = "down";
+    //             break;
+    //         case 4:
+    //             dirString = "left";
+    //             break;
+    //     }
+
+    //     console.log("direction: " + dirString);
+    //     console.log(mazeTravelData[obj].x + ", " + mazeTravelData[obj].y);
+    //     console.log("");
+    // }
+    return mazeTravelData;
+}
+
+//returns a Point obj
+MazeSolver.prototype._getForward = function(currentX, currentY, currentDir){
+        //figure out the x and y positions of the location in front
+        //of you and the location to your right
+        if(currentDir > 4) currentDir = 1;
+        else if (currentDir < 1) currentDir = 4;
+
+        var forwardX;
+        var forwardY;
+        if(currentDir == this.up){
+            forwardX   = currentX;
+            forwardY   = currentY - 1;
+        }else if(currentDir == this.right){
+            forwardX   = currentX + 1;
+            forwardY   = currentY;
+        }else if(currentDir == this.down){
+            forwardX   = currentX;
+            forwardY   = currentY + 1;
+        }else if(currentDir == this.left){
+            forwardX   = currentX - 1;
+            forwardY   = currentY;
+        }
+        return new Point(forwardX, forwardY);
 }
