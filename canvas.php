@@ -32,7 +32,7 @@
 		<link rel="stylesheet" type="text/css" href="styles/base.css"g>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
 		<script type="text/javascript" src="scripts/canvas/kinetic-v4.7.0.min.js">//load kinetic</script>
-		<script type="text/javascript" src="scripts/canvas/helpers.js"></script>
+		<script type="text/javascript" src="scripts/helpers.js"></script>
 		<script type="text/javascript" src="scripts/canvas/classes/MazeSolver.js"></script>
 		<script type="text/javascript" src="scripts/canvas/classes/Block.js"></script>
 		<script type="text/javascript" src="scripts/canvas/classes/Maze.js"></script>

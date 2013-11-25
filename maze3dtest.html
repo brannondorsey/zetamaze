@@ -4,6 +4,7 @@
 		<style>canvas { width: 100%; height: 100% }</style>
 		<script src="scripts/three/three.js"></script>
 		<script src="scripts/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="scripts/helpers.js"></script>
 		<script src="scripts/three/classes/Maze3D.js"></script>
 		<script src="scripts/three/classes/Block3D.js"></script>
 		<script src="scripts/three/classes/controls/PointerLockControls.js"></script>
@@ -114,11 +115,11 @@
 					console.log(err);
 				},
 				success: function(response){
-					
-					var mazeData = response.data[0].maze;
-					mazeData = JSON.parse(mazeData);
-					var maze3D = new Maze3D(mazeData, block3Dsize);
-					maze3D.draw(scene);
+					var mazeObj = response.data[0];
+					var mazeData = JSON.parse(mazeObj.maze);
+					var textureData = JSON.parse(mazeObj.textureData);
+					var maze3D = new Maze3D(mazeData, block3Dsize, textureData, "test_images/");
+					maze3D.addToScene(scene);
 
 					//do it!
 					init();
@@ -128,7 +129,9 @@
 			
 
 			function init(){
-
+				var directionalLight = new THREE.DirectionalLight(0xffffff);
+			    directionalLight.position.set(1, 1, 1).normalize();
+			    scene.add(directionalLight);
 				renderer.setSize(window.innerWidth, window.innerHeight);
 				document.body.appendChild(renderer.domElement);
 				

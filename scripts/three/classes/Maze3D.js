@@ -1,8 +1,15 @@
-function Maze3D(maze, block3DSize){
+function Maze3D(maze, block3DSize, textureData, pathToImagesFolder){
+	
+	this.pathToImagesFolder = pathToImagesFolder;
+	this.fillerImage = "filler_image.png";
+	this.imagePrefix = "test_image_";
+	this.imageType = ".png";
+
 	this.data = maze;
 	this.width = maze[0].length;
 	this.height = maze.length;
 	this.block3DSize = block3DSize;
+	this.textureData = textureData;
 
 	//construct maze
 	this.blocks3D = [];
@@ -15,7 +22,14 @@ function Maze3D(maze, block3DSize){
 		for(var x = 0; x < this.width; x++){
 			var index = x.toString()+","+z.toString();
 			var state = (maze[z][x] == 1) ? true: false;
-			if(state) this.blocks3D[z][x] = new Block3D(xPos, yPos, zPos, this.block3DSize, this.block3DSize, this.block3DSize);
+			var blockTextureData = this.textureData[z][x];
+			var textureNames = [];
+			for(var i = 0; i < blockTextureData.length; i++){
+				if (blockTextureData[i] != 0) {
+					textureNames[i] = this.pathToImagesFolder + this.imagePrefix + zeroPad(blockTextureData[i], 4) + this.imageType;
+				}else textureNames[i] = 0;	
+			}
+			if(state) this.blocks3D[z][x] = new Block3D(xPos, yPos, zPos, this.block3DSize, this.block3DSize, this.block3DSize, textureNames);
 			xPos += this.block3DSize;
 		}
 		xPos = 0;
@@ -23,7 +37,8 @@ function Maze3D(maze, block3DSize){
 	}
 }
 
-Maze3D.prototype.draw = function(scene){
+//this should probably be init()
+Maze3D.prototype.addToScene = function(scene){
 	for(var z = 0; z < this.blocks3D.length; z++){
 		for(var x = 0; x < this.blocks3D[0].length; x++){
 			var block3D = this.blocks3D[z][x];

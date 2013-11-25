@@ -323,6 +323,6 @@ MazeSolver.prototype._getForward = function(currentX, currentY, currentDir){
 
 //returns an index 1-6 that corresponds with the in threejs
 MazeSolver.prototype._getFaceIndex = function(dir){
-    var faceIndexes = [4, 1, 3, 6]; //not sure if this is right
-    return faceIndexes[dir - 1] - 1;
+    var faceIndexes = [5, 3, 2, 4]; //not sure if this is right
+    return faceIndexes[dir - 1];
 }
