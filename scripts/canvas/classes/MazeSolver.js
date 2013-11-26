@@ -321,8 +321,9 @@ MazeSolver.prototype._getForward = function(currentX, currentY, currentDir){
         return new Point(forwardX, forwardY);
 }
 
-//returns an index 1-6 that corresponds with the in threejs
+//returns an index 0-5 that corresponds with the material face index in threejs
 MazeSolver.prototype._getFaceIndex = function(dir){
-    var faceIndexes = [5, 3, 2, 4]; //not sure if this is right
+    console.log(dir);
+    var faceIndexes = [1, 5, 0, 4]; //[up, right, down, left] [1, 5, 0, 4]
     return faceIndexes[dir - 1];
 }
