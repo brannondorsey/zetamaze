@@ -87,6 +87,18 @@ MazeSolver.prototype.solve = function(x, y)
 
 MazeSolver.prototype.getTextureData = function(){
     var mazeTravelData = this._getMazeTravelData();
+    for(var i = 0; i < mazeTravelData.length; i++){
+               
+        var travelDataObj = mazeTravelData[i];
+        if(i == 0 ||
+           i == 1){
+            console.log("index: " + travelDataObj.imageIndex);
+            console.log("currentxy: " + travelDataObj.currentX + ", " + travelDataObj.currentY);
+            console.log("rightxy: " + travelDataObj.rightX + ", " + travelDataObj.rightY);
+            console.log("direction: " + travelDataObj.dir);
+            console.log("");
+        }
+    }
     return this._getWallFaceData(mazeTravelData);
 }
 
@@ -104,26 +116,24 @@ MazeSolver.prototype._getWallFaceData = function(mazeTravelData){
     //get a copy of the maze so that we can overwrite the 1s and 0s
     //with arrays containting the image names of their textures
     var wallFaceData = this.getCopy(this.maze);
+    var testArray = [];
     
     //loop through each wall/rect in the maze
     for(var y = 0; y < this.mazeHeight; y++){
         for(var x = 0; x < this.mazeWidth; x++){
             
 
-            var fillerImage = 0;
-            wallFaceData[y][x] = [fillerImage,
-                                  fillerImage,
-                                  fillerImage,
-                                  fillerImage,
-                                  fillerImage,
-                                  fillerImage];
+            wallFaceData[y][x] = [0, 0, 0, 0, 0, 0];
 
             for(var i = 0; i < mazeTravelData.length; i++){
                
                 var travelDataObj = mazeTravelData[i];
-                // console.log("dir is " + travelDataObj.dir);
-                // console.log("i is " + i);
-                // console.log(travelDataObj);
+                
+                if(travelDataObj.imageIndex == 1 ||
+                   travelDataObj.imageIndex == 2){
+                    console.log("imageIndex " + travelDataObj.imageIndex + ": " + travelDataObj.rightX + ", " + travelDataObj.rightY);
+                }
+
                 //if this x and y equal the x and y to the right of this travelDataObj
                 if(travelDataObj.rightX == x &&
                    travelDataObj.rightY == y){
@@ -131,10 +141,18 @@ MazeSolver.prototype._getWallFaceData = function(mazeTravelData){
                     //calculate face index using dir
                     var faceIndex = this._getFaceIndex(travelDataObj.dir);
                     //console.log(faceIndex);
-
+                    
                     //overwrite filler image with imageIndex
                     var nextImage = travelDataObj.imageIndex;
                     wallFaceData[y][x][faceIndex] = nextImage;
+                    testArray.push(nextImage);
+
+                    // wallFaceData[y][x][0] = 1;
+                    // wallFaceData[y][x][1] = 2;
+                    // wallFaceData[y][x][2] = 3;
+                    // wallFaceData[y][x][3] = 4;
+                    // wallFaceData[y][x][4] = 5;
+                    // wallFaceData[y][x][5] = 6;
 
                     //remove this travelDataObj from mazeTravelData array
                     mazeTravelData.splice(i, 1);
@@ -142,9 +160,12 @@ MazeSolver.prototype._getWallFaceData = function(mazeTravelData){
             }
         }
     }
-   
-   //console.log(wallFaceData);
-   return wallFaceData;
+
+    console.log(mazeTravelData);
+    // testArray = testArray.sort(function (a,b) {return a - b;});
+    // console.log(testArray);
+    
+    return wallFaceData;
 }
 
 //returns an array of mazeTravelData objs representing each location and dir
@@ -237,8 +258,7 @@ MazeSolver.prototype._getMazeTravelData = function(){
             targetY = rightY;
             wallToRight = false;
         }
-        console.log("");
-
+        
         //if we all faces have been indexed
         if(imageIndex > 1 && 
            currentX == startX &&
@@ -246,19 +266,32 @@ MazeSolver.prototype._getMazeTravelData = function(){
            currentDir == startDir){
             // console.log("I finished!!!");
             // console.log("This maze uses " + imageIndex + " images");
-            done = true;
+           done = true;
         }else if(wallToRight){
-            var blockToRight = this._getForward(currentX, currentY, currentDir + 1);
+            //var blockToRight = this._getForward(currentX, currentY, currentDir + 1);
             mazeTravelData.push({
                 imageIndex: imageIndex,
                 currentX: currentX,
                 currentY: currentY,
-                rightX: blockToRight.x,
-                rightY: blockToRight.y,
+                rightX: rightX,//blockToRight.x,
+                rightY: rightY,//blockToRight.y,
                 dir: currentDir
             });
             imageIndex++;
         }
+        // else{
+        //     console.log("got in here");
+        //     var blockToRight = this._getForward(targetX, targetY, targetDir + 1);
+        //     mazeTravelData.push({
+        //         imageIndex: imageIndex,
+        //         currentX: targetX,
+        //         currentY: targetY,
+        //         rightX: blockToRight.x,
+        //         rightY: blockToRight.y,
+        //         dir: targetDir
+        //     });
+        //     imageIndex++;
+        // }
 
         currentX = targetX;
         currentY = targetY;
@@ -323,7 +356,6 @@ MazeSolver.prototype._getForward = function(currentX, currentY, currentDir){
 
 //returns an index 0-5 that corresponds with the material face index in threejs
 MazeSolver.prototype._getFaceIndex = function(dir){
-    console.log(dir);
     var faceIndexes = [1, 5, 0, 4]; //[up, right, down, left] [1, 5, 0, 4]
     return faceIndexes[dir - 1];
 }

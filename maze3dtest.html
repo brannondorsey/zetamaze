@@ -23,13 +23,13 @@
 		<script>
 
 			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+			var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 35);
 			var controls = new THREE.PointerLockControls(camera);
 			var ray = new THREE.Raycaster();
 			var renderer = new THREE.WebGLRenderer();
 			var clock = new THREE.Clock();
 			var objects = [];
-			var block3Dsize = 1;
+			var block3Dsize = 5;
 
 			var blocker = document.getElementById( 'blocker' );
 			var instructions = document.getElementById( 'instructions' );
@@ -129,9 +129,10 @@
 			
 
 			function init(){
-				var directionalLight = new THREE.DirectionalLight(0xffffff);
-			    directionalLight.position.set(1, 1, 1).normalize();
-			    scene.add(directionalLight);
+			    
+				var hemisphereLight = new THREE.HemisphereLight(0xffffff);
+			    hemisphereLight.position.set(1, 1, 1).normalize();
+			    scene.add(hemisphereLight);
 				renderer.setSize(window.innerWidth, window.innerHeight);
 				document.body.appendChild(renderer.domElement);
 				
