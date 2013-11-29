@@ -147,15 +147,9 @@ MazeSolver.prototype._getWallFaceData = function(mazeTravelData){
                     wallFaceData[y][x][faceIndex] = nextImage;
                     testArray.push(nextImage);
 
-                    // wallFaceData[y][x][0] = 1;
-                    // wallFaceData[y][x][1] = 2;
-                    // wallFaceData[y][x][2] = 3;
-                    // wallFaceData[y][x][3] = 4;
-                    // wallFaceData[y][x][4] = 5;
-                    // wallFaceData[y][x][5] = 6;
-
                     //remove this travelDataObj from mazeTravelData array
                     mazeTravelData.splice(i, 1);
+                    i--; //<-- this is really important
                 }
             }
         }
