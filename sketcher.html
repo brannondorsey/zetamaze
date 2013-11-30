@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name=viewport content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+<title>Sketch Pad</title>
+<script src="scripts/canvas/sketcher/smooth.js"></script>
+
+<script src="scripts/jquery-1.10.2.min.js"></script>
+
+<script src="scripts/canvas/sketcher/classes/SketchPad.js"></script>
+<script src="scripts/canvas/sketcher/classes/MarkerMaker.js"></script>
+<script src="scripts/farbtastic.min.js"></script>
+
+<link rel="stylesheet" href="styles/bootstrap.css" />
+<link rel="stylesheet" href="styles/styles.css" />
+<link rel="stylesheet" href="styles/farbtastic.css" />
+<style>
+#tip_picker {
+  border:1px solid gray;
+  width:32px;
+}
+#tip_picker img {
+  border:1px solid black;
+}
+#tip_picker img:hover {
+  border:1px solid orange;
+}
+
+#eraser_picker {
+  border:1px solid gray;
+  width:32px;
+}
+#eraser_picker img {
+  border:1px solid black;
+}
+#eraser_picker img:hover {
+  border:1px solid orange;
+}
+
+</style>
+
+<script>
+var sketcher = null;
+var brush = null;
+
+function hideMenus() {
+  $('#colorpicker').hide();
+  $('#tip_picker').hide();
+  $('#eraser_picker').hide();
+}
+
+function installBrush(img, color) {
+  brush = new markerMaker(img, color);
+  sketcher.brush = brush;
+  sketcher.renderFunction = sketcher.updateCanvasByBrush;
+}
+
+$(document).ready(function(e) {
+	
+	  sketcher = new SketchPad("sketch");
+    sketcher.preOnCanvasMouseDown = function(){
+       hideMenus();
+    }
+    
+    $('.btn').click(function(){sketcher.clear();});	
+
+     //color picker bindings
+     var fb = $.farbtastic('#colorpicker',setColor);
+     $('#colorpicker').hide();
+     $('#color_swatch').click(function(){ 
+        sketcher.context.globalCompositeOperation = 'source-over';
+        hideMenus();
+        $('#colorpicker').toggle();
+     });
+
+     function setColor(color) {
+         installBrush($('#tip_swatch img')[0], color);
+         $('#color_swatch').css('background-color',color);
+      }
+
+    //tip picker bindings
+    $('#tip_picker').hide();
+    $('#tip_swatch').click(function(){     
+        sketcher.context.globalCompositeOperation = 'source-over';
+        hideMenus();
+        $('#tip_picker').toggle();
+    });
+
+    $('#tip_picker img').click(function(){
+      installBrush($(this)[0],$('#color_swatch').css('background-color'));
+      hideMenus();
+      $('#tip_swatch img').attr('src',$(this).attr('src'));
+    });
+
+    //eraser picker bindings 
+    $('#eraser_picker').hide();
+    $('#eraser_swatch').click(function(){
+        sketcher.context.globalCompositeOperation = 'destination-out';
+        hideMenus();
+        $('#eraser_picker').toggle();
+    });
+
+    $('#eraser_picker img').click(function(){
+        installBrush($(this)[0],$('#color_swatch').css('background-color'));
+        hideMenus();
+        $('#eraser_swatch img').attr('src',$(this).attr('src'));
+    });
+});
+
+</script>
+
+</head>
+
+<body>
+<div class="topbar-wrapper" style="z-index: 5;">
+    <div class="topbar" data-dropdown="dropdown">
+      <div class="topbar-inner">
+        <div class="container">
+          <h3><a href="#">Stylistic Sketchy</a></h3>
+          
+          <ul class="nav">
+            <li class="active"><a href="#">a sketch app using "brush" images</a></li>
+          </ul>
+          
+          <ul class="nav secondary-nav">
+            <a href="#">
+             <input type="button" class="btn error" value="clear" />
+             </a>
+
+
+             <div id="eraser_swatch" style="width:30px;height:30px;background-color:white;position:absolute;top:0;right:300px;border:1px solid gray;">
+               <img src="images/sketcher/eraser.jpg">
+             </div>
+
+
+             <div id="tip_swatch" style="width:30px;height:30px;background-color:white;position:absolute;top:0;right:150px;border:1px solid gray;">
+               <img src="images/sketcher/brush.jpg">
+              </div>
+
+             <div id="color_swatch" style="width:30px;height:30px;background-color:black;position:absolute;top:0;right:80px;border:1px solid gray;">
+             </div>
+             <div id="colorpicker" style="position:absolute;"></div>
+             <div id="tip_picker" style="position:absolute;">
+                              <img src="images/sketcher/tip.png">
+                              <img src="images/sketcher/tip2.png">
+                              <img src="images/sketcher/tip3.png">
+
+             </div>
+             <div id="eraser_picker" style="position:absolute;">
+                              <img src="images/sketcher/tip.png">
+                              <img src="images/sketcher/tip2.png">
+                              <img src="images/sketcher/tip3.png">
+             </div>
+          </ul>
+        </div>
+      </div><!-- /topbar-inner -->
+    </div><!-- /topbar -->
+  </div>
+    <canvas id="sketch" width="600" height="600" style="margin-top:100px;"/>
+</body>
+</html>
