@@ -21,33 +21,41 @@ function SketchPad( canvasID, brushImage ) {
 		this.mouseMoveEvent = "mousemove";
 		this.mouseUpEvent = "mouseup";
 	}
-	
+	this.enabled = true;
 	this.canvas.bind( this.mouseDownEvent, this.onCanvasMouseDown() );
+}
+
+SketchPad.prototype.setEnabled = function(bool){
+	this.enabled = bool;
+	console.log('I set enabled to ' + this.enabled);
 }
 
 SketchPad.prototype.onCanvasMouseDown = function () {
 	var self = this;
 	return function(event) {
-        self.preOnCanvasMouseDown.call();
-        
-		self.mouseMoveHandler = self.onCanvasMouseMove()
-		self.mouseUpHandler = self.onCanvasMouseUp()
+		if(self.enabled){
+	        self.preOnCanvasMouseDown.call();
+	        
+			self.mouseMoveHandler = self.onCanvasMouseMove()
+			self.mouseUpHandler = self.onCanvasMouseUp()
 
-		$(document).bind( self.mouseMoveEvent, self.mouseMoveHandler );
-		$(document).bind( self.mouseUpEvent, self.mouseUpHandler );
-		
-		self.updateMousePosition( event );
-        self.points.push([self.lastMousePoint.x, self.lastMousePoint.y]);
-		self.renderFunction( event );
+			$(document).bind( self.mouseMoveEvent, self.mouseMoveHandler );
+			$(document).bind( self.mouseUpEvent, self.mouseUpHandler );
+			
+			self.updateMousePosition( event );
+	        self.points.push([self.lastMousePoint.x, self.lastMousePoint.y]);
+			self.renderFunction( event );
+		}
 	}
 }
 
 SketchPad.prototype.onCanvasMouseMove = function () {
 	var self = this;
 	return function(event) {
-
-		self.renderFunction( event );
-     	event.preventDefault();
+		if(self.enabled){
+			self.renderFunction( event );
+	     	event.preventDefault();
+     	}
     	return false;
 	}
 }
@@ -75,7 +83,6 @@ SketchPad.prototype.updateMousePosition = function (event) {
 	var offset = this.canvas.offset();
 	this.lastMousePoint.x = target.pageX - offset.left;
 	this.lastMousePoint.y = target.pageY - offset.top;
-
 }
 
 SketchPad.prototype.updateCanvasByLine = function (event) {
@@ -103,18 +110,13 @@ SketchPad.prototype.drawLine = function (start, end){
     var dy = end.y - start.y;
 	var distance = parseInt( Math.sqrt(dx*dx + dy*dy) );
 	if ( distance > 20 ){
-           //     console.log('fast:' + distance);
-
-            var s = Smooth(this.points,{ 
-  method: 'cubic',
-    clip: 'clamp',
-  //  lanczosFilterSize: 10,
-    cubicTension: 0
-           
+         
+        var s = Smooth(this.points,{ 
+ 			method: 'cubic',
+    		clip: 'clamp',
+    		cubicTension: 0
+        });
         
-          });
-        
-
         for (var t=this.points.length - 2; t <= this.points.length - 1; t+= (1/distance)) {
           var x,y;
           var point = s(t);
@@ -136,9 +138,7 @@ SketchPad.prototype.drawLine = function (start, end){
 		}
 
 	} else {
-     //   console.log('no distance');
       	this.context.drawImage(this.brush, start.x - halfBrushW, start.y - halfBrushH);
-
     }
 }
 

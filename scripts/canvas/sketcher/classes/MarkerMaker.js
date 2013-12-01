@@ -1,7 +1,7 @@
 /*
 create a semi-transparent image to be used as a brush tip
 */
-function markerMaker(stamp_img,color) {
+function MarkerMaker(stamp_img,color) {
    this.length = stamp_img.width;
    this.canvas = $('<canvas width="'+this.length+'px" height="'+this.length+'px">');
    this.context = this.canvas[0].getContext('2d');
@@ -39,9 +39,9 @@ function markerMaker(stamp_img,color) {
     this.make();*/
 }
 
-markerMaker.prototype.make = function () {
-   this.context.fillStyle = "rgba(255,0,0,0.5)";
-    this.context.beginPath();
+MarkerMaker.prototype.make = function () {
+  this.context.fillStyle = "rgba(255,0,0,0.5)";
+  this.context.beginPath();
 
   this.context.moveTo(0,0);
   this.context.quadraticCurveTo(this.length * 0.6, this.length * 0.0, this.length, this.length);
@@ -56,15 +56,9 @@ markerMaker.prototype.make = function () {
         this.context.fillStyle = grd;
   
   this.context.fill();
-
-
-
-        
-
-
 }
 
-markerMaker.prototype.getImage = function() {
+MarkerMaker.prototype.getImage = function() {
 }
 
 

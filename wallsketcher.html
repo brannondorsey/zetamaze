@@ -6,12 +6,16 @@
   
 <title>Sketch Pad</title>
 <script src="scripts/canvas/sketcher/smooth.js"></script>
-
+<script src="scripts/helpers.js"></script>
 <script src="scripts/jquery-1.10.2.min.js"></script>
+<!--<script src="scripts/canvas/kinetic-v4.7.0.min.js"></script>-->
+<script src="scripts/farbtastic.min.js"></script>
 
 <script src="scripts/canvas/sketcher/classes/SketchPad.js"></script>
 <script src="scripts/canvas/sketcher/classes/MarkerMaker.js"></script>
-<script src="scripts/farbtastic.min.js"></script>
+<script src="scripts/canvas/sketcher/classes/WallDrawing.js"></script>
+<script src="scripts/canvas/sketcher/classes/WallSegment.js"></script>
+
 
 <link rel="stylesheet" href="styles/bootstrap.css" />
 <link rel="stylesheet" href="styles/styles.css" />
@@ -63,6 +67,11 @@
 <script>
 var sketcher = null;
 var brush = null;
+var wallDrawing;
+var canvas;
+var isDragging = false;
+var prevMousePos;
+var dragToolEnabled = false;
 
 function hideMenus() {
   $('#colorpicker').hide();
@@ -72,7 +81,19 @@ function installBrush(img, color) {
   brush = new MarkerMaker(img, color);
   sketcher.brush = brush;
   sketcher.renderFunction = sketcher.updateCanvasByBrush;
-  console.log(img);
+}
+
+function setColor(color) {
+  installBrush(sketcher.brush, color);
+  $('#color_swatch').css('background-color',color);
+}
+
+function getMousePos(canvas, evt) {
+  var rect = canvas.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top
+  };
 }
 
 function bindEvents(){
@@ -88,25 +109,43 @@ function bindEvents(){
 
      //drag bindings
     $("#drag_button").click(function(){
-        sketcher.toggleDraggingTool();
+        sketcher.setEnabled(dragToolEnabled); //this is done before the toggle
+        dragToolEnabled = !dragToolEnabled;
     });
+
+    canvas.addEventListener('mousemove', function(evt) {
+        if(dragToolEnabled &&
+          isDragging){
+          var currentMousePos = getMousePos(canvas, evt);
+          wallDrawing.drag(prevMousePos.x, currentMousePos.x);
+          // var message = 'Mouse position: ' + currentMousePos.x + ',' + currentMousePos.y;
+          // console.log(message);
+          prevMousePos = currentMousePos;
+        }
+    }, false);
+
+    canvas.addEventListener('mousedown', function(evt){
+        isDragging = true;
+        prevMousePos = getMousePos(canvas, evt);
+    }, false);
+
+    canvas.addEventListener('mouseup', function(evt){
+
+        isDragging = false;
+    }, false);
 }
 
 $(document).ready(function(e) {
 	
+    canvas = $("#sketch")[0];
 	  sketcher = new SketchPad("sketch", $("#default-brush-image")[0]);
     sketcher.preOnCanvasMouseDown = function(){
        hideMenus();
     }
-    
-    //$('.btn').click(function(){sketcher.clear();});	
 
-     bindEvents();
+    wallDrawing = new WallDrawing(canvas, 400);
 
-     function setColor(color) {
-         installBrush(sketcher.brush, color);
-         $('#color_swatch').css('background-color',color);
-      }
+    bindEvents();
 });
 
 </script>
@@ -121,12 +160,7 @@ $(document).ready(function(e) {
           <h3><a href="#">Wall Sketcher</a></h3>
           <img id="default-brush-image" visibility="hidden" src="images/sketcher/tip3.png">
   
-          
           <ul class="nav secondary-nav">
-            <!--<a href="#">
-             <input type="button" class="btn error" value="clear" />
-             </a>-->
-
              <div id="drag_button">
               <img src="images/hand_icon.png">
              </div>
@@ -137,6 +171,8 @@ $(document).ready(function(e) {
       </div><!-- /topbar-inner -->
     </div><!-- /topbar -->
   </div>
+  <div class="canvas-container">
     <canvas id="sketch" width="960" height="512" />
+  </div>
 </body>
 </html>
