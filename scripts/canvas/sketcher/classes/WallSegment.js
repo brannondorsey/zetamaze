@@ -7,6 +7,7 @@ function WallSegment(context, x, y, size, imageIndex, bShouldLoad){
 	this.image = null;
 	this._isLoaded = false;
 	this._needsSave = false;
+	this.imageURL = 'http://localhost:8888/zeta/test_images/test_image_' + zeroPad(this.imageIndex, 4) + '.png';
 	if(bShouldLoad){
 		this.loadImage();
 	}
@@ -22,14 +23,29 @@ WallSegment.prototype.display = function(){
 	}
 }
 
+WallSegment.prototype.updateImage = function(canvas, newImageData){
+
+	var self = this;
+
+	var context = canvas.getContext('2d');
+	context.putImageData(newImageData, 0, 0);
+	var dataURL = canvas.toDataURL('image/png');
+
+	var newImage = new Image();
+	newImage.src = dataURL;
+	newImage.onload = function(){
+		self.image = newImage;
+		console.log(self.image)
+	}
+}
+
 WallSegment.prototype.loadImage = function(){
 	var self = this;
 	this.image = new Image();
-	this.image.src = 'http://localhost:8888/zeta/test_images/test_image_' + zeroPad(this.imageIndex, 4) + '.png';
+	this.image.src = this.imageURL;
 	this.image.onload = function() {
     	self._isLoaded = true;
-	}
-		  
+	}		  
 }
 
 WallSegment.prototype.isLoaded = function(){

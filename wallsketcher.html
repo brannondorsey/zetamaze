@@ -111,6 +111,9 @@ function bindEvents(){
     $("#drag_button").click(function(){
         sketcher.setEnabled(dragToolEnabled); //this is done before the toggle
         dragToolEnabled = !dragToolEnabled;
+        if(dragToolEnabled){
+          wallDrawing.saveImages(); //save the three images that were drawn to.
+        }
     });
 
     canvas.addEventListener('mousemove', function(evt) {
@@ -118,6 +121,7 @@ function bindEvents(){
           isDragging){
           var currentMousePos = getMousePos(canvas, evt);
           wallDrawing.drag(prevMousePos.x, currentMousePos.x);
+          wallDrawing.display();
           // var message = 'Mouse position: ' + currentMousePos.x + ',' + currentMousePos.y;
           // console.log(message);
           prevMousePos = currentMousePos;
@@ -146,6 +150,8 @@ $(document).ready(function(e) {
     wallDrawing = new WallDrawing(canvas, 400);
 
     bindEvents();
+
+    setTimeout(function(){wallDrawing.display()},500);
 });
 
 </script>

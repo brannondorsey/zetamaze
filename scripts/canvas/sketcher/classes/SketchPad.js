@@ -27,7 +27,10 @@ function SketchPad( canvasID, brushImage ) {
 
 SketchPad.prototype.setEnabled = function(bool){
 	this.enabled = bool;
-	console.log('I set enabled to ' + this.enabled);
+}
+
+SketchPad.prototype.isEnabled = function(){
+	return this.enabled;
 }
 
 SketchPad.prototype.onCanvasMouseDown = function () {
