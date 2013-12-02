@@ -46,9 +46,27 @@ WallDrawing.prototype.loadNewImages = function(startX, endX){
 }
 
 WallDrawing.prototype.drag = function(previousMouseX, mouseX){
-	this._walkWallSegments(function(wallSegment){
-		wallSegment.update(previousMouseX, mouseX);
-	});
+
+	var canDrag = false;
+
+	//if dragged wall right
+	if(previousMouseX < mouseX){
+		if(this.wallSegments[0].x < 0){
+			canDrag = true;
+		}
+	}else if(previousMouseX > mouseX){ //if dragged left
+		var lastWallSegment = this.wallSegments[this.wallSegments.length - 1];
+		if(lastWallSegment.x + lastWallSegment.size > this.canvas.width){
+			canDrag = true;
+		}
+	}
+
+	if(canDrag){
+		this._walkWallSegments(function(wallSegment){
+			wallSegment.update(previousMouseX, mouseX);
+		});
+		this.display();
+	}
 }
 
 WallDrawing.prototype.display = function(){
