@@ -7,7 +7,8 @@ function WallSegment(context, x, y, size, imageIndex, bShouldLoad){
 	this.image = null;
 	this._isLoaded = false;
 	this._needsSave = false;
-	this.imageURL = 'http://localhost:8888/zeta/test_images/test_image_' + zeroPad(this.imageIndex, 4) + '.png';
+	this.filename = 'test_image_' + zeroPad(this.imageIndex, 4) + '.png';
+	this.imageURL = 'http://localhost:8888/zeta/test_images/' + this.filename;
 	if(bShouldLoad){
 		this.loadImage();
 	}
@@ -24,7 +25,7 @@ WallSegment.prototype.display = function(){
 }
 
 WallSegment.prototype.updateImage = function(){
-	console.log(this.image);
+	
 	var self = this;
 
 	//create two memory-only canvas
@@ -55,6 +56,30 @@ WallSegment.prototype.updateImage = function(){
 			self.image = combinedImage;
 			// console.log(self.image.src)
 		}
+	}
+}
+
+WallSegment.prototype.saveImage = function(){
+	
+	//if the image has been changed
+	if(this.image.src != this.imageURL){
+		var encodedImage = encodeURIComponent(this.image.src);
+		var data = {
+			filename : this.filename,
+			base64 : encodedImage
+		}
+
+		$.ajax({
+			url: 'http://localhost:8888/zeta/saveimage.php',
+			method: 'post',
+			data: data,
+			success: function(response){
+				//console.log(response);
+			},
+			error: function(err){
+				console.log(err)
+			}
+		});
 	}
 }
 

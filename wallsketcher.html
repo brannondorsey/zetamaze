@@ -69,7 +69,7 @@ var sketcher = null;
 var brush = null;
 var wallDrawing;
 var canvas;
-var isDragging = false;
+var mousePressed = false;
 var prevMousePos;
 var dragToolEnabled = false;
 
@@ -112,13 +112,13 @@ function bindEvents(){
         sketcher.setEnabled(dragToolEnabled); //this is done before the toggle
         dragToolEnabled = !dragToolEnabled;
         if(dragToolEnabled){
-          wallDrawing.saveImages(); //save the three images that were drawn to.
+          wallDrawing.updateImages();
         }
     });
 
     canvas.addEventListener('mousemove', function(evt) {
         if(dragToolEnabled &&
-          isDragging){
+          mousePressed){
           var currentMousePos = getMousePos(canvas, evt);
           wallDrawing.drag(prevMousePos.x, currentMousePos.x);
           // var message = 'Mouse position: ' + currentMousePos.x + ',' + currentMousePos.y;
@@ -128,13 +128,13 @@ function bindEvents(){
     }, false);
 
     canvas.addEventListener('mousedown', function(evt){
-        isDragging = true;
+        mousePressed = true;
         prevMousePos = getMousePos(canvas, evt);
     }, false);
 
     canvas.addEventListener('mouseup', function(evt){
 
-        isDragging = false;
+        mousePressed = false;
     }, false);
 }
 
@@ -151,6 +151,7 @@ $(document).ready(function(e) {
     bindEvents();
 
     setTimeout(function(){wallDrawing.display()},500);
+    setInterval(function(){wallDrawing.updateImages()}, 3000);
 });
 
 </script>

@@ -21,16 +21,13 @@ function WallDrawing(canvas, numbImages){
 	}
 }
 
-WallDrawing.prototype.saveImages = function(){
-	this.updateImages();
-}
-
 WallDrawing.prototype.updateImages = function(){
 	
 	var visibleWalls = this._getVisibleWalls();
 	for(var i = 0; i < visibleWalls.length; i++){
 		var visibleWall = visibleWalls[i];
 		visibleWalls[i].updateImage();
+		visibleWalls[i].saveImage();
 	}
 }
 
