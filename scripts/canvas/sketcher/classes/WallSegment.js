@@ -6,7 +6,7 @@ function WallSegment(context, x, y, size, imageIndex, bShouldLoad){
 	this.imageIndex = imageIndex;
 	this.image = null;
 	this._isLoaded = false;
-	this._needsSave = false;
+	this._needsUpdate = false;
 	this.filename = 'test_image_' + zeroPad(this.imageIndex, 4) + '.png';
 	this.imageURL = 'http://localhost:8888/zeta/test_images/' + this.filename;
 	if(bShouldLoad){
@@ -24,6 +24,7 @@ WallSegment.prototype.display = function(){
 	}
 }
 
+//updates and saves image
 WallSegment.prototype.updateImage = function(){
 	
 	var self = this;
@@ -54,33 +55,33 @@ WallSegment.prototype.updateImage = function(){
 		combinedImage.src = dataURL;
 		combinedImage.onload = function(){
 			self.image = combinedImage;
-			// console.log(self.image.src)
+			self._needsUpdate = false;
+			self.saveImage();
 		}
 	}
 }
 
 WallSegment.prototype.saveImage = function(){
-	
 	//if the image has been changed
-	if(this.image.src != this.imageURL){
-		var encodedImage = encodeURIComponent(this.image.src);
-		var data = {
-			filename : this.filename,
-			base64 : encodedImage
-		}
-
-		$.ajax({
-			url: 'http://localhost:8888/zeta/saveimage.php',
-			method: 'post',
-			data: data,
-			success: function(response){
-				//console.log(response);
-			},
-			error: function(err){
-				console.log(err)
-			}
-		});
+	//if(this.image.src != this.imageURL){
+	var encodedImage = encodeURIComponent(this.image.src);
+	var data = {
+		filename : this.filename,
+		base64 : encodedImage
 	}
+	
+	$.ajax({
+		url: 'http://localhost:8888/zeta/saveimage.php',
+		method: 'post',
+		data: data,
+		success: function(response){
+			console.log("image saved");
+		},
+		error: function(err){
+			console.log(err)
+		}
+	});
+	//}
 }
 
 WallSegment.prototype.loadImage = function(){
@@ -98,8 +99,12 @@ WallSegment.prototype.isLoaded = function(){
 	return this._isLoaded;
 }
 
-WallSegment.prototype.needsSave = function(){
-	return this._needsSave;
+WallSegment.prototype.notifyNeedsUpdate = function(){
+	this._needsUpdate = true;
+}
+
+WallSegment.prototype.needsUpdate = function(){
+	return this._needsUpdate;
 }
 
 WallSegment.prototype.inside = function(mouseX){

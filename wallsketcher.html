@@ -32,24 +32,25 @@
   border:1px solid gray;
 }
 
-#drag_button{
+#sketch{
+  margin-top:100px;
+  margin-bottom: 100px;
+}
+
+.drag_button{
   width:30px;
   height:30px;
   background-color:black;
   position:absolute;
   top:5px;
   right:120px;
-  border:1px solid gray;
+  border: 1px solid gray;
 }
 
-#drag_button img{
+.drag_button img{
   width: inherit;
   height: inherit;
-}
-
-#sketch{
-  margin-top:100px;
-  margin-bottom: 100px;
+  
 }
 
 .grab {
@@ -60,6 +61,10 @@
 .grabbing { 
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing; 
+}
+
+.tool-selected{
+  border:1px solid orange;
 }
 
 </style>
@@ -108,32 +113,44 @@ function bindEvents(){
      });
 
      //drag bindings
-    $("#drag_button").click(function(){
+    $(".drag_button").click(function(){
         sketcher.setEnabled(dragToolEnabled); //this is done before the toggle
         dragToolEnabled = !dragToolEnabled;
-        if(dragToolEnabled){
-          wallDrawing.updateImages();
-        }
+        
+        $('#sketch').toggleClass('grab');
+        $(this).toggleClass('tool-selected');
     });
 
     canvas.addEventListener('mousemove', function(evt) {
-        if(dragToolEnabled &&
-          mousePressed){
+        if(mousePressed){
+
           var currentMousePos = getMousePos(canvas, evt);
-          wallDrawing.drag(prevMousePos.x, currentMousePos.x);
-          // var message = 'Mouse position: ' + currentMousePos.x + ',' + currentMousePos.y;
-          // console.log(message);
+
+          if(dragToolEnabled){ //dragging...
+            wallDrawing.drag(prevMousePos.x, currentMousePos.x);
+          }else{ //drawing...
+            wallDrawing.notifyNeedsUpdate(prevMousePos.x, currentMousePos.x);
+          }
           prevMousePos = currentMousePos;
-        }
+        }          
     }, false);
 
     canvas.addEventListener('mousedown', function(evt){
         mousePressed = true;
         prevMousePos = getMousePos(canvas, evt);
+
+        if(dragToolEnabled){
+          $('canvas').toggleClass('grabbing', true);
+        }
     }, false);
 
     canvas.addEventListener('mouseup', function(evt){
-
+        
+        if(dragToolEnabled){
+          $('canvas').toggleClass('grabbing', false);
+        }else{ //save images
+          wallDrawing.updateImages();
+        }
         mousePressed = false;
     }, false);
 }
@@ -151,7 +168,6 @@ $(document).ready(function(e) {
     bindEvents();
 
     setTimeout(function(){wallDrawing.display()},500);
-    setInterval(function(){wallDrawing.updateImages()}, 3000);
 });
 
 </script>
@@ -167,7 +183,7 @@ $(document).ready(function(e) {
           <img id="default-brush-image" visibility="hidden" src="images/sketcher/tip3.png">
   
           <ul class="nav secondary-nav">
-             <div id="drag_button">
+             <div class="drag_button">
               <img src="images/hand_icon.png">
              </div>
              <div id="color_swatch"></div>

@@ -26,8 +26,9 @@ WallDrawing.prototype.updateImages = function(){
 	var visibleWalls = this._getVisibleWalls();
 	for(var i = 0; i < visibleWalls.length; i++){
 		var visibleWall = visibleWalls[i];
-		visibleWalls[i].updateImage();
-		visibleWalls[i].saveImage();
+		if(visibleWall.needsUpdate()){
+			visibleWalls[i].updateImage();
+		}
 	}
 }
 
@@ -69,6 +70,15 @@ WallDrawing.prototype.drag = function(previousMouseX, mouseX){
 WallDrawing.prototype.display = function(){
 	this._walkWallSegments(function(wallSegment){
 		wallSegment.display();
+	});
+}
+
+WallDrawing.prototype.notifyNeedsUpdate = function(previousMouseX, mouseX){
+	this._walkWallSegments(function(wallSegment){
+		if(wallSegment.inside(previousMouseX) ||
+		   wallSegment.inside(mouseX)){
+			wallSegment.notifyNeedsUpdate();
+		}
 	});
 }
 
