@@ -129,10 +129,10 @@ MazeSolver.prototype._getWallFaceData = function(mazeTravelData){
                
                 var travelDataObj = mazeTravelData[i];
                 
-                if(travelDataObj.imageIndex == 1 ||
-                   travelDataObj.imageIndex == 2){
-                    console.log("imageIndex " + travelDataObj.imageIndex + ": " + travelDataObj.rightX + ", " + travelDataObj.rightY);
-                }
+                // if(travelDataObj.imageIndex == 1 ||
+                //    travelDataObj.imageIndex == 2){
+                //     console.log("imageIndex " + travelDataObj.imageIndex + ": " + travelDataObj.rightX + ", " + travelDataObj.rightY);
+                // }
 
                 //if this x and y equal the x and y to the right of this travelDataObj
                 if(travelDataObj.rightX == x &&
@@ -273,19 +273,6 @@ MazeSolver.prototype._getMazeTravelData = function(){
             });
             imageIndex++;
         }
-        // else{
-        //     console.log("got in here");
-        //     var blockToRight = this._getForward(targetX, targetY, targetDir + 1);
-        //     mazeTravelData.push({
-        //         imageIndex: imageIndex,
-        //         currentX: targetX,
-        //         currentY: targetY,
-        //         rightX: blockToRight.x,
-        //         rightY: blockToRight.y,
-        //         dir: targetDir
-        //     });
-        //     imageIndex++;
-        // }
 
         currentX = targetX;
         currentY = targetY;
@@ -320,6 +307,16 @@ MazeSolver.prototype._getMazeTravelData = function(){
     //     console.log(mazeTravelData[obj].x + ", " + mazeTravelData[obj].y);
     //     console.log("");
     // }
+    
+    //re-asign the imageIndex to each mazeTravelData object
+    //(they must be in reverse order)
+    var numbImages = mazeTravelData.length;
+    var imageIndex = 0;
+    console.log("the number of images is " + numbImages);
+    for(var i = numbImages - 1; i >= 0; i--){
+        mazeTravelData[i].imageIndex = imageIndex;
+        imageIndex++;
+    }
     return mazeTravelData;
 }
 
