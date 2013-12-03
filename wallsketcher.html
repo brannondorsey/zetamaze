@@ -128,6 +128,7 @@ function bindEvents(){
 
           if(dragToolEnabled){ //dragging...
             wallDrawing.drag(prevMousePos.x, currentMousePos.x);
+            wallDrawing.loadImages(prevMousePos.x, currentMousePos.x);
           }else{ //drawing...
             wallDrawing.notifyNeedsUpdate(prevMousePos.x, currentMousePos.x);
           }
@@ -163,11 +164,18 @@ $(document).ready(function(e) {
        hideMenus();
     }
 
-    wallDrawing = new WallDrawing(canvas, 400);
+    wallDrawing = new WallDrawing(canvas, 500);
 
     bindEvents();
 
-    setTimeout(function(){wallDrawing.display()},500);
+    //constantly check if init images have been loaded
+    var interValID = setInterval(function(){
+      if(wallDrawing.initImagesLoaded()){
+        wallDrawing.display();
+        clearInterval(interValID);
+      }
+    }, 100);
+    
 });
 
 </script>
