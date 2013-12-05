@@ -58,11 +58,14 @@ ErrorHandler.prototype.checkLocationvalidity = function(locations){
 
 ErrorHandler.prototype.checkWallsConnected = function(maze){
 
-	console.log('got in here');
+	console.log('what?');
 
 	var shouldBreak = false;
 	//don't check the outer rim
-	for(var y = 1; y < maze.length - 1; y++{
+	
+	console.log("y length: " + (maze.length - 1));
+	console.log("x length: " + (maze[0].length - 1));
+	for(var y = 1; y < maze.length - 1; y++){
 		if(!shouldBreak){
 			for(var x = 1; x < maze[0].length - 1; x++){
 
@@ -80,6 +83,15 @@ ErrorHandler.prototype.checkWallsConnected = function(maze){
 					var left      = maze[y][x - 1];
 					var leftUp    = maze[y - 1][x - 1];
 
+					// console.log('up: ' + up);
+					// console.log('upRight: ' + upRight);
+					// console.log('right: ' + right);
+					// console.log('rightDown: ' + rightDown);
+					// console.log('down: ' + down);
+					// console.log('downLeft: ' + downLeft);
+					// console.log('left: ' + left);
+					// console.log('leftUp: ' + leftUp);
+
 					if(up == 1 ||
 					   upRight == 1 ||
 					   right == 1 ||
@@ -90,19 +102,18 @@ ErrorHandler.prototype.checkWallsConnected = function(maze){
 					   leftUp == 1){
 						continue;
 					}else{
+						console.log("I made it here biotch");
 						this.addError('All walls must be connected');
 						shouldBreak = true;
 						break;
 					}
 				}
 			}
-		}
+		}else break;
 	}
 }
 
 ErrorHandler.prototype.errorsExist = function(){
 	return (this.errors.length > 0) ? true : false;
 }
-
-
 
