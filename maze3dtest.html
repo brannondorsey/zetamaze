@@ -8,6 +8,8 @@
 		<script src="scripts/three/classes/Maze3D.js"></script>
 		<script src="scripts/three/classes/Block3D.js"></script>
 		<script src="scripts/three/THREEx.KeyboardState.js"></script>
+		<script src="scripts/three/classes/CharacterController.js"></script>
+
 	</head>
 	<body>
 		<div id="blocker">
@@ -22,25 +24,10 @@
 
 		<script>
 
-			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 35);
-			var ray = new THREE.Raycaster();
-			var renderer = new THREE.WebGLRenderer();
-			var clock = new THREE.Clock();
-			var objects = [];
-			var block3Dsize = 5;
+			var renderer, scene, camera, clock, character;
 
-			var controls;
-			var person;
-			var mouseLook;
-			var keyboard = new THREEx.KeyboardState();
-			var gravity = new THREE.Vector3(0, -10, 0);
-
-			var blocker = document.getElementById( 'blocker' );
-			var instructions = document.getElementById( 'instructions' );
-
+			
 			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
-
 			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 
 			document.addEventListener( 'click', function ( event ) {
@@ -65,8 +52,6 @@
 				document.addEventListener(   'mozpointerlockchange', pointerLockChange, false);
 				document.addEventListener('webkitpointerlockchange', pointerLockChange, false);
 				
-				// Hook mouse move events
-				// document.addEventListener("mousemove", this.moveCallback, false);
 				
 			}, false );
 
@@ -78,179 +63,53 @@
 					console.log(err);
 				},
 				success: function(response){
+					var block3Dsize = 5;
 					var mazeObj = response.data[0];
 					var mazeData = JSON.parse(mazeObj.maze);
 					var textureData = JSON.parse(mazeObj.textureData);
 					var maze3D = new Maze3D(mazeData, block3Dsize, textureData, "test_images/");
-					maze3D.addToScene(scene);
 
 					//do it!
-					init();
+					init(maze3D);
 					animate();
 				}
 			});
 			
-			function init(){
+			function init(maze3D){
+
+				renderer = new THREE.WebGLRenderer();
+				scene = new THREE.Scene();
+				camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 35);
+				clock = new THREE.Clock();
+
+				//renderer
+				renderer.setSize(window.innerWidth, window.innerHeight);
+				document.body.appendChild(renderer.domElement);
 			    
+			    //camera
 			    scene.add(camera);
+
+			    //light
 				var hemisphereLight = new THREE.HemisphereLight(0xffffff);
 			    hemisphereLight.position.set(1, 1, 1).normalize();
 			    scene.add(hemisphereLight);
-				renderer.setSize(window.innerWidth, window.innerHeight);
-				document.body.appendChild(renderer.domElement);
+				
+				//maze3D
+				maze3D.addToScene(scene);
 
-				mouseLook = { 
-					x:0, 
-					y:0 
-				};
-				
-				//person
-				
-				person = new THREE.Object3D();
-				person.add(camera);
-				// camera.position.set(0,35,10); // first-person view
-				// person.position.set(-600,100,500);
-				// person.rotation.y = -Math.PI / 2.0;
-				
-				boundingG = new THREE.CubeGeometry(40,80,40);
-				// radiusAtTop, radiusAtBottom, height, segmentsAroundRadius, segmentsAlongHeight,
-				// boundingG = new THREE.CylinderGeometry(20,20,80,8,2);
-				// better collision but FPS drops too much
-				
-				boundingG.computeBoundingSphere();
-				boundingM = new THREE.MeshBasicMaterial( {color:0xff0000, transparent:true, wireframe:true} );
-				bounding  = new THREE.Mesh( boundingG, boundingM );
-				bounding.visible = false;
-				person.add(bounding);
-				
-				person.velocity = new THREE.Vector3(0,0,0);
-				
-				scene.add(person);
+				//character
+				//character must be instantiated after maze3D is added to scene
+				character = new CharacterController(scene, camera);
+
 			}
 
 			function animate() {
 
 				requestAnimationFrame( animate );
 
-				//person.position.y = 10;
-				var speed = 5;
-				var cursorSpeed = 100;
-
-				var delta = clock.getDelta();
-				var moveDistance = speed * delta; // 200 pixels per second  // should be velocity?
-				var rotateAngle = Math.PI / 4 * delta;   // pi/4 radians (45 degrees) per second
-				var cursorSpeed = cursorSpeed * delta;	
-				
-				if (keyboard.pressed("P"))
-				{
-					camera.position.set(0,35,10); // first-person view
-					person.position.set(50,100,50);
-					person.rotation.y = -Math.PI / 2.0;
-					person.velocity = new THREE.Vector3(0,0,0);
-				}
-				
-				// movement controls	
-				var move = { xDist: 0, yAngle: 0, zDist: 0 };				
-				
-				// forwards/backwards
-				if (keyboard.pressed("W"))
-					move.zDist -= moveDistance;
-				if (keyboard.pressed("S"))
-					move.zDist += moveDistance;
-				// turn left/right
-				if (keyboard.pressed("Q"))
-					move.yAngle += rotateAngle;
-				if (keyboard.pressed("E"))
-					move.yAngle -= rotateAngle;
-				// left/right (strafe)
-				if ( keyboard.pressed("A") )
-					move.xDist -= moveDistance;
-				if ( keyboard.pressed("D") )
-					move.xDist += moveDistance;
-					
-				// process data from mouse look
-				//  (if inactive, there will be no change)
-				move.yAngle -= rotateAngle * mouseLook.x * 0.1;
-				mouseLook.x = 0;
-					
-				// up/down (debugging fly)
-				if ( keyboard.pressed("T") )
-				{
-					person.velocity = new THREE.Vector3(0,0,0);
-					person.translateY( moveDistance );
-				}
-				if ( keyboard.pressed("G") )
-				{
-					person.velocity = new THREE.Vector3(0,0,0);
-					person.translateY( -moveDistance );
-				}
-				
-				person.translateZ( move.zDist );
-				person.rotateY( move.yAngle );
-				person.translateX( move.xDist );
-				person.updateMatrix();
-					
-				// look up/down
-				if ( keyboard.pressed("3") ) // third-person view
-					camera.position.set(0,50,250);
-				if ( keyboard.pressed("1") ) // first-person view
-					camera.position.set(0,35,10);
-				if ( keyboard.pressed("R") )
-					camera.rotateX(  rotateAngle );
-				if ( keyboard.pressed("F") )
-					camera.rotateX( -rotateAngle );
-					
-				// process data from mouse look
-				//  (if inactive, there will be no change)
-				camera.rotateX( -rotateAngle * mouseLook.y * 0.05 );
-				mouseLook.y = 0;
-					
-				// limit camera to +/- 45 degrees (0.7071 radians) or +/- 60 degrees (1.04 radians)
-				camera.rotation.x = THREE.Math.clamp( camera.rotation.x, -1.04, 1.04 );
-				// pressing both buttons moves look angle to horizon
-				if ( keyboard.pressed("R") && keyboard.pressed("F") )
-					camera.rotateX( -6 * camera.rotation.x * rotateAngle );
-				
-				// collision detection!
-				// if ( collision( walls ) )
-				// {
-				// 	person.translateX( -move.xDist );
-				// 	person.rotateY( -move.yAngle );
-				// 	person.translateZ( -move.zDist );
-				// 	person.updateMatrix();
-					
-				// 	if ( collision( walls ) )
-				// 		console.log( "Something's wrong with collision..." );
-					
-				// }
-				
-				// TODO: make sure there is no double-jump glitch
-				//	(e.g. hold down space sometimes results in double-jump)
-				if ( keyboard.pressed("space") && (person.velocity.y == 0) )
-					person.velocity = new THREE.Vector3(0,12,0);
-				
-				person.velocity.add( gravity.clone().multiplyScalar( delta ) );
-				//person.translateY( person.velocity.y );
-				person.updateMatrix();
-				// if ( collision(walls) )
-				// {
-				// 	person.translateY( -person.velocity.y );
-				// 	person.updateMatrix();
-				// 	person.velocity = new THREE.Vector3(0,0,0);
-				// }
-				
+				character.update(clock.getDelta());
 				renderer.render( scene, camera );
 
-			}
-
-
-			function moveCallback(e){
-
-				var movementX = e.movementX || e.mozMovementX || e.webkitMovementX || 0;
-				var movementY = e.movementY || e.mozMovementY || e.webkitMovementY || 0;
-				// store movement amounts; will be processed by update function.
-				mouseLook.x += movementX;
-				mouseLook.y += movementY;
 			}
 
 			function pointerLockChange(event){
@@ -261,12 +120,16 @@
 			        document.webkitPointerLockElement === element) {
 
 					// Pointer was just locked, enable the mousemove listener
-					document.addEventListener("mousemove", moveCallback, false);
+					document.addEventListener("mousemove", mouseMove, false);
 				} 
 				else {
 					// Pointer was just unlocked, disable the mousemove listener
-					document.removeEventListener("mousemove", moveCallback, false);
+					document.removeEventListener("mousemove", mouseMove, false);
 				}
+			}
+
+			function mouseMove(e){
+				character.mouseMove(e);
 			}
 
 		</script>
