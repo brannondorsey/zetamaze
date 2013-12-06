@@ -1,13 +1,16 @@
 <html>
 	<head>
-		<title>My first Three.js app</title>
-		<style>canvas { width: 100%; height: 100% }</style>
+		<title>3D Maze</title>
+
+		<link rel="stylesheet" type="text/css" href="styles/maze3d.css">
 		<script src="scripts/three/three.js"></script>
 		<script src="scripts/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="scripts/helpers.js"></script>
 		<script src="scripts/three/classes/Maze3D.js"></script>
 		<script src="scripts/three/classes/Block3D.js"></script>
 		<script src="scripts/three/THREEx.KeyboardState.js"></script>
+		<script src="scripts/three/THREEx.WindowResize.js"></script>
+		<script src="scripts/three/classes/Stats.js"></script>
 		<script src="scripts/three/classes/CharacterController.js"></script>
 
 	</head>
@@ -25,7 +28,10 @@
 		<script>
 
 			//globals
-			var renderer, scene, camera, clock, character;
+			var renderer, scene, camera, clock, character, stats, displayStats;
+
+			var blocker = document.getElementById( 'blocker' );
+			var instructions = document.getElementById( 'instructions' );
 			
 			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
 			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
@@ -37,6 +43,21 @@
 								'webkitPointerLockElement' in document;
 				
 				if ( !havePointerLock ) return;
+
+				if ( document.pointerLockElement === element || 
+					 document.mozPointerLockElement === element || 
+					 document.webkitPointerLockElement === element ) {
+
+						blocker.style.display = 'none';
+
+					} else {
+
+						blocker.style.display = '-webkit-box';
+						blocker.style.display = '-moz-box';
+						blocker.style.display = 'box';
+
+						instructions.style.display = '';
+					}
 				
 				var element = document.body;
 				// Ask the browser to lock the pointer
@@ -46,11 +67,57 @@
 
 				// Ask the browser to lock the pointer
 				element.requestPointerLock();
+
+				function pointerlockerror(){
+					instructions.style.display = '';
+				}
 				
 				// Hook pointer lock state change events
 				document.addEventListener(      'pointerlockchange', pointerLockChange, false);
 				document.addEventListener(   'mozpointerlockchange', pointerLockChange, false);
 				document.addEventListener('webkitpointerlockchange', pointerLockChange, false);
+
+				document.addEventListener( 'pointerlockerror', pointerlockerror, false );
+				document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
+				document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
+
+				instructions.addEventListener( 'click', function ( event ) {
+
+					instructions.style.display = 'none';
+
+					// Ask the browser to lock the pointer
+					element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+
+					if ( /Firefox/i.test( navigator.userAgent ) ) {
+
+						var fullscreenchange = function ( event ) {
+
+							if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
+
+								document.removeEventListener( 'fullscreenchange', fullscreenchange );
+								document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
+
+								element.requestPointerLock();
+							}
+
+						}
+
+						document.addEventListener( 'fullscreenchange', fullscreenchange, false );
+						document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
+
+						element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+
+						element.requestFullscreen();
+
+					} else {
+
+						element.requestPointerLock();
+
+					}
+
+				}, false );
+
+
 				
 				
 			}, false );
@@ -79,8 +146,10 @@
 
 				renderer = new THREE.WebGLRenderer();
 				scene = new THREE.Scene();
-				camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 35);
+				camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 30);
 				clock = new THREE.Clock();
+
+				displayStats = true;
 
 				//renderer
 				renderer.setSize(window.innerWidth, window.innerHeight);
@@ -93,6 +162,9 @@
 				var hemisphereLight = new THREE.HemisphereLight(0xffffff);
 			    hemisphereLight.position.set(1, 1, 1).normalize();
 			    scene.add(hemisphereLight);
+
+			    //fog
+			    scene.fog = new THREE.Fog( 0xffffff, 20, 30);
 				
 				//maze3D
 				maze3D.addToScene(scene);
@@ -101,12 +173,26 @@
 				//character must be instantiated after maze3D is added to scene
 				character = new CharacterController(scene, camera);
 
+				//bind resize event
+				THREEx.WindowResize(renderer, camera);
+
+				//stants
+				if(displayStats){
+
+					stats = new Stats();
+					stats.domElement.style.position = 'absolute';
+					stats.domElement.style.bottom = '0px';
+					stats.domElement.style.zIndex = 100;
+					document.body.appendChild( stats.domElement );
+				}
+				
+
 			}
 
 			function animate() {
 
 				requestAnimationFrame( animate );
-
+				if(displayStats) stats.update();
 				character.update(clock.getDelta());
 				renderer.render( scene, camera );
 

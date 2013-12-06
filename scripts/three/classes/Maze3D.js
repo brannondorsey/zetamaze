@@ -4,6 +4,7 @@ function Maze3D(maze, block3DSize, textureData, pathToImagesFolder){
 	this.fillerImage = "filler_image.png";
 	this.imagePrefix = "test_image_";
 	this.imageType = ".png";
+	this.date = new Date();
 
 	this.data = maze;
 	this.width = maze[0].length;
@@ -26,7 +27,13 @@ function Maze3D(maze, block3DSize, textureData, pathToImagesFolder){
 			var textureNames = [];
 			for(var i = 0; i < blockTextureData.length; i++){
 				if (blockTextureData[i] != 0) {
-					textureNames[i] = this.pathToImagesFolder + this.imagePrefix + zeroPad(blockTextureData[i], 4) + this.imageType;
+
+					textureNames[i] = this.pathToImagesFolder +
+									  this.imagePrefix +
+									  zeroPad(blockTextureData[i], 4) +
+									  this.imageType +
+									  '?time=' + this.date.getTime(); //included so that cached images aren't used
+
 				}else textureNames[i] = 0;	
 			}
 			if(state) this.blocks3D[z][x] = new Block3D(xPos, yPos, zPos, this.block3DSize, this.block3DSize, this.block3DSize, textureNames);
