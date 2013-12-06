@@ -56,13 +56,29 @@ Maze3D.prototype.addToScene = function(scene){
 	}	
 }
 
+//finds the mesh objects of all block3Ds and returns them as an array
+Maze3D.prototype.getBlockMeshes = function(){
+	var blocks = [];
+	this.walkBlocks(function(block){
+		blocks.push(block.cube);
+	});
+	return blocks;
+}
+
+Maze3D.prototype.getBlocks = function(){
+	return this.blocks3D;
+}
+
 //walks through a function with all blocks
 Maze3D.prototype.walkBlocks = function(walkFunction){
 	for(var z = 0; z < this.blocks3D.length; z++){
 		for(var x = 0; x < this.blocks3D[0].length; x++){
 			var block3D = this.blocks3D[z][x];
 			//console.log(block3D);
-			walkFunction(block3D.cube);
+			if(block3D != undefined){
+				walkFunction(block3D);
+			}
+			
 		}
 	}	
 }

@@ -1,4 +1,4 @@
-function CharacterController(scene, camera){
+function CharacterController(scene, camera, position){
 	
 	this.speed = 5;
 	this.lookSpeed = 100;
@@ -8,6 +8,11 @@ function CharacterController(scene, camera){
 
 	this.body = new THREE.Object3D();
 	this.body.add(this.camera);
+	console.log('position before: ');
+	console.log(this.body.position);
+	if(position != undefined) this.body.position = position;
+	console.log('position after: ');
+	console.log(this.body.position);	
 
 	var boundingG = new THREE.CubeGeometry(40,80,40);
 	// radiusAtTop, radiusAtBottom, height, segmentsAroundRadius, segmentsAlongHeight,
@@ -16,9 +21,9 @@ function CharacterController(scene, camera){
 				
 	boundingG.computeBoundingSphere();
 	var boundingM = new THREE.MeshBasicMaterial( {color:0xff0000, transparent:true, wireframe:true} );
-	var bounding  = new THREE.Mesh( boundingG, boundingM );
-	bounding.visible = false;
-	this.body.add(bounding);
+	this.bounding  = new THREE.Mesh( boundingG, boundingM );
+	this.bounding.visible = false;
+	this.body.add(this.bounding);
 	
 	this.body.velocity = new THREE.Vector3(0,0,0);
 	
@@ -26,6 +31,10 @@ function CharacterController(scene, camera){
 
 	this.mouseLook = {x: 0, y: 0}
 	this.keyboard = new THREEx.KeyboardState();
+}
+
+CharacterController.prototype.registerCollisionObjects = function(collisionObjects){
+	this.wallArray = collisionObjects;
 }
 
 CharacterController.prototype.update = function(delta){
@@ -91,17 +100,18 @@ CharacterController.prototype.update = function(delta){
 		this.camera.rotateX( -6 * this.camera.rotation.x * rotateAngle );
 	
 	// collision detection!
-	// if ( collision( walls ) )
-	// {
-	// 	this.body.translateX( -move.xDist );
-	// 	this.body.rotateY( -move.yAngle );
-	// 	this.body.translateZ( -move.zDist );
-	// 	this.body.updateMatrix();
+	var collisions = this.getCollisions();
+	if (collisions != false ){
+		for(var i = 0; i < collisions.length; i++){
+			var colliderPosition = collision.mesh.position;
+			var centerX = colliderPosition.x + 2.5;
+		}
+		this.body.translateX( -move.xDist );
+		this.body.rotateY( -move.yAngle );
+		this.body.translateZ( -move.zDist );
+	 // this.body.updateMatrix();
 		
-	// 	if ( collision( walls ) )
-	// 		console.log( 'Something's wrong with collision...' );
-		
-	// }
+	}
 	
 	this.body.updateMatrix();
 }
@@ -114,4 +124,36 @@ CharacterController.prototype.mouseMove = function(e){
 	// store movement amounts; will be processed by update function.
 	this.mouseLook.x += movementX;
 	this.mouseLook.y += movementY;
+}
+
+// returns true on intersection
+CharacterController.prototype.getCollisions = function(){
+
+	if(this.wallArray != undefined){
+			/*
+		// coarse collision detection, create a list of candidates to check thoroughly
+		var candidates = [];
+		for (var i = 0; i < walls.length; i++)
+		{
+			if ( person.position.distanceTo(wallArray[i].position) < 
+					(person.children[1].geometry.boundingSphere.radius + wallArray[i].geometry.boundingSphere.radius) )
+				candidates.push( wallArray[i] );
+		}
+		*/
+
+		// send rays from center of person to each vertex in bounding geometry
+		for (var vertexIndex = 0; vertexIndex < this.body.children[1].geometry.vertices.length; vertexIndex++){		
+
+			var localVertex = this.body.children[1].geometry.vertices[vertexIndex].clone();
+			var globalVertex = localVertex.applyMatrix4( this.body.matrix );
+			var directionVector = globalVertex.sub( this.body.position );
+			
+			var ray = new THREE.Raycaster( this.body.position, directionVector.clone().normalize() );
+			var collisionResults = ray.intersectObjects(this.wallArray);
+			
+			if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() - 1 ) 
+				return collisionResults;
+		}
+		return false;
+	}
 }

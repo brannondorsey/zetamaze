@@ -112,7 +112,6 @@
 					} else {
 
 						element.requestPointerLock();
-
 					}
 
 				}, false );
@@ -171,7 +170,10 @@
 
 				//character
 				//character must be instantiated after maze3D is added to scene
-				character = new CharacterController(scene, camera);
+				//var startPosition = new THREE.Vector3(4, 20, 5);
+				var startPosition = new THREE.Vector3(5, 0, 5);
+				character = new CharacterController(scene, camera, startPosition);
+				character.registerCollisionObjects(maze3D.getBlockMeshes());
 
 				//bind resize event
 				THREEx.WindowResize(renderer, camera);
@@ -185,7 +187,6 @@
 					stats.domElement.style.zIndex = 100;
 					document.body.appendChild( stats.domElement );
 				}
-				
 
 			}
 

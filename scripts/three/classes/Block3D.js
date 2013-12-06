@@ -6,6 +6,10 @@ function Block3D(x, y, z, w, h, d, textureNames){
 	this.cube.position = new THREE.Vector3(x, y, z);
 }
 
+Block3D.prototype.getMesh = function(){
+    return this.cube;
+}
+
 Block3D.prototype._getMaterial = function(textureNames){
 	// create an array with six textures for a cool cube
     var materialArray = [];
