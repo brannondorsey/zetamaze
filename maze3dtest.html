@@ -173,7 +173,7 @@
 				//var startPosition = new THREE.Vector3(4, 20, 5);
 				var startPosition = new THREE.Vector3(5, 0, 5);
 				character = new CharacterController(scene, camera, startPosition);
-				character.registerCollisionObjects(maze3D.getBlockMeshes());
+				character.registerCollisionObjects(maze3D.getBlockMeshes(), maze3D.getBlockSize());
 
 				//bind resize event
 				THREEx.WindowResize(renderer, camera);

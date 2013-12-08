@@ -69,6 +69,10 @@ Maze3D.prototype.getBlocks = function(){
 	return this.blocks3D;
 }
 
+Maze3D.prototype.getBlockSize = function(){
+	return this.block3DSize;
+}
+
 //walks through a function with all blocks
 Maze3D.prototype.walkBlocks = function(walkFunction){
 	for(var z = 0; z < this.blocks3D.length; z++){
