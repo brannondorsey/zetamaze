@@ -48,6 +48,7 @@ function Location3D(config){
 
 	}else{
 		this.x = config.x;
+		this.y = config.y;
 		this.z = config.z;
 	}
 }

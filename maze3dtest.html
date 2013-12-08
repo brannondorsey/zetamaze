@@ -172,8 +172,8 @@
 				//character
 				//character must be instantiated after maze3D is added to scene
 				//var startPosition = new THREE.Vector3(4, 20, 5);
-				var startPosition = new THREE.Vector3(5, 0, 5);
-				character = new CharacterController(scene, camera, startPosition);
+				var beginPosition = maze3D.getBeginPosition();
+				character = new CharacterController(scene, camera, beginPosition);
 				character.registerCollisionObjects(maze3D.getBlockMeshes(), maze3D.getBlockSize());
 
 				//bind resize event

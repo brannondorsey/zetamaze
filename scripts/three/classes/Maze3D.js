@@ -60,7 +60,10 @@ Maze3D.prototype.update = function(delta){
 		var characterZ = character.getZ();
 		if(location.hit(characterX, characterZ)){
 			location.destroy();
-			location.onHitFunc();
+			if(location.hasObject() &&
+			   location.isLoaded()){
+				location.onHitFunc();
+			}
 			delete self.locations3D[key];
 		}else location.update(delta);
 	});
@@ -95,6 +98,14 @@ Maze3D.prototype.getBlockSize = function(){
 	return this.block3DSize;
 }
 
+//used to initialize character controller's position
+Maze3D.prototype.getBeginPosition = function(){
+	var x = this.locations3D['begin'].x;
+	var y = this.locations3D['begin'].y;
+	var z = this.locations3D['begin'].z;
+	return new THREE.Vector3(x, y, z);
+}
+
 //walks through a function with all blocks
 Maze3D.prototype.walkBlocks = function(walkFunction){
 	for(var z = 0; z < this.blocks3D.length; z++){
@@ -104,7 +115,6 @@ Maze3D.prototype.walkBlocks = function(walkFunction){
 			if(block3D != undefined){
 				walkFunction(block3D);
 			}
-			
 		}
 	}	
 }
