@@ -10,19 +10,6 @@ function CharacterController(scene, camera, position){
 	this.body.add(this.camera);
 	
 	if(position != undefined) this.body.position = position;
-
-	var boundingG = new THREE.CubeGeometry(40,80,40);
-	// radiusAtTop, radiusAtBottom, height, segmentsAroundRadius, segmentsAlongHeight,
-	// boundingG = new THREE.CylinderGeometry(20,20,80,8,2);
-	// better collision but FPS drops too much
-				
-	boundingG.computeBoundingSphere();
-	var boundingM = new THREE.MeshBasicMaterial( {color:0xff0000, transparent:true, wireframe:true} );
-	this.bounding  = new THREE.Mesh( boundingG, boundingM );
-	this.bounding.visible = false;
-	this.body.add(this.bounding);
-	
-	this.body.velocity = new THREE.Vector3(0,0,0);
 	
 	scene.add(this.body);
 
@@ -74,12 +61,10 @@ CharacterController.prototype.update = function(delta){
 	if(this.flyEnabled){
 		// up/down (debugging fly)
 		if ( this.keyboard.pressed('R') ){
-			this.body.velocity = new THREE.Vector3(0,0,0);
 			this.body.translateY( moveDistance );
 		}
 
 		if ( this.keyboard.pressed('F') ){
-			this.body.velocity = new THREE.Vector3(0,0,0);
 			this.body.translateY( -moveDistance );
 		}
 	}	
@@ -89,11 +74,11 @@ CharacterController.prototype.update = function(delta){
 	var previousX = this.body.position.x;
 	var previousZ = this.body.position.z;
 
+	//perform translations and rotations in local space
 	this.body.translateZ(move.zDist);
 	this.body.translateX(move.xDist);
 	this.body.rotateY(move.yAngle);
 	
-	// console.log('after: ' + this.body.position.x);
 	if(collisions) this.restrictMovement(previousX, previousZ, move);
 	this.body.updateMatrix();
 		
@@ -171,28 +156,21 @@ CharacterController.prototype.restrictMovement = function(previousX, previousZ, 
 	if(this.limitXNeg) console.log('limiting negative x');
 	if(this.limitZPos) console.log('limiting positive z');
 	if(this.limitZNeg) console.log('limiting negative z');
-	// console.log('');
-	//console.log('move before: ' + move.xDist + ', ' + move.zDist);
-	
-	// if(this.limitXPos && move.xDist > 0) move.xDist = 0;
-	// if(this.limitXNeg && move.xDist < 0) move.xDist = 0;
-	// if(this.limitZPos && move.zDist > 0) move.zDist = 0;
-	// if(this.limitZNeg && move.zDist < 0) move.zDist = 0;
 	
 	var newX = this.body.position.x;
 	var newZ = this.body.position.z;
 
-	console.log('difference: ' + (previousX - newX) + ', ' + (previousZ - newZ));
+	console.log('difference x: ' + (previousX - newX));
 	//checks world coordinates after local translation
 	if(this.limitXPos && newX > previousX ||
 	   this.limitXNeg && newX < previousX){
 	   	//resets translation if move should be restricted
-		this.body.translateX( -move.xDist);
+		this.body.translateX(-move.xDist);
 	}
 
 	if(this.limitZPos && newZ > previousZ ||
 	   this.limitZNeg && newZ < previousZ){
-		this.body.translateZ( -move.zDist);
+		this.body.translateZ(-move.zDist);
 	}
 	
 }
