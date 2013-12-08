@@ -29,7 +29,7 @@ ErrorHandler.prototype.checkErrors = function(maze, locations){
 	this.maze = maze;
 	this.locations = locations;
 	this.checkLocationvalidity(this.locations);
-	this.checkWallsConnected(this.maze);
+	this.checkWallsConnected(maze);
 	if(this.errorsExist()) return true;
 	else{ //check for more errors
 		for(var key in this.locations){
@@ -56,64 +56,67 @@ ErrorHandler.prototype.checkLocationvalidity = function(locations){
 	}
 }
 
+//uses flood fill algorithm with recursion to check if all
+//maze walls are connected
 ErrorHandler.prototype.checkWallsConnected = function(maze){
 
-	console.log('what?');
+	var currentX = 0;
+	var currentY = 0;
 
-	var shouldBreak = false;
-	//don't check the outer rim
-	
-	console.log("y length: " + (maze.length - 1));
-	console.log("x length: " + (maze[0].length - 1));
-	for(var y = 1; y < maze.length - 1; y++){
-		if(!shouldBreak){
-			for(var x = 1; x < maze[0].length - 1; x++){
+	this._floodFill(maze, 1, 2);
 
-				//if this wall is on...
-				if(maze[y][x] == 1){
+	var islandsExist = false;
+	for(var y = 0; y < maze.length; y++){
 
-					//check to make sure that one of the 
-					//8 ajacent walls is also on...
-					var up        = maze[y - 1][x];
-					var upRight   = maze[y - 1][x + 1];
-					var right     = maze[y][x + 1];
-					var rightDown = maze[y + 1][x + 1];
-					var down      = maze[y + 1][x];
-					var downLeft  = maze[y + 1][y - 1];
-					var left      = maze[y][x - 1];
-					var leftUp    = maze[y - 1][x - 1];
-
-					// console.log('up: ' + up);
-					// console.log('upRight: ' + upRight);
-					// console.log('right: ' + right);
-					// console.log('rightDown: ' + rightDown);
-					// console.log('down: ' + down);
-					// console.log('downLeft: ' + downLeft);
-					// console.log('left: ' + left);
-					// console.log('leftUp: ' + leftUp);
-
-					if(up == 1 ||
-					   upRight == 1 ||
-					   right == 1 ||
-					   rightDown == 1 ||
-					   down == 1 ||
-					   downLeft == 1 ||
-					   left == 1 ||
-					   leftUp == 1){
-						continue;
-					}else{
-						console.log("I made it here biotch");
-						this.addError('All walls must be connected');
-						shouldBreak = true;
-						break;
-					}
-				}
+		var shouldBreak = false;
+		for(var x = 0; x < maze[0].length; x++){
+			if(maze[y][x] == 1){
+				islandsExist = true;
+				shouldBreak = true;
+				break;
 			}
-		}else break;
+		}
+		if(shouldBreak) break;
 	}
+
+	if(islandsExist) this.addError('All walls must be connected');
 }
 
 ErrorHandler.prototype.errorsExist = function(){
 	return (this.errors.length > 0) ? true : false;
+}
+
+ErrorHandler.prototype._floodFill = function(maze, x, y){
+
+	var target = 1;
+	var replacement = 2;
+	
+	if(y > 0)									      var up = maze[y - 1][x];
+    if(y > 0 && x < maze[0].length - 1) 		      var upRight = maze[y - 1][x + 1];
+    if(x < maze[0].length - 1) 					      var  right = maze[y][x + 1];
+    if(y < maze.length - 1 && x < maze[0].length - 1) var rightDown = maze[y + 1][x + 1];
+    if(y < maze.length - 1) 					      var down = maze[y + 1][x];
+    if(y < maze.length - 1 && x > 0) 			      var downLeft  = maze[y + 1][x - 1];
+    if(x > 0) 									      var left = maze[y][x - 1];
+    if(y > 0 && x > 0) 							      var leftUp  = maze[y - 1][x - 1];
+
+    maze[y][x] = replacement;
+
+    if(up != undefined &&
+       up == target) this._floodFill(maze, x, y - 1);
+    if(upRight != undefined &&
+       upRight == target) this._floodFill(maze, x + 1, y - 1);
+    if(right != undefined &&
+       right == target) this._floodFill(maze, x + 1, y);
+    if(rightDown != undefined &&
+       rightDown == target) this._floodFill(maze, x + 1, y + 1);
+    if(down != undefined &&
+       down == target) this._floodFill(maze, x, y + 1);
+    if(downLeft != undefined &&
+       downLeft == target) this._floodFill(maze, x - 1, y + 1);
+    if(left != undefined &&
+       left == target) this._floodFill(maze, x - 1, y);
+    if(leftUp != undefined &&
+       leftUp == target) this._floodFill(maze, x - 1, y - 1);
 }
 
