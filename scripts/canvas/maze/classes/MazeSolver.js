@@ -90,9 +90,9 @@ MazeSolver.prototype.getTextureData = function(){
     for(var i = 0; i < mazeTravelData.length; i++){
                
         var travelDataObj = mazeTravelData[i];
-        if(i == 0 ||
-           i == 1){
-            console.log("index: " + travelDataObj.imageIndex);
+        if(i == mazeTravelData.length - 1 ||
+            i == mazeTravelData.length - 2){
+            console.log("imageIndex: " + travelDataObj.imageIndex);
             console.log("currentxy: " + travelDataObj.currentX + ", " + travelDataObj.currentY);
             console.log("rightxy: " + travelDataObj.rightX + ", " + travelDataObj.rightY);
             console.log("direction: " + travelDataObj.dir);
@@ -311,7 +311,7 @@ MazeSolver.prototype._getMazeTravelData = function(){
     //re-asign the imageIndex to each mazeTravelData object
     //(they must be in reverse order)
     var numbImages = mazeTravelData.length;
-    var imageIndex = 0;
+    var imageIndex = 1;
     console.log("the number of images is " + numbImages);
     for(var i = numbImages - 1; i >= 0; i--){
         mazeTravelData[i].imageIndex = imageIndex;
