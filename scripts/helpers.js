@@ -20,3 +20,17 @@ function zeroPad(n, numbDigits) {
   n = n + '';
   return n.length >= numbDigits ? n : new Array(numbDigits - n.length + 1).join(z) + n;
 }
+
+function dist( point1, point2 ){
+  
+  var xs = 0;
+  var ys = 0;
+  
+  xs = point2.x - point1.x;
+  xs = xs * xs;
+ 
+  ys = point2.y - point1.y;
+  ys = ys * ys;
+  
+  return Math.sqrt( xs + ys );
+}

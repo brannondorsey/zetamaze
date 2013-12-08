@@ -1,6 +1,6 @@
 function CharacterController(scene, camera, position){
 	
-	this.speed = 2;
+	this.speed = 3;
 	this.lookSpeed = 100;
 	this.flyEnabled = true;
 
@@ -10,7 +10,10 @@ function CharacterController(scene, camera, position){
 	this.body.add(this.camera);
 	
 	if(position != undefined) this.body.position = position;
-	
+
+	this.x = this.body.position.x;
+	this.z = this.body.position.z;
+
 	scene.add(this.body);
 
 	this.mouseLook = {x: 0, y: 0}
@@ -94,6 +97,14 @@ CharacterController.prototype.update = function(delta){
 		this.camera.rotateX( -6 * this.camera.rotation.x * rotateAngle );
 	
 	this.body.updateMatrix();
+}
+
+CharacterController.prototype.getX = function(){
+	return this.body.position.x;
+}
+
+CharacterController.prototype.getZ = function(){
+	return this.body.position.z;
 }
 
 CharacterController.prototype.mouseMove = function(e){

@@ -8,9 +8,12 @@
 		<script type="text/javascript" src="scripts/helpers.js"></script>
 		<script src="scripts/three/classes/Maze3D.js"></script>
 		<script src="scripts/three/classes/Block3D.js"></script>
+		<script src="scripts/three/classes/Location3D.js"></script>
 		<script src="scripts/three/THREEx.KeyboardState.js"></script>
 		<script src="scripts/three/THREEx.WindowResize.js"></script>
-		<script src="scripts/three/classes/Stats.js"></script>
+		<script src="scripts/three/MTLLoader.js"></script>
+		<script src="scripts/three/OBJMTLLoader.js"></script>
+		<script src="scripts/three/Stats.js"></script>
 		<script src="scripts/three/classes/CharacterController.js"></script>
 
 	</head>
@@ -28,7 +31,8 @@
 		<script>
 
 			//globals
-			var renderer, scene, camera, clock, character, stats, displayStats;
+			var renderer, scene, camera, clock, character, stats, displayStats, maze3D;
+			scene = new THREE.Scene();
 
 			var blocker = document.getElementById( 'blocker' );
 			var instructions = document.getElementById( 'instructions' );
@@ -131,9 +135,7 @@
 				success: function(response){
 					var block3Dsize = 5;
 					var mazeObj = response.data[0];
-					var mazeData = JSON.parse(mazeObj.maze);
-					var textureData = JSON.parse(mazeObj.textureData);
-					var maze3D = new Maze3D(mazeData, block3Dsize, textureData, "test_images/");
+					maze3D = new Maze3D(scene, mazeObj, block3Dsize, "test_images/", "models/");
 
 					//do it!
 					init(maze3D);
@@ -144,7 +146,6 @@
 			function init(maze3D){
 
 				renderer = new THREE.WebGLRenderer();
-				scene = new THREE.Scene();
 				camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 30);
 				clock = new THREE.Clock();
 
@@ -166,7 +167,7 @@
 			    scene.fog = new THREE.Fog( 0xffffff, 20, 30);
 				
 				//maze3D
-				maze3D.addToScene(scene);
+				maze3D.addToScene();
 
 				//character
 				//character must be instantiated after maze3D is added to scene
@@ -192,9 +193,11 @@
 
 			function animate() {
 
+				var delta = clock.getDelta();
 				requestAnimationFrame( animate );
 				if(displayStats) stats.update();
-				character.update(clock.getDelta());
+				maze3D.update(delta);
+				character.update(delta);
 				renderer.render( scene, camera );
 
 			}
