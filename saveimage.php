@@ -1,6 +1,6 @@
 <?php
 
-	$images_folder = "test_images";
+	$images_folder = "images/maze/textures/";
 	$file_name_key = "filename";
 	$image_data_key = "base64";
 
@@ -16,6 +16,6 @@
 		$base64String = urldecode($_POST[$image_data_key]);
 		$base64String = str_replace('data:image/png;base64,', '', $base64String);
 		$image = base64_decode($base64String);
-		$success = file_put_contents($images_folder . "/" . $filename, $image);                                   
+		$success = file_put_contents($images_folder . $filename, $image);                                   
 	}
 ?>

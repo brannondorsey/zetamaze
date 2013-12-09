@@ -82,7 +82,8 @@ CharacterController.prototype.update = function(delta){
 	this.body.translateX(move.xDist);
 	this.body.rotateY(move.yAngle);
 	
-	if(collisions) this.restrictMovement(previousX, previousZ, move);
+	if(collisions &&
+	   this.getY() < this.blockSize) this.restrictMovement(previousX, previousZ, move);
 	this.body.updateMatrix();
 		
 	// process data from mouse look
@@ -101,6 +102,10 @@ CharacterController.prototype.update = function(delta){
 
 CharacterController.prototype.getX = function(){
 	return this.body.position.x;
+}
+
+CharacterController.prototype.getY = function(){
+	return this.body.position.y;
 }
 
 CharacterController.prototype.getZ = function(){

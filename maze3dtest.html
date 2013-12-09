@@ -135,7 +135,7 @@
 				success: function(response){
 					var block3Dsize = 5;
 					var mazeObj = response.data[0];
-					maze3D = new Maze3D(scene, mazeObj, block3Dsize, "test_images/", "models/");
+					maze3D = new Maze3D(scene, mazeObj, block3Dsize, "images/maze/textures/", "models/");
 
 					//do it!
 					init(maze3D);

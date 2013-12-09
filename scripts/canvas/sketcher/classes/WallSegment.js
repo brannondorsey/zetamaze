@@ -8,7 +8,7 @@ function WallSegment(context, x, y, size, imageIndex, bShouldLoad){
 	this._isLoaded = false;
 	this._needsUpdate = false;
 	this.filename = 'test_image_' + zeroPad(this.imageIndex, 4) + '.png';
-	this.imageURL = 'http://localhost:8888/zeta/test_images/' + this.filename;
+	this.imageURL = 'http://localhost:8888/zeta/images/maze/textures/' + this.filename;
 	if(bShouldLoad){
 		this.loadImage();
 	}

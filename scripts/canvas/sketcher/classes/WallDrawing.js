@@ -33,6 +33,7 @@ WallDrawing.prototype.updateImages = function(){
 	var visibleWalls = this._getVisibleWalls();
 	for(var i = 0; i < visibleWalls.length; i++){
 		var visibleWall = visibleWalls[i];
+		console.log("Image number: " + visibleWall.imageIndex);
 		if(visibleWall.needsUpdate()){
 			visibleWalls[i].updateImage();
 		}

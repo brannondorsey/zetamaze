@@ -1,3 +1,5 @@
 .DS_Store
 ._*
 test_images/
+images/maze/textures/*
+!images/maze/textures/.gitkeep
