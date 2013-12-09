@@ -1,0 +1,37 @@
+body{
+	width: 960px;
+	margin: auto;
+	font-family: "Andale Mono", helvetica, arial, sans-serif;
+}
+
+#links{
+	width: 580px;
+	margin: auto;
+	margin-top: 150px;
+	font-family: "Lobster 1.4", helvetica, arial, sans-serif;
+	font-size: 100pt;
+}
+
+a{
+	color: #000000;
+	text-decoration: none;
+}
+
+a:hover{
+	color: #757575;
+
+}
+
+#links a#make{
+	float: right;
+}
+
+#description{
+	width: 500px;
+	margin: auto;
+	margin-top: 50px;
+}
+
+#description a{
+	text-decoration: underline;
+}
