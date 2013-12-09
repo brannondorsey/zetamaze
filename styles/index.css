@@ -5,11 +5,11 @@ body{
 }
 
 #links{
-	width: 580px;
 	margin: auto;
 	margin-top: 150px;
 	font-family: "Lobster 1.4", helvetica, arial, sans-serif;
-	font-size: 100pt;
+	font-size: 60pt;
+	text-align: center;
 }
 
 a{
@@ -22,12 +22,8 @@ a:hover{
 
 }
 
-#links a#make{
-	float: right;
-}
-
 #description{
-	width: 500px;
+	width: 600px;
 	margin: auto;
 	margin-top: 50px;
 }
