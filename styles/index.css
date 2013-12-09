@@ -17,15 +17,24 @@ a{
 	text-decoration: none;
 }
 
-a:hover{
-	color: #757575;
+#links {
+	margin-bottom: 30px;
+}
 
+#links a{
+	display: inline-block;
+	transition: margin .5s;
+	-webkit-transition: margin .5s; /* Safari */
+}
+
+#links a:hover{
+	margin: 0px 30px;
 }
 
 #description{
 	width: 600px;
 	margin: auto;
-	margin-top: 50px;
+	margin-top: 20px;
 }
 
 #description a{

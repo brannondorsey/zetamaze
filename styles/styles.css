@@ -22,7 +22,7 @@ body {
 
 #navbar{
 	width: 100%;
-	height: 70px;
+	height: 50px;
 	border-bottom: 1px solid black;
 	color: #ffffff;
 	font-size: 14pt;
@@ -33,8 +33,15 @@ body {
 /*title*/
 #navbar h1{
 	float: left;
-	margin-top: 12px;
+	font-size: 18pt;
+	margin-top: 10px;
 	margin-left: 25px;
+}
+
+/*beta title*/
+#navbar h1 span{
+	font-family: "Andale Mono", helvetica, arial, sans-serif;
+	font-size: 10pt;
 }
 
 #navbar .content a{
@@ -44,17 +51,15 @@ body {
 	text-decoration: none;
 }
 
-/*title*/
-#navbar h1 span{
-	font-family: "Andale Mono", helvetica, arial, sans-serif;
-	font-size: 10pt;
+#navbar .content a:hover{
+	text-decoration: underline;
 }
 
 /*play and make links container on navbar*/
 #navbar .content div#links{
 	float: right;
 	padding-right: 25px;
-	margin-top: 25px;
+	margin-top: 15px;
 }
 
 /*page name*/
