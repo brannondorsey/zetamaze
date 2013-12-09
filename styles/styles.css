@@ -4,7 +4,7 @@ body {
 	padding: 0px;
 	margin: 0px;
 	text-align:center;
-	font-family: "Andale Mono", helvetica, arial, sans-serif;
+	font-family: "Andale Mono", "Courier New", Courier, monospace;
 	font-size: 12pt;
 }
 
@@ -12,7 +12,7 @@ body {
 	width: 960px;
 	margin: auto;
 	padding-bottom: 40px;
-	font-family: "Andale Mono", helvetica, arial, sans-serif;
+	font-family: "Andale Mono", "Courier New", Courier, monospace;
 	font-size: 12pt;
 }
 
@@ -40,7 +40,7 @@ body {
 
 /*beta title*/
 #navbar h1 span{
-	font-family: "Andale Mono", helvetica, arial, sans-serif;
+	font-family: "Andale Mono", "Courier New", Courier, monospace;
 	font-size: 10pt;
 }
 
@@ -118,7 +118,7 @@ div.error-box ul li{
 /*save button*/
 input.button{
 	margin: 20px;
-	font-family: "Andale Mono", helvetica, arial, sans-serif;
+	font-family: "Andale Mono", "Courier New", Courier, monospace;
 	background-color: #ffffff;
 	padding: 5px 10px;
 	font-size: 14pt;

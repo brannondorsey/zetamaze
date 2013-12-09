@@ -1,13 +1,13 @@
 body{
 	width: 960px;
 	margin: auto;
-	font-family: "Andale Mono", helvetica, arial, sans-serif;
+	font-family: "Andale Mono", "Courier New", Courier, monospace;
 }
 
 #links{
 	margin: auto;
 	margin-top: 150px;
-	font-family: "Lobster 1.4", helvetica, arial, sans-serif;
+	font-family: "Lobster", helvetica, arial, sans-serif;
 	font-size: 60pt;
 	text-align: center;
 }
