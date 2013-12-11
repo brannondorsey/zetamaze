@@ -131,7 +131,7 @@
 				<?php } ?>
 
 				if(errors_from_get != undefined){
-					alert(errors.join("\n") + "\n\n" + "If you uploaded other files they were uploaded successfully");
+					alert(errors_from_get.join("\n") + "\n\n" + "If you uploaded other files they were uploaded successfully");
 				}
 			}
 			

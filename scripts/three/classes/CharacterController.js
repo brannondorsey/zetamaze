@@ -1,8 +1,8 @@
 function CharacterController(scene, camera, position){
 	
-	this.speed = 3;
+	this.speed = 3.5;
 	this.lookSpeed = 100;
-	this.flyEnabled = true;
+	this.flyEnabled = false;
 
 	this.camera = camera;
 
@@ -168,15 +168,16 @@ CharacterController.prototype.checkCollisions = function(){
 
 CharacterController.prototype.restrictMovement = function(previousX, previousZ, move){
 	
-	if(this.limitXPos) console.log('limiting positive x');
-	if(this.limitXNeg) console.log('limiting negative x');
-	if(this.limitZPos) console.log('limiting positive z');
-	if(this.limitZNeg) console.log('limiting negative z');
+	// if(this.limitXPos) console.log('limiting positive x');
+	// if(this.limitXNeg) console.log('limiting negative x');
+	// if(this.limitZPos) console.log('limiting positive z');
+	// if(this.limitZNeg) console.log('limiting negative z');
 	
 	var newX = this.getX();
 	var newZ = this.getY();
 
-	console.log('difference x: ' + (previousX - newX));
+	// console.log('difference x: ' + (previousX - newX));
+	
 	//checks world coordinates after local translation
 	if(this.limitXPos && newX > previousX ||
 	   this.limitXNeg && newX < previousX){

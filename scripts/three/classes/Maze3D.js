@@ -194,7 +194,7 @@ Maze3D.prototype._initLocations = function(){
 	config.onHitFunc = function(){
 		self._promptFileDownload('file4');
 	}
-	this.locations3D['file4MazeY'] = new Location3D(config);
+	this.locations3D['file4'] = new Location3D(config);
 	
 }
 
@@ -219,14 +219,11 @@ Maze3D.prototype._promptFileDownload = function(filename){
 
 				var periodIndex = itemNames[i].indexOf('.');
 				var filenameWithExt = itemNames[i].substring(0, periodIndex);
-				console.log(filename);
-				console.log(filenameWithExt);
-				console.log('');
 
 				if(filename == filenameWithExt){
 
 					//download the file! 
-					window.location = "http://localhost:8888/zeta/promptdownload.php?filename=" + filenameWithExt;
+					window.location = "http://localhost:8888/zeta/promptdownload.php?filename=" + itemNames[i];
 				}
 			}
 		}
