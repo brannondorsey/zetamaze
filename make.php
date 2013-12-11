@@ -77,7 +77,7 @@
 			var fileUploadSelector = '.file-upload input[type=file]';
 
 			$(document).ready(function(){
-				alert("<a href='test.html'>test</a>");
+				
 				var i = 1;
 				$(fileUploadSelector).each(function(){
 					console.log($(this).val());
@@ -127,10 +127,10 @@
 
 				<?php if(isset($file_upload_errors) &&
 					     !empty($file_upload_errors)){ ?>
-					 var errors = <?php echo $file_upload_errors ?> ; //don't forget semi
+					 var errors_from_get = <?php echo $file_upload_errors ?> ; //don't forget semi
 				<?php } ?>
 
-				if(errors != undefined){
+				if(errors_from_get != undefined){
 					alert(errors.join("\n") + "\n\n" + "If you uploaded other files they were uploaded successfully");
 				}
 			}

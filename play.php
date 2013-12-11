@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require_once("includes/head.include.php"); ?>
+		<?php require_once "includes/config.include.php";
+			  require_once "includes/head.include.php";
+	     ?>
+
 		<link rel="stylesheet" type="text/css" href="styles/maze3d.css">
 		<script src="scripts/three/three.js"></script>
 		<script src="scripts/jquery-1.10.2.min.js"></script>
@@ -127,7 +130,7 @@
 			}, false );
 
 			$.ajax({
-				url: "http://localhost:8888/zeta/api.php",
+				url: <?php echo '"' . $HOSTNAME . "/api.php" . '"' ?> , //dont forget comma
 				type: "get",
 				dataType: "json",
 				error: function(err){
