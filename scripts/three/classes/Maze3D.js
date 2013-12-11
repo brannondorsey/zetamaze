@@ -130,23 +130,21 @@ Maze3D.prototype._walkLocations = function(walkFunction){
 
 Maze3D.prototype._initLocations = function(){
 
+	var self = this;
+
 	//set config defaults
 	var config = {
 		scene: this.scene,
 		y: 0
 	};
 
-	var name;
-
 	//begin
-	name = 'begin';
 	config.color = 0x00ff00;
 	config.x = this._toMaze3DCoords(JSON.parse(this.mazeObj.beginMazeX));
 	config.z = this._toMaze3DCoords(JSON.parse(this.mazeObj.beginMazeY));
-	this.locations3D[name] = new Location3D(config);
+	this.locations3D['begin'] = new Location3D(config);
 
 	//end
-	name = 'end';
 	config.color = 0xff0000;
 	config.x = this._toMaze3DCoords(JSON.parse(this.mazeObj.endMazeX));
 	config.z = this._toMaze3DCoords(JSON.parse(this.mazeObj.endMazeY));
@@ -155,52 +153,48 @@ Maze3D.prototype._initLocations = function(){
 	config.onHitFunc = function(){
 		console.log('hit the end!');
 	}
-	this.locations3D[name] = new Location3D(config);
+	this.locations3D['end'] = new Location3D(config);
 
 	//file1
-	name = 'file1';
 	config.color = 0x686868;
 	config.x = this._toMaze3DCoords(JSON.parse(this.mazeObj.file1MazeX));
 	config.z = this._toMaze3DCoords(JSON.parse(this.mazeObj.file1MazeY));
 	config.objPath = this.pathToModelsFolder + 'file.obj';
 	config.matPath = this.pathToModelsFolder + 'file.mtl';
 	config.onHitFunc = function(){
-		this._promptFileDownload(name);
+		self._promptFileDownload('file1');
 	}
-	this.locations3D[name] = new Location3D(config);
+	this.locations3D['file1'] = new Location3D(config);
 
 	//file2
-	name = 'file2';
 	config.x = this._toMaze3DCoords(JSON.parse(this.mazeObj.file2MazeX));
 	config.z = this._toMaze3DCoords(JSON.parse(this.mazeObj.file2MazeY));
 	config.objPath = this.pathToModelsFolder + 'file.obj';
 	config.matPath = this.pathToModelsFolder + 'file.mtl';
 	config.onHitFunc = function(){
-		this._promptFileDownload(name);
+		self._promptFileDownload('file2');
 	}
-	this.locations3D[name] = new Location3D(config);
+	this.locations3D['file2'] = new Location3D(config);
 
 	//file3
-	name = 'file3';
 	config.x = this._toMaze3DCoords(JSON.parse(this.mazeObj.file3MazeX));
 	config.z = this._toMaze3DCoords(JSON.parse(this.mazeObj.file3MazeY));
 	config.objPath = this.pathToModelsFolder + 'file.obj';
 	config.matPath = this.pathToModelsFolder + 'file.mtl';
 	config.onHitFunc = function(){
-		this._promptFileDownload(name);
+		self._promptFileDownload('file3');
 	}
-	this.locations3D[name] = new Location3D(config);
+	this.locations3D['file3'] = new Location3D(config);
 
 	//file4
-	name = 'file4';
 	config.x = this._toMaze3DCoords(JSON.parse(this.mazeObj.file4MazeX));
 	config.z = this._toMaze3DCoords(JSON.parse(this.mazeObj.file4MazeY));
 	config.objPath = this.pathToModelsFolder + 'file.obj';
 	config.matPath = this.pathToModelsFolder + 'file.mtl';
 	config.onHitFunc = function(){
-		this._promptFileDownload(name);
+		self._promptFileDownload('file4');
 	}
-	this.locations3D[name] = new Location3D(config);
+	this.locations3D['file4MazeY'] = new Location3D(config);
 	
 }
 
@@ -213,17 +207,22 @@ Maze3D.prototype._promptFileDownload = function(filename){
 
 	//note: filename at the point that it is passed in does not include extension!
 	$.ajax({
-		url: 'http://localhost:8888/zeta/itemnames.php';
+		url: 'http://localhost:8888/zeta/itemnames.php',
 		method: 'post',
 		data: filename,
 		success: function(response){
 
 			console.log("first response succeeded!");
 			var itemNames = response;
+			console.log(itemNames);
 			for(var i = 0; i < itemNames.length; i++){
 
 				var periodIndex = itemNames[i].indexOf('.');
-				var filenameWithExt = itemNames.substring(0, periodIndex);
+				var filenameWithExt = itemNames[i].substring(0, periodIndex);
+				console.log(filename);
+				console.log(filenameWithExt);
+				console.log('');
+
 				if(filename == filenameWithExt){
 
 					//download the file! 

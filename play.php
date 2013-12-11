@@ -12,12 +12,21 @@
 		<script src="scripts/three/classes/Maze3D.js"></script>
 		<script src="scripts/three/classes/Block3D.js"></script>
 		<script src="scripts/three/classes/Location3D.js"></script>
+		<script src="scripts/three/Detector.js"></script>
 		<script src="scripts/three/THREEx.KeyboardState.js"></script>
 		<script src="scripts/three/THREEx.WindowResize.js"></script>
 		<script src="scripts/three/MTLLoader.js"></script>
 		<script src="scripts/three/OBJMTLLoader.js"></script>
 		<script src="scripts/three/Stats.js"></script>
 		<script src="scripts/three/classes/CharacterController.js"></script>
+		
+		<script>
+			$(document).ready(function(){
+				if(!Detector.webgl){
+					$('div#instructions').html("Ooops, it looks like your browser doesn't support WebGL. Trying using Google Chrome.");
+				}
+			});
+		</script>
 	</head>
 
 	<body>
@@ -28,7 +37,6 @@
 				You can also <a href="make.php">edit</a> the maze for everyone else.<br/>
 				(W, A, S, D = Move, MOUSE = Look around)
 
-			
 			</div>
 		</div>
 
@@ -149,7 +157,7 @@
 			
 			function init(maze3D){
 
-				renderer = new THREE.WebGLRenderer();
+				renderer = new THREE.WebGLRenderer({antialias:true}); 
 				camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 30);
 				clock = new THREE.Clock();
 

@@ -1,8 +1,8 @@
 <?php
-	if(isset($_POST["filename"]) &&
-	   !empty($_POST["filename"])){
+	if(isset($_GET["filename"]) &&
+	   !empty($_GET["filename"])){
 
-	   	$file_url = "http:/localhost:8888/zeta/uploads/" . $_POST["filename"];
+	   	$file_url = "http:/localhost:8888/zeta/uploads/" . $_GET["filename"];
 		header("Content-Type: application/octet-stream");
 		header("Content-Transfer-Encoding: Binary"); 
 		header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 

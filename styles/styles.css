@@ -45,7 +45,7 @@ body {
 }
 
 #navbar .content a{
-	font-family: "Lobster 1.4", helvetica, arial, sans-serif;
+	font-family: "Lobster", helvetica, arial, sans-serif;
 	color: #ffffff;
 	font-size: 14pt;
 	text-decoration: none;
@@ -64,7 +64,7 @@ body {
 
 /*page name*/
 .content h2{
-	font-family: "Lobster 1.4", helvetica, arial, sans-serif;
+	font-family: "Lobster", helvetica, arial, sans-serif;
 	font-size: 24pt;
 	text-align: right;
 }
