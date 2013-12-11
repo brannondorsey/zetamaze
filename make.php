@@ -77,6 +77,7 @@
 			var fileUploadSelector = '.file-upload input[type=file]';
 
 			$(document).ready(function(){
+				alert("<a href='test.html'>test</a>");
 				var i = 1;
 				$(fileUploadSelector).each(function(){
 					console.log($(this).val());
@@ -121,7 +122,6 @@
 				}
 				return inArray;
 			}
-
 
 			function alertIfUploadFailed(){
 
