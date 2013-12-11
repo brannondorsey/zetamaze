@@ -116,8 +116,8 @@ div.error-box ul li{
 }
 
 /*save button*/
-input.button{
-	margin: 20px;
+.button{
+	margin: 25px;
 	font-family: "Andale Mono", "Courier New", Courier, monospace;
 	background-color: #ffffff;
 	padding: 5px 10px;
@@ -125,10 +125,31 @@ input.button{
 	border: 1px solid #000000;
 }
 
-input.button:hover, input.button:focus{
+.button:hover, input.button:focus{
 	background-color: #000000;
 	color: #ffffff;
 	cursor: pointer;
+}
+
+/*file upload*/
+form.file-upload{
+	display: block;
+	padding-top: 40px;
+	width: 350px;
+	margin: auto;
+}
+
+div.file-upload-input-container{
+	padding: 5px 0px;
+}
+
+form.file-upload label{
+	float: left;
+	display: block;
+}
+
+form.file-upload input.button{
+	margin-top: 40px;
 }
 
 /*sketcher*/

@@ -74,8 +74,8 @@ CharacterController.prototype.update = function(delta){
 	
 	var collisions = this.checkCollisions();
 
-	var previousX = this.body.position.x;
-	var previousZ = this.body.position.z;
+	var previousX = this.getX();
+	var previousZ = this.getZ();
 
 	//perform translations and rotations in local space
 	this.body.translateZ(move.zDist);
@@ -173,8 +173,8 @@ CharacterController.prototype.restrictMovement = function(previousX, previousZ, 
 	if(this.limitZPos) console.log('limiting positive z');
 	if(this.limitZNeg) console.log('limiting negative z');
 	
-	var newX = this.body.position.x;
-	var newZ = this.body.position.z;
+	var newX = this.getX();
+	var newZ = this.getY();
 
 	console.log('difference x: ' + (previousX - newX));
 	//checks world coordinates after local translation
