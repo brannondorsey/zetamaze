@@ -21,6 +21,7 @@
 		<script src="scripts/three/classes/CharacterController.js"></script>
 		
 		<script>
+			var hostname = <?php echo "'" . $HOSTNAME . "'"?>;
 			$(document).ready(function(){
 				if(!Detector.webgl){
 					$('div#instructions').html("Ooops, it looks like your browser doesn't support WebGL. Trying using Google Chrome.");
@@ -131,14 +132,12 @@
 					}
 
 				}, false );
-
-
 				
 				
 			}, false );
 
 			$.ajax({
-				url: <?php echo '"' . $HOSTNAME . "/api.php" . '"' ?> , //dont forget comma
+				url: hostname + "/api.php",
 				type: "get",
 				dataType: "json",
 				error: function(err){
@@ -147,7 +146,7 @@
 				success: function(response){
 					var block3Dsize = 5;
 					var mazeObj = response.data[0];
-					maze3D = new Maze3D(scene, mazeObj, block3Dsize, "images/maze/textures/", "models/");
+					maze3D = new Maze3D(hostname, scene, mazeObj, block3Dsize, "images/maze/textures/", "models/");
 
 					//do it!
 					init(maze3D);

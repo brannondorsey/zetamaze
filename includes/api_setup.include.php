@@ -1,10 +1,12 @@
 <?php
+		require_once 'config.include.php';
+
 	  	//setup the API
 	  	$api = new API("localhost", 
-	  				   "zeta", 
-	  				   "mazes", 
-	  				   "root", 
-	  				   "root");
+	  				   $DATABASE, 
+	  				   $TABLE, 
+	  				   $USERNAME, 
+	  				   $PASSWORD);
 
 	  	$api->setup($columns);
 	  	$api->set_default_order("id");

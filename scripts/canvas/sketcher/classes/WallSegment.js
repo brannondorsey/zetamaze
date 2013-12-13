@@ -1,4 +1,5 @@
-function WallSegment(context, x, y, size, imageIndex, bShouldLoad){
+function WallSegment(hostname, context, x, y, size, imageIndex, bShouldLoad){
+	this.hostname = hostname;
 	this.context = context;
 	this.x = x;
 	this.y = y;
@@ -8,7 +9,7 @@ function WallSegment(context, x, y, size, imageIndex, bShouldLoad){
 	this._isLoaded = false;
 	this._needsUpdate = false;
 	this.filename = 'test_image_' + zeroPad(this.imageIndex, 4) + '.png';
-	this.imageURL = 'http://localhost:8888/zeta/images/maze/textures/' + this.filename;
+	this.imageURL = this.hostname + '/images/maze/textures/' + this.filename;
 	if(bShouldLoad){
 		this.loadImage();
 	}
@@ -69,9 +70,10 @@ WallSegment.prototype.saveImage = function(){
 		filename : this.filename,
 		base64 : encodedImage
 	}
-	
+
+	var self = this;
 	$.ajax({
-		url: 'http://localhost:8888/zeta/saveimage.php',
+		url: self.hostname + '/saveimage.php',
 		method: 'post',
 		data: data,
 		success: function(response){

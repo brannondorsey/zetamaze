@@ -130,7 +130,7 @@
 					 var errors_from_get = <?php echo $file_upload_errors ?> ; //don't forget semi
 				<?php } ?>
 
-				if(errors_from_get != undefined){
+				if(typeof errors_from_get !== 'undefined'){
 					alert(errors_from_get.join("\n") + "\n\n" + "If you uploaded other files they were uploaded successfully");
 				}
 			}

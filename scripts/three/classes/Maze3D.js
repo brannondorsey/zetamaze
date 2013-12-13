@@ -1,5 +1,6 @@
-function Maze3D(scene, mazeObj, block3DSize, pathToImagesFolder, pathToModelsFolder){
+function Maze3D(hostname, scene, mazeObj, block3DSize, pathToImagesFolder, pathToModelsFolder){
 	
+	this.hostname = hostname;
 	this.scene = scene;
 	this.pathToModelsFolder = pathToModelsFolder;
 	this.pathToImagesFolder = pathToImagesFolder;
@@ -206,8 +207,9 @@ Maze3D.prototype._toMaze3DCoords = function(maze2DValue){
 Maze3D.prototype._promptFileDownload = function(filename){
 
 	//note: filename at the point that it is passed in does not include extension!
+	var self = this;
 	$.ajax({
-		url: 'http://localhost:8888/zeta/itemnames.php',
+		url: self.hostname + '/zeta/itemnames.php',
 		method: 'post',
 		data: filename,
 		success: function(response){
@@ -223,7 +225,7 @@ Maze3D.prototype._promptFileDownload = function(filename){
 				if(filename == filenameWithExt){
 
 					//download the file! 
-					window.location = "http://localhost:8888/zeta/promptdownload.php?filename=" + itemNames[i];
+					window.location = self.hostname + "/zeta/promptdownload.php?filename=" + itemNames[i];
 				}
 			}
 		}

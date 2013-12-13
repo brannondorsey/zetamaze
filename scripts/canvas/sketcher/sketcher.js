@@ -92,7 +92,7 @@ $(document).ready(function(e) {
        hideMenus();
     }
 
-    wallDrawing = new WallDrawing(canvas, 650);
+    wallDrawing = new WallDrawing(hostname, canvas, 650);
 
     bindEvents();
 
