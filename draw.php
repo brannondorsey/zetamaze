@@ -38,7 +38,7 @@
 
 			<canvas id="sketch" width="960" height="512"></canvas>
 
-			<p style="text-align: center; padding-top: 20px">Finished your drawing? Now try and <a href="play.php">find</a> find it.</p>
+			<p style="text-align: center; padding-top: 20px">Finished your drawing? Now try and <a href="play.php">find</a> it.</p>
 			
 		</div>
 	</body>
