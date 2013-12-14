@@ -3,6 +3,7 @@ function CharacterController(scene, camera, position){
 	this.speed = 3.5;
 	this.lookSpeed = 100;
 	this.flyEnabled = false;
+	this.colliderPadding = 0.3;
 
 	this.camera = camera;
 
@@ -18,9 +19,6 @@ function CharacterController(scene, camera, position){
 
 	this.mouseLook = {x: 0, y: 0}
 	this.keyboard = new THREEx.KeyboardState();
-
-	this._resetMovementLimits();
-
 }
 
 CharacterController.prototype.registerCollisionObjects = function(collisionObjects, blockSize){
@@ -72,20 +70,17 @@ CharacterController.prototype.update = function(delta){
 		}
 	}	
 	
-	var collisions = this.checkCollisions();
+	var collisions = this.getCollisions();
 
 	var previousX = this.getX();
 	var previousZ = this.getZ();
 
-	//perform translations and rotations in local space
-	this.body.translateZ(move.zDist);
-	this.body.translateX(move.xDist);
-	this.body.rotateY(move.yAngle);
-	
-	if(collisions &&
-	   this.getY() < this.blockSize) this.restrictMovement(previousX, previousZ, move);
-	this.body.updateMatrix();
-		
+	if(collisions == false ||
+	   this._allowMovement(move, collisions)){
+		this._move(move);
+		this.body.updateMatrix();
+	}
+			
 	// process data from mouse look
 	//  (if inactive, there will be no change)
 	this.camera.rotateX( -rotateAngle * this.mouseLook.y * 0.05 );
@@ -122,79 +117,75 @@ CharacterController.prototype.mouseMove = function(e){
 	this.mouseLook.y += movementY;
 }
 
-CharacterController.prototype.checkCollisions = function(){
+CharacterController.prototype.getCollisions = function(){
 
 	var collisionDetected = false;
-	var colliderPadding = .3;
-	this._resetMovementLimits();
+	var colliders = [];
 
 	if(this.colliderMeshes != undefined){
 
 		for(var i = 0; i < this.colliderMeshes.length; i++){
 
 			var colliderMesh = this.colliderMeshes[i];
-			var minX = colliderMesh.position.x - this.blockSize/2 - colliderPadding;
-			var maxX = colliderMesh.position.x + this.blockSize/2 + colliderPadding;
-			var minZ = colliderMesh.position.z - this.blockSize/2 - colliderPadding;
-			var maxZ = colliderMesh.position.z + this.blockSize/2 + colliderPadding;
+			var minX = colliderMesh.position.x - this.blockSize/2 - this.colliderPadding;
+			var maxX = colliderMesh.position.x + this.blockSize/2 + this.colliderPadding;
+			var minZ = colliderMesh.position.z - this.blockSize/2 - this.colliderPadding;
+			var maxZ = colliderMesh.position.z + this.blockSize/2 + this.colliderPadding;
 
 			//if collision has occurred
-			if(this.body.position.x < maxX &&
-			   this.body.position.x > minX &&
-			   this.body.position.z < maxZ &&
-			   this.body.position.z > minZ){
+			if(this.getX() < maxX &&
+			   this.getX() > minX &&
+			   this.getZ() < maxZ &&
+			   this.getZ() > minZ){
 
-				collisionDetected = true;
-
-				var wallCenter = new THREE.Vector2(colliderMesh.position.x, colliderMesh.position.z);
-				var bodyCenter = new THREE.Vector2(this.body.position.x, this.body.position.z);
-				
-				var direction = wallCenter.sub(bodyCenter);
-				var x = direction.x;
-				var y = direction.y;
-
-				if (Math.abs(y) > Math.abs(x)) {
-				  if (y > 0) this.limitZPos = true;
-				  else this.limitZNeg = true;
-				} else {
-				  if (x > 0) this.limitXPos = true; 
-				  else this.limitXNeg = true;
-				}
+				colliders.push(colliderMesh);
 			}
 		}
 	}
-	return collisionDetected;
+	return colliders.length > 0 ? colliders : false;
 }
 
-CharacterController.prototype.restrictMovement = function(previousX, previousZ, move){
+//boolean
+CharacterController.prototype._allowMovement = function(movementObj, colliders){
 	
-	// if(this.limitXPos) console.log('limiting positive x');
-	// if(this.limitXNeg) console.log('limiting negative x');
-	// if(this.limitZPos) console.log('limiting positive z');
-	// if(this.limitZNeg) console.log('limiting negative z');
-	
-	var newX = this.getX();
-	var newZ = this.getY();
+	var allowMovement = true;
 
-	// console.log('difference x: ' + (previousX - newX));
-	
-	//checks world coordinates after local translation
-	if(this.limitXPos && newX > previousX ||
-	   this.limitXNeg && newX < previousX){
-	   	//resets translation if move should be restricted
-		this.body.translateX(-move.xDist);
-	}
+	this._move(movementObj);
+	var x = this.getX();
+	var z = this.getZ();
+	this._unMove(movementObj);
 
-	if(this.limitZPos && newZ > previousZ ||
-	   this.limitZNeg && newZ < previousZ){
-		this.body.translateZ(-move.zDist);
+	for(var i = 0; i < colliders.length; i++){
+
+		var collider = colliders[i]; 
+		var minX = collider.position.x - this.blockSize/2 - this.colliderPadding;
+		var maxX = collider.position.x + this.blockSize/2 + this.colliderPadding;
+		var minZ = collider.position.z - this.blockSize/2 - this.colliderPadding;
+		var maxZ = collider.position.z + this.blockSize/2 + this.colliderPadding;
+
+		//if collision has occurred
+		if(x < maxX &&
+		   x > minX &&
+		   z < maxZ &&
+		   z > minZ){
+			allowMovement = false;
+			break;
+		}
 	}
-	
+	return allowMovement;
 }
 
-CharacterController.prototype._resetMovementLimits = function(){
-	this.limitXPos = false;
-	this.limitXNeg = false;
-	this.limitZPos = false;
-	this.limitZNeg = false;
+CharacterController.prototype._move = function(movementObj){
+	//perform translations and rotations in local space
+	this.body.translateZ(movementObj.zDist);
+	this.body.translateX(movementObj.xDist);
+	this.body.rotateY(movementObj.yAngle);
+}
+
+CharacterController.prototype._unMove = function(movementObj){
+	var reverseMovementObj = {};
+	reverseMovementObj.xDist = -movementObj.xDist;
+	reverseMovementObj.zDist = -movementObj.zDist;
+	reverseMovementObj.yAngle = -movementObj.yAngle;
+	this._move(reverseMovementObj);
 }

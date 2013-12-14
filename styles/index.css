@@ -2,11 +2,12 @@ body{
 	width: 960px;
 	margin: auto;
 	font-family: "Andale Mono", "Courier New", Courier, monospace;
+	line-height: 140%;
 }
 
 #links{
 	margin: auto;
-	margin-top: 150px;
+	margin-top: 200px;
 	font-family: "Lobster", helvetica, arial, sans-serif;
 	font-size: 60pt;
 	text-align: center;
@@ -18,7 +19,7 @@ a{
 }
 
 #links {
-	margin-bottom: 30px;
+	margin-bottom: 65px;
 }
 
 #links a{

@@ -5,6 +5,7 @@ body {
 	margin: 0px;
 	text-align:center;
 	font-family: "Andale Mono", "Courier New", Courier, monospace;
+	line-height: 140%;
 	font-size: 12pt;
 }
 
@@ -34,7 +35,7 @@ body {
 #navbar h1{
 	float: left;
 	font-size: 18pt;
-	margin-top: 10px;
+	margin-top: 15px;
 	margin-left: 25px;
 }
 

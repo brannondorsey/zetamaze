@@ -1,5 +1,6 @@
 .DS_Store
 ._*
+error_log
 400.shtml
 401.shtml
 403.shtml
