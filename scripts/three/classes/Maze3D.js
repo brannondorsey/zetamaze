@@ -1,5 +1,6 @@
 function Maze3D(hostname, scene, mazeObj, block3DSize, pathToImagesFolder, pathToModelsFolder){
 	
+	var self = this;
 	this.hostname = hostname;
 	this.scene = scene;
 	this.pathToModelsFolder = pathToModelsFolder;
@@ -9,13 +10,16 @@ function Maze3D(hostname, scene, mazeObj, block3DSize, pathToImagesFolder, pathT
 	this.imageType = ".png";
 	this.date = new Date();
 
-
 	this.mazeObj = mazeObj;
 	this.data = JSON.parse(mazeObj.maze);
 	this.width = this.data[0].length;
 	this.height = this.data.length;
 	this.block3DSize = block3DSize;
 	this.textureData = JSON.parse(mazeObj.textureData);
+
+	this._isLoaded = false;
+	this._numbTexturesLoaded = 0; //number of textures currently loaded
+	this._numbTexturesNeeded = 0; //max number of textures needed to load
 
 	this.locations3D = [];
 
@@ -43,7 +47,20 @@ function Maze3D(hostname, scene, mazeObj, block3DSize, pathToImagesFolder, pathT
 
 				}else textureNames[i] = 0;	
 			}
-			if(state) this.blocks3D[z][x] = new Block3D(xPos, yPos, zPos, this.block3DSize, this.block3DSize, this.block3DSize, textureNames);
+			if(state){
+				this.blocks3D[z][x] = new Block3D(xPos, 
+												  yPos, 
+												  zPos, 
+												  this.block3DSize, 
+												  this.block3DSize, 
+												  this.block3DSize, 
+												  textureNames,
+												  function(){ //on material load call back
+												  	self._numbTexturesLoaded++;
+												  	//console.log('I loaded an image');
+												  });
+				this._numbTexturesNeeded += this.blocks3D[z][x].getNumbTextures();
+			}
 			xPos += this.block3DSize;
 		}
 		xPos = 0;
@@ -118,6 +135,16 @@ Maze3D.prototype.walkBlocks = function(walkFunction){
 			}
 		}
 	}	
+}
+
+Maze3D.prototype.isLoaded = function(){
+	return this._isLoaded;
+}
+
+Maze3D.prototype.getPercentLoaded = function(){
+	var percentLoaded = mapRange(this._numbTexturesLoaded, 0, this._numbTexturesNeeded, 0, 100);
+	if(percentLoaded == 100) this._isLoaded = true;
+	return percentLoaded;
 }
 
 Maze3D.prototype._walkLocations = function(walkFunction){

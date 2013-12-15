@@ -1,17 +1,29 @@
 canvas{
         width: 100%;
         height: 100%;
+        cursor: pointer;
 }
 
 #blocker {
 
         position: absolute;
-
         width: 100%;
         height: 100%;
+        background-color: #000000;
+}
 
-        background-color: rgba(0,0,0,0.7);
+progress[value] {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+  appearance: none;
 
+  width: 400px;
+  height: 30px;
+}
+
+/*styles the progress bar value*/
+progress[value]::-webkit-progress-value{
+        background-color: #ffffff;  
 }
 
 #instructions{
@@ -36,10 +48,9 @@ canvas{
         box-align: center;
 
         color: #ffffff;
+        cursor: default;
         text-align: center;
         font-family: "Andale Mono", helvetica, arial, sans-serif;
-        
-        cursor: pointer;
 }
 
 #instructions a{
