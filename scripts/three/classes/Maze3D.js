@@ -143,7 +143,7 @@ Maze3D.prototype.isLoaded = function(){
 
 Maze3D.prototype.getPercentLoaded = function(){
 	var percentLoaded = mapRange(this._numbTexturesLoaded, 0, this._numbTexturesNeeded, 0, 100);
-	if(percentLoaded == 100) this._isLoaded = true;
+	if(percentLoaded >= 99) this._isLoaded = true;
 	return percentLoaded;
 }
 
