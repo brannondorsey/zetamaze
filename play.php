@@ -72,7 +72,7 @@
 			function init(maze3D){
 
 				renderer = new THREE.WebGLRenderer({antialias:true}); 
-				camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 30);
+				camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 26);
 				clock = new THREE.Clock();
 
 				displayStats = true;
@@ -90,7 +90,7 @@
 			    scene.add(hemisphereLight);
 
 			    //fog
-			    scene.fog = new THREE.Fog( 0xffffff, 20, 30);
+			    scene.fog = new THREE.Fog( 0xffffff, 16, 26);
 				
 				//maze3D
 				maze3D.addToScene();

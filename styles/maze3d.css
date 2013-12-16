@@ -13,17 +13,30 @@ canvas{
 }
 
 progress[value] {
-  /* Reset the default appearance */
+  
+   /* Reset the default appearance */
   -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
+  
+  /* Get rid of default border in Firefox. */
+  border: none;
 
   width: 400px;
   height: 30px;
+  
+  /* For IE10 */
+  color: #ffffff; 
 }
 
 /*styles the progress bar value*/
 progress[value]::-webkit-progress-value{
         background-color: #ffffff;  
+}
+
+/*same as above but with firefox*/
+progress[value]::-moz-progress-bar{
+        background-color: #ffffff;
 }
 
 #instructions{
