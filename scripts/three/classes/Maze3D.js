@@ -236,7 +236,7 @@ Maze3D.prototype._promptFileDownload = function(filename){
 	//note: filename at the point that it is passed in does not include extension!
 	var self = this;
 	$.ajax({
-		url: self.hostname + '/zeta/itemnames.php',
+		url: self.hostname + '/itemnames.php',
 		method: 'post',
 		data: filename,
 		success: function(response){
@@ -252,7 +252,7 @@ Maze3D.prototype._promptFileDownload = function(filename){
 				if(filename == filenameWithExt){
 
 					//download the file! 
-					window.location = self.hostname + "/zeta/promptdownload.php?filename=" + itemNames[i];
+					window.location = self.hostname + "/promptdownload.php?filename=" + itemNames[i];
 				}
 			}
 		}
