@@ -87,18 +87,18 @@ MazeSolver.prototype.solve = function(x, y)
 
 MazeSolver.prototype.getTextureData = function(){
     var mazeTravelData = this._getMazeTravelData();
-    for(var i = 0; i < mazeTravelData.length; i++){
+    // for(var i = 0; i < mazeTravelData.length; i++){
                
-        var travelDataObj = mazeTravelData[i];
-        if(i == mazeTravelData.length - 1 ||
-            i == mazeTravelData.length - 2){
-            console.log("imageIndex: " + travelDataObj.imageIndex);
-            console.log("currentxy: " + travelDataObj.currentX + ", " + travelDataObj.currentY);
-            console.log("rightxy: " + travelDataObj.rightX + ", " + travelDataObj.rightY);
-            console.log("direction: " + travelDataObj.dir);
-            console.log("");
-        }
-    }
+    //     var travelDataObj = mazeTravelData[i];
+    //     if(i == mazeTravelData.length - 1 ||
+    //         i == mazeTravelData.length - 2){
+    //         console.log("imageIndex: " + travelDataObj.imageIndex);
+    //         console.log("currentxy: " + travelDataObj.currentX + ", " + travelDataObj.currentY);
+    //         console.log("rightxy: " + travelDataObj.rightX + ", " + travelDataObj.rightY);
+    //         console.log("direction: " + travelDataObj.dir);
+    //         console.log("");
+    //     }
+    // }
     return this._getWallFaceData(mazeTravelData);
 }
 
@@ -155,7 +155,6 @@ MazeSolver.prototype._getWallFaceData = function(mazeTravelData){
         }
     }
 
-    console.log(mazeTravelData);
     // testArray = testArray.sort(function (a,b) {return a - b;});
     // console.log(testArray);
     
@@ -312,7 +311,7 @@ MazeSolver.prototype._getMazeTravelData = function(){
     //(they must be in reverse order)
     var numbImages = mazeTravelData.length;
     var imageIndex = 1;
-    console.log("the number of images is " + numbImages);
+
     for(var i = numbImages - 1; i >= 0; i--){
         mazeTravelData[i].imageIndex = imageIndex;
         imageIndex++;

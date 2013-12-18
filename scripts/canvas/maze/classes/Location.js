@@ -46,6 +46,6 @@ Location.prototype.recalculate = function(mazeSize, blockSize){
 	var centerY = this.rect.getY()+blockSize/2;
 	this.mazeX = Math.round(mapRange(centerX, 0, mazeSize*blockSize, 0, mazeSize) - 0.5);
 	this.mazeY = Math.round(mapRange(centerY, 0, mazeSize*blockSize, 0, mazeSize) - 0.5);
-	console.log("Maze coordinates: "+this.mazeX+", "+this.mazeY);
-	console.log("Literal coordinates: "+this.rect.getX()+", "+this.rect.getY());
+	// console.log("Maze coordinates: "+this.mazeX+", "+this.mazeY);
+	// console.log("Literal coordinates: "+this.rect.getX()+", "+this.rect.getY());
 }

@@ -80,7 +80,6 @@
 				
 				var i = 1;
 				$(fileUploadSelector).each(function(){
-					console.log($(this).val());
 					$(this).change(function(){
 						fileInputVals['file' + i] = $(this).val();
 					});

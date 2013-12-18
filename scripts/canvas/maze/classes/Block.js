@@ -1,8 +1,8 @@
 function Block(index, state, x, y, w, h){
-	this.primaryColor   = 'black';
-	this.secondaryColor = 'white';
+	this._primaryColor   = 'black';
+	this._secondaryColor = 'white';
 
-	this.index = index;
+	this._index = index;
 	this.state = state;
 	this.rect  = new Kinetic.Rect({
 		x: x,
@@ -20,6 +20,6 @@ Block.prototype.toggleState = function(){
 }
 
 Block.prototype.assignColor = function(){
-	if(this.state) this.rect.setFill(this.primaryColor);
-	else this.rect.setFill(this.secondaryColor);
+	if(this.state) this.rect.setFill(this._primaryColor);
+	else this.rect.setFill(this._secondaryColor);
 }

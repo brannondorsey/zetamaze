@@ -115,7 +115,7 @@ Maze.prototype.draw = function(layer){
 }
 
 Maze.prototype.toggleBlock = function(rectIndex, layer){
-	var block = this.getBlockByIndex(rectIndex);
+	var block = this._getBlockByIndex(rectIndex);
 	block.toggleState();
 	layer.draw();
 }
@@ -201,7 +201,7 @@ Maze.prototype.getTextureData = function(){
 //protected methods
 
 //returns an object from blocks if its rect.id matches the parameter passed
-Maze.prototype.getBlockByIndex = function(rectIndex){
+Maze.prototype._getBlockByIndex = function(rectIndex){
 	for(var y = 0; y < this.blocks.length; y++){
 		for(var x = 0; x < this.blocks[0].length; x++){
 			if(this.blocks[y][x].rect.index == rectIndex){

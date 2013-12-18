@@ -1,64 +1,72 @@
 function ErrorHandler(){
-	this.errors = [];
-	this.errorHtmlParent = $("div.maze-container div.error-box");
+	this._errors = [];
+	this._errorHTMLParent = $("div.maze-container div.error-box");
 }
 
-ErrorHandler.prototype.addError = function(message){
-	this.errors.push(message);
-}
+//----------------------------------------------------------------
+//PUBLIC
 
 ErrorHandler.prototype.reset = function(){
-	this.errors = [];
+	this._errors = [];
 }
 
 ErrorHandler.prototype.clearErrorBox = function(containerSelector){
 	var container = $(containerSelector);
-	this.errorHtmlParent.children("ul").remove(); //clear content
+	this._errorHTMLParent.children("ul").remove(); //clear content
 }
 
 ErrorHandler.prototype.outputErrors = function(){
-	var container = this.errorHtmlParent.append("<ul></ul>").children("ul");
-	for(var i = 0; i < this.errors.length; i++){
-		var html = "<li>" + this.errors[i] + "</li>";
+	var container = this._errorHTMLParent.append("<ul></ul>").children("ul");
+	for(var i = 0; i < this._errors.length; i++){
+		var html = "<li>" + this._errors[i] + "</li>";
 		container.append(html);
 	}
 }
 
 //boolean that checks if errors exist and returns true if they do
 ErrorHandler.prototype.checkErrors = function(maze, locations){
-	this.maze = maze;
-	this.locations = locations;
-	this.checkLocationvalidity(this.locations);
-	this.checkWallsConnected(maze);
-	if(this.errorsExist()) return true;
+	this._checkLocationvalidity(maze, locations);
+	this._checkWallsConnected(maze);
+	if(this._errorsExist()) return true;
 	else{ //check for more errors
-		for(var key in this.locations){
+		for(var key in locations){
 			if(key == 'begin') continue; //skip begin because begin point doesnt need to be compared to itself
-			var solver = new MazeSolver(this.maze,
-										this.locations['begin'].mazeX,
-										this.locations['begin'].mazeY,
-										this.locations[key].mazeX,
-										this.locations[key].mazeY);
-			if(!solver.isSolvable()) this.addError(key.capitalize() + " cannot be reached");	
+			var solver = new MazeSolver(maze,
+										locations['begin'].mazeX,
+										locations['begin'].mazeY,
+										locations[key].mazeX,
+										locations[key].mazeY);
+			if(!solver.isSolvable()) this._addError(key.capitalize() + " cannot be reached");	
 		}
 
-		if(this.errorsExist()) return true;
+		if(this._errorsExist()) return true;
 	}
 	return false; //no errors were found
 }
 
-ErrorHandler.prototype.checkLocationvalidity = function(locations){
+//----------------------------------------------------------------
+//PROTECTED
+
+ErrorHandler.prototype._errorsExist = function(){
+	return (this._errors.length > 0) ? true : false;
+}
+
+ErrorHandler.prototype._addError = function(message){
+	this._errors.push(message);
+}
+
+ErrorHandler.prototype._checkLocationvalidity = function(maze, locations){
 	for(var key in locations){
 		var location = locations[key];
-		if(this.maze[location.mazeY][location.mazeX] == 1){
-			this.addError("This location is not allowed");
+		if(maze[location.mazeY][location.mazeX] == 1){
+			this._addError("This location is not allowed");
 		}
 	}
 }
 
 //uses flood fill algorithm with recursion to check if all
 //maze walls are connected
-ErrorHandler.prototype.checkWallsConnected = function(maze){
+ErrorHandler.prototype._checkWallsConnected = function(maze){
 
 	var currentX = 0;
 	var currentY = 0;
@@ -79,11 +87,7 @@ ErrorHandler.prototype.checkWallsConnected = function(maze){
 		if(shouldBreak) break;
 	}
 
-	if(islandsExist) this.addError('All walls must be connected');
-}
-
-ErrorHandler.prototype.errorsExist = function(){
-	return (this.errors.length > 0) ? true : false;
+	if(islandsExist) this._addError('All walls must be connected');
 }
 
 ErrorHandler.prototype._floodFill = function(maze, x, y){
@@ -102,21 +106,21 @@ ErrorHandler.prototype._floodFill = function(maze, x, y){
 
     maze[y][x] = replacement;
 
-    if(up != undefined &&
+    if(typeof up !== 'undefined' &&
        up == target) this._floodFill(maze, x, y - 1);
-    if(upRight != undefined &&
+    if(typeof upRight !== 'undefined' &&
        upRight == target) this._floodFill(maze, x + 1, y - 1);
-    if(right != undefined &&
+    if(typeof right !== 'undefined' &&
        right == target) this._floodFill(maze, x + 1, y);
-    if(rightDown != undefined &&
+    if(typeof rightDown !== 'undefined' &&
        rightDown == target) this._floodFill(maze, x + 1, y + 1);
-    if(down != undefined &&
+    if(typeof down !== 'undefined' &&
        down == target) this._floodFill(maze, x, y + 1);
-    if(downLeft != undefined &&
+    if(typeof downLeft !== 'undefined' &&
        downLeft == target) this._floodFill(maze, x - 1, y + 1);
-    if(left != undefined &&
+    if(typeof left !== 'undefined' &&
        left == target) this._floodFill(maze, x - 1, y);
-    if(leftUp != undefined &&
+    if(typeof leftUp !== 'undefined' &&
        leftUp == target) this._floodFill(maze, x - 1, y - 1);
 }
 

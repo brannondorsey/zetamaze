@@ -15,6 +15,7 @@ The 3D maze consists of the following
 3. 5 hidden items (grey icons)
 
 The maze grid system is made up of 25x25 cube walls. Each side of the walls are covered with black and white digital marker drawings. Each drawing may overlap previous drawings and is not confined to a single wall/cube, but rather can span the length of multiple walls. 
+
 ####2D birds-eye-view example maze
 
 ![Screenshot](images/maze_screenshot.png)
