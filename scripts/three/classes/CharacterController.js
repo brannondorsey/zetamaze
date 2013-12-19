@@ -2,7 +2,7 @@ function CharacterController(scene, camera, position){
 	
 	this.speed = 3.5;
 	this.lookSpeed = 100;
-	this.flyEnabled = false;
+	this.flyEnabled = true;
 	this.colliderPadding = 0.3;
 
 	this.camera = camera;

@@ -19,16 +19,18 @@ function Location3D(config){
 		// 	self.object = object;
 
 		// 	self.object.position.x = config.x;
+		// 	self.object.position.z = config.z;
 		// 	self.object.position.y = config.y;
 		// 	self.x = self.object.position.x;
 		// 	self.z = self.object.position.z;
-		// 	scene.add(self.object);
+		// 	self.y = self.object.position.y;
+		// 	self.scene.add(self.object);
 		// 	console.log('I added an object to the scene');
 		// 	console.log('x: ' + self.x);
 		// 	console.log('y: ' + self.z);
 		// });
 		
-		//temporary...
+		// //temporary...
 		var cubeSize = 1.5;
 
 		var geometry = new THREE.CubeGeometry(cubeSize, cubeSize, cubeSize);
