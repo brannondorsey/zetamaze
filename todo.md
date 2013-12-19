@@ -1,0 +1,27 @@
+#Zeta Todo
+
+- Exchange cubes with models
+- Exchange rects with images
+- Add server side maze data validation
+- Add safeguard from image attacks
+- Add 3D maze instructions
+- Add menu to `play.php`
+- better instructions in `make.php`
+- Better tool handling in `draw.php`
+- Detailed about/instructions/more info page
+- Make collisions better (at least fix bug where a player can get stuck)
+- Add maze2D error if start and end are too close
+- Style upload buttons
+- Add meaningful meta tags in head include
+- Get sponsorship
+- Check backend file upload validation
+- Build end of game `.zip` download system
+- Review all copy
+- Come up with canvas maze reload process to prevent large overwrites
+- Do ^ with sketcher
+- Use random color on sketcher page load
+- Come up with better system for 2D maze error handling. Currently it has the possibility to block the maze.
+- Better feedback when using file upload on make.php. Do not us alerts.
+- Remove all `console.log()` occurrences before launch.
+- Setup a cron job to auto back things up.
+- FAQ page?
