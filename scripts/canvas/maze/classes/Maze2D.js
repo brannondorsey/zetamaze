@@ -1,5 +1,5 @@
 //MAZE CLASS
-function Maze(maze, stageWidth, stageHeight){
+function Maze2D(maze, stageWidth, stageHeight){
 	this.data = maze;
 	this.width = maze[0].length;
 	this.height = maze.length;
@@ -24,7 +24,7 @@ function Maze(maze, stageWidth, stageHeight){
 }
 
 //loads the state of the maze from the database into the maze object
-Maze.prototype.initLocations = function(mazeData){
+Maze2D.prototype.initLocations = function(mazeData){
 	this.locations = [];
 
 	//set config constants
@@ -87,7 +87,7 @@ Maze.prototype.initLocations = function(mazeData){
 
 //recalculates the state of the maze and returns the maze as a 
 //2D array string
-Maze.prototype.update = function(){
+Maze2D.prototype.update = function(){
 	var mazeData = [];
 	for(var y = 0; y < this.blocks.length; y++){
 		mazeData[y] = [];
@@ -100,7 +100,7 @@ Maze.prototype.update = function(){
 	return JSON.stringify(this.data);
 }
 
-Maze.prototype.draw = function(layer){
+Maze2D.prototype.draw = function(layer){
 	for(var y = 0; y < this.blocks.length; y++){
 		for(var x = 0; x < this.blocks[0].length; x++){
 			var block = this.blocks[y][x];
@@ -114,13 +114,13 @@ Maze.prototype.draw = function(layer){
 	
 }
 
-Maze.prototype.toggleBlock = function(rectIndex, layer){
+Maze2D.prototype.toggleBlock = function(rectIndex, layer){
 	var block = this._getBlockByIndex(rectIndex);
 	block.toggleState();
 	layer.draw();
 }
 
-Maze.prototype.recalculateLocation = function(rectIndex){
+Maze2D.prototype.recalculateLocation = function(rectIndex){
 	var location;
 	//find the location with the rectIndex
 	for(var key in this.locations){
@@ -133,7 +133,7 @@ Maze.prototype.recalculateLocation = function(rectIndex){
 }
 
 //saves the maze data to the hidden form
-Maze.prototype.save = function(){
+Maze2D.prototype.save = function(){
 
 		//save the submit value because it gets changed by the below
 		var submitValue = $("#maze-form input[type='submit']").val();
@@ -178,7 +178,7 @@ Maze.prototype.save = function(){
 }
 
 //make sure the maze is solvable
-Maze.prototype.isSolvable = function(){
+Maze2D.prototype.isSolvable = function(){
 	var solver = new MazeSolver(this.data, 
 							this.locations['begin'].mazeX,
 							this.locations['begin'].mazeY,
@@ -188,7 +188,7 @@ Maze.prototype.isSolvable = function(){
 	return solver.isSolvable();
 }
 
-Maze.prototype.getTextureData = function(){
+Maze2D.prototype.getTextureData = function(){
 	var solver = new MazeSolver(this.data,
 								this.locations['begin'].mazeX,
 								this.locations['begin'].mazeY,
@@ -201,7 +201,7 @@ Maze.prototype.getTextureData = function(){
 //protected methods
 
 //returns an object from blocks if its rect.id matches the parameter passed
-Maze.prototype._getBlockByIndex = function(rectIndex){
+Maze2D.prototype._getBlockByIndex = function(rectIndex){
 	for(var y = 0; y < this.blocks.length; y++){
 		for(var x = 0; x < this.blocks[0].length; x++){
 			if(this.blocks[y][x].rect.index == rectIndex){

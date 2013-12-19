@@ -66,7 +66,7 @@
 		<script type="text/javascript" src="scripts/canvas/kinetic-v4.7.0.min.js">//load kinetic</script>
 		<script type="text/javascript" src="scripts/canvas/maze/classes/MazeSolver.js"></script>
 		<script type="text/javascript" src="scripts/canvas/maze/classes/Block.js"></script>
-		<script type="text/javascript" src="scripts/canvas/maze/classes/Maze.js"></script>
+		<script type="text/javascript" src="scripts/canvas/maze/classes/Maze2D.js"></script>
 		<script type="text/javascript" src="scripts/canvas/maze/classes/Location.js"></script>
 		<script type="text/javascript" src="scripts/canvas/maze/classes/ErrorHandler.js"></script>
 		<script>
@@ -164,7 +164,7 @@
 			<script type="text/javascript">
 				var mazeData = <?php echo $mazeData; ?>	
 			</script>
-			<script defer="defer" type="text/javascript" src="scripts/canvas/maze/maze.js">//code for 2D editable maze</script>
+			<script defer="defer" type="text/javascript" src="scripts/canvas/maze/canvas-maze.js">//code for 2D editable maze</script>
 
 			<form id="maze-form" method="post" action="" onsubmit="return saveMaze()">
 				<?php 
