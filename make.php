@@ -1,4 +1,8 @@
 <?php
+	
+	require_once 'includes/config.include.php';
+	require_once 'includes/helpers.include.php';
+
 	require_once 'includes/classes/api_builder_includes/class.API.inc.php';
 	require_once 'includes/classes/api_builder_includes/class.Database.inc.php';
 
@@ -6,7 +10,7 @@
 	require_once 'includes/api_columns.include.php';
 	require_once 'includes/api_setup.include.php';
 
-	//file validation
+	//file validation include
 	require_once 'includes/filevalidation.include.php';
 
 	//if POST...
@@ -15,10 +19,34 @@
 
 		$post_array = Database::clean($_POST);
 
-		//validate here!
-		if(!Database::execute_from_assoc($post_array, Database::$table)){
-			echo "There was a problem inserting into the database";
-		} 
+		if(isset($post_array['maze']) &&
+		   !empty($post_array['maze'])){
+
+			//server-side validation below
+			//technique taken from here:
+			//http://stackoverflow.com/questions/2445276/how-to-post-data-in-php-using-file-get-contents
+			
+			$url = $HOSTNAME . "/mazevalidator.php";
+			$postdata = http_build_query($post_array);
+			$opts = array('http' =>
+			    array(
+			        'method'  => 'POST',
+			        'header'  => 'Content-type: application/x-www-form-urlencoded',
+			        'content' => $postdata
+			    )
+			);
+			$context  = stream_context_create($opts);
+			$response = file_get_contents($url, false, $context);
+
+			//lfpsq66zf8 is a success code sent from mazevalidator.php
+			//the below conditional means that mazevalidator.php passed
+			//the maze
+			if(strpos($response, "lfpsq66zf8") !== false){
+				if(!Database::execute_from_assoc($post_array, Database::$table)){
+					echo "There was a problem inserting into the database";
+				} 
+			}
+		}
 	}
 
 	$query_array = array("limit" => 1,
