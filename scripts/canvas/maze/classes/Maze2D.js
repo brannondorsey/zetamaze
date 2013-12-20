@@ -1,5 +1,5 @@
 //MAZE CLASS
-function Maze2D(maze, stageWidth, stageHeight){
+function Maze2D(maze, stageWidth){
 	this.data = maze;
 	this.width = maze[0].length;
 	this.height = maze.length;

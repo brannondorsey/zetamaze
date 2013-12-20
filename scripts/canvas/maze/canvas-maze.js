@@ -7,7 +7,7 @@ var layer = new Kinetic.Layer();
 
 //-----------------------------------------------------------------------
 
-var maze2D  = new Maze2D(JSON.parse(mazeData.maze), stage.getWidth(), stage.getHeight());
+var maze2D  = new Maze2D(JSON.parse(mazeData.maze), stage.getWidth());
 
 maze2D.initLocations(mazeData);
 maze2D.draw(layer);
