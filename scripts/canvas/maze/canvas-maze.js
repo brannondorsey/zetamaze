@@ -8,19 +8,13 @@ var layer = new Kinetic.Layer();
 //-----------------------------------------------------------------------
 
 var maze2D  = new Maze2D(JSON.parse(mazeData.maze), stage.getWidth());
-
-maze2D.initLocations(mazeData);
-maze2D.draw(layer);
-
-//-----------------------------------------------------------------------
-
-bindEvents();
+maze2D.initLocations(mazeData, function(){
+    maze2D.display(layer);
+    bindEvents();
+    stage.add(layer);
+});
 
 //-----------------------------------------------------------------------
-
-// add the layer to the stage
-stage.add(layer);
-// exportMaze() //COME BACK
 
 function bindEvents(){
     //bind events for each block...

@@ -1,8 +1,8 @@
 #Zeta Todo
 
 - Exchange cubes with models
-- Exchange rects with images
-- Add server side maze data validation
+- ~~Exchange rects with images~~
+- ~~Add server side maze data validation~~
 - Add safeguard from image attacks
 - Add 3D maze instructions
 - Add menu to `play.php`
@@ -15,6 +15,7 @@
 - Add meaningful meta tags in head include
 - Get sponsorship
 - Check backend file upload validation
+- Set direction of 3D player so that they never start facing a wall
 - Build end of game `.zip` download system
 - Review all copy
 - Come up with canvas maze reload process to prevent large overwrites

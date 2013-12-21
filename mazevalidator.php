@@ -31,7 +31,9 @@
 			
 			var mazeData = <?php echo $mazeData ?>; //don't forget semi
 			var maze2D  = new Maze2D(JSON.parse(mazeData.maze), 800); //can pick random stage width (800) for this purpose
-			maze2D.initLocations(mazeData);
+			maze2D.initLocations(mazeData, function(){
+				//this callback is for loading images and can be ignored
+			});
 			var errorHand = new ErrorHandler(); 
 		    //errors
 		    if(!errorHand.checkErrors(maze2D.data, maze2D.locations)){ 

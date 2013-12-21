@@ -14,7 +14,7 @@ function Maze2D(maze, stageWidth){
 		this.blocks[y] = [];
 		for(var x = 0; x < this.width; x++){
 			var index = x.toString()+","+y.toString();
-			var state = (maze[y][x] == 1) ? true: false;
+			var state = (maze[y][x] == 1) ? true : false;
 			this.blocks[y][x] = new Block(index, state, xPos, yPos, this.blockSize, this.blockSize);
 			xPos += this.blockSize;
 		}
@@ -24,13 +24,23 @@ function Maze2D(maze, stageWidth){
 }
 
 //loads the state of the maze from the database into the maze object
-Maze2D.prototype.initLocations = function(mazeData){
+Maze2D.prototype.initLocations = function(mazeData, locationsLoadedFunc){
+	var self = this;
+	var numbLoaded = 0;
 	this.locations = [];
-
+	
 	//set config constants
 	var config = {
 	 	blockSize: this.blockSize,
-	 	mazeSize: this.blockSize * this.width
+	 	mazeSize: this.blockSize * this.width,
+	 	onLoadFunc: function(){
+	 		numbLoaded++;
+	 		//if all images have now been loaded...
+	 		if(numbLoaded == getAssocSize(self.locations)){
+	 			//call the callback function included in method
+	 			locationsLoadedFunc();
+	 		}
+	 	}
 	}
 
 	//set begin location
@@ -38,7 +48,7 @@ Maze2D.prototype.initLocations = function(mazeData){
 	config.y = parseFloat(mazeData.beginY);
 	config.mazeX = parseInt(mazeData.beginMazeX);
 	config.mazeY = parseInt(mazeData.beginMazeY);
-	config.primaryColor = 'green'
+	config.imagePath = 'images/builder/begin.png';
 	this.locations['begin'] = new Location(config);
 
 	//set end location
@@ -46,7 +56,7 @@ Maze2D.prototype.initLocations = function(mazeData){
 	config.y = parseFloat(mazeData.endY);
 	config.mazeX = parseInt(mazeData.endMazeX);
 	config.mazeY = parseInt(mazeData.endMazeY);
-	config.primaryColor = 'red'
+	config.imagePath = 'images/builder/zip.png';
 	this.locations['end'] = new Location(config);
 
 	//set file1 location
@@ -54,7 +64,7 @@ Maze2D.prototype.initLocations = function(mazeData){
 	config.y = parseFloat(mazeData.file1Y);
 	config.mazeX = parseInt(mazeData.file1MazeX);
 	config.mazeY = parseInt(mazeData.file1MazeY);
-	config.primaryColor = 'grey'
+	config.imagePath = 'images/builder/file_1.png';
 	this.locations['file1'] = new Location(config);
 
 	//set file2 location
@@ -62,7 +72,7 @@ Maze2D.prototype.initLocations = function(mazeData){
 	config.y = parseFloat(mazeData.file2Y);
 	config.mazeX = parseInt(mazeData.file2MazeX);
 	config.mazeY = parseInt(mazeData.file2MazeY);
-	config.primaryColor = 'grey'
+	config.imagePath = 'images/builder/file_2.png';
 	this.locations['file2'] = new Location(config);
 
 	//set file3 location
@@ -70,7 +80,7 @@ Maze2D.prototype.initLocations = function(mazeData){
 	config.y = parseFloat(mazeData.file3Y);
 	config.mazeX = parseInt(mazeData.file3MazeX);
 	config.mazeY = parseInt(mazeData.file3MazeY);
-	config.primaryColor = 'grey'
+	config.imagePath = 'images/builder/file_3.png';
 	this.locations['file3'] = new Location(config);
 
 	//set file4 location
@@ -78,7 +88,7 @@ Maze2D.prototype.initLocations = function(mazeData){
 	config.y = parseFloat(mazeData.file4Y);
 	config.mazeX = parseInt(mazeData.file4MazeX);
 	config.mazeY = parseInt(mazeData.file4MazeY);
-	config.primaryColor = 'grey'
+	config.imagePath = 'images/builder/file_4.png';
 	this.locations['file4'] = new Location(config);
 
 	//test
@@ -100,7 +110,7 @@ Maze2D.prototype.update = function(){
 	return JSON.stringify(this.data);
 }
 
-Maze2D.prototype.draw = function(layer){
+Maze2D.prototype.display = function(layer){
 	for(var y = 0; y < this.blocks.length; y++){
 		for(var x = 0; x < this.blocks[0].length; x++){
 			var block = this.blocks[y][x];
@@ -111,7 +121,6 @@ Maze2D.prototype.draw = function(layer){
 	for(var key in this.locations){
 		layer.add(this.locations[key].rect);
 	}
-	
 }
 
 Maze2D.prototype.toggleBlock = function(rectIndex, layer){
