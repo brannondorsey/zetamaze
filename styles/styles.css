@@ -77,16 +77,28 @@ body {
 }
 
 /*Editable maze key*/
-.maze-key ul{
+.maze-key{
 	list-style-type: none;
-	margin-top: 40px;
+	width: 200px;
 	padding-left: 0px;
+	margin: 25px auto 10px auto;
 }
 
-.maze-key ul li{
-	display: inline;
+.maze-key div {
+	width: 55px;
+	margin: 0px;
+	display: inline-block;
 }
 
+.maze-key div span {
+	margin: auto;
+}
+
+.maze-key div img{
+	width: 30px;
+	height: 30px;
+	margin: auto;
+}
 
 /*div container for editable 2D maze*/
 div.maze-container{
@@ -209,3 +221,13 @@ ul.tools{
 .drawing {
 	cursor: url('../images/sketcher/marker_cursor.png') 0 30, default;
 }
+
+/*upload notifications*/
+.error-text {
+	color: #fc1d00;
+}
+
+.success-text {
+	color: #22de0d;
+}
+

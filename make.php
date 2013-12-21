@@ -61,24 +61,37 @@
 	if(isset($_GET) &&
 	   !empty($_GET)){
 
-	   	$file_upload_errors = array();
+		//if maze upload was a success
+		if (isset($_GET['maze-upload-success']) &&
+			      $_GET['maze-upload-success'] == "true"){
 
-		for($i = 0; $i < $numb_files; $i++){
+		}
+		//if file upload was a success
+		else if(isset($_GET['file-upload-success']) &&
+				$_GET['file-upload-success'] == "true"){
 
-			$filename = "file" . ($i + 1);
+		}
+		//if file upload was a failure
+		else{
+			$file_upload_errors = array();
 
-			if(isset($_GET[$filename]) &&
-			   !empty($_GET[$filename])){
+			for($i = 0; $i < $numb_files; $i++){
 
-				if($_GET[$filename] == 'size_error'){
-					$file_upload_errors[] = "Item " . ($i + 1) . " was too large";
-				}else if($_GET[$filename] == 'type_error'){
-					$file_upload_errors[] = "Item " . ($i + 1) . " is not a supported file type";
+				$filename = "file" . ($i + 1);
+
+				if(isset($_GET[$filename]) &&
+				   !empty($_GET[$filename])){
+
+					if($_GET[$filename] == 'size_error'){
+						$file_upload_errors[] = "Item " . ($i + 1) . " was too large";
+					}else if($_GET[$filename] == 'type_error'){
+						$file_upload_errors[] = "Item " . ($i + 1) . " is not a supported file type";
+					}
 				}
 			}
-		}
 
-		if(!empty($file_upload_errors)) $file_upload_errors = json_encode($file_upload_errors);
+			if(!empty($file_upload_errors)) $file_upload_errors = json_encode($file_upload_errors);
+		}
 	}
 
 ?>
@@ -103,9 +116,10 @@
 			var errors = [];
 
 			var fileUploadSelector = '.file-upload input[type=file]';
+			var fileUploadNotificationSelector = '#file-upload-notification';
 
 			$(document).ready(function(){
-				
+				console.log("wassp");
 				var i = 1;
 				$(fileUploadSelector).each(function(){
 					$(this).change(function(){
@@ -114,7 +128,7 @@
 					i++;
 				});
 
-				alertIfUploadFailed();
+				notifyIfUploadFailed();
 			});
 
 			function validateFiles(){
@@ -130,7 +144,8 @@
 				
 				if(errors.length > 0){
 					var errorString = (errors.length == 1) ? errors[0] : errors.join("\n");
-					alert(errorString);
+					$(fileUploadNotificationSelector).html(errorString);
+					$(fileUploadNotificationSelector).addClass('error-text');
 					errors = [];
 					return false;
 				}else return true;
@@ -150,7 +165,7 @@
 				return inArray;
 			}
 
-			function alertIfUploadFailed(){
+			function notifyIfUploadFailed(){
 
 				<?php if(isset($file_upload_errors) &&
 					     !empty($file_upload_errors)){ ?>
@@ -158,7 +173,9 @@
 				<?php } ?>
 
 				if(typeof errors_from_get !== 'undefined'){
-					alert(errors_from_get.join("\n") + "\n\n" + "If you uploaded other files they were uploaded successfully");
+					console.log("got in here");
+					$(fileUploadNotificationSelector).html(errors_from_get.join("<br/>") + "<br/>" + "If you uploaded other files they were uploaded successfully");
+					$(fileUploadNotificationSelector).addClass('error-text');
 				}
 			}
 			
@@ -169,19 +186,24 @@
 		<?php require_once('includes/navbar.include.php'); ?>
 		<div class="content">
 
-			<!--<h2>make</h2>-->
-			<p>
-			   You can edit the structure, start point, end point, and items that are hidden around the maze and on this page. 
-			   Once you are finished editing, click the save button and the <a href="play.php">3D maze</a> will be updated to 
-			   reflect your changes.
+			<p style="text-align:center">
+			   Click to edit walls &amp; drag to move icons. <br/> 
+			   Press save below to update the <a href="play.php">3D maze</a>.
 			<p>
 
 			<div class="maze-key">
-				<ul>
-					<li style="color: #188000">Start</li>
-					<li style="color: #fc1d00">End</li>
-					<li style="color: #808080">Item</li>
-				</ul>
+				<div>
+					<img src="images/builder/begin.png"/>
+					<span>start</span>
+				</div>
+				<div>
+					<img src="images/builder/file.png"/>
+					<span>item</span>
+				</div>
+				<div>
+					<img src="images/builder/zip.png"/>
+					<span>end</span>
+				</div>
 			</div>
 
 			<div class="maze-container">
@@ -212,6 +234,7 @@
 				less than 5MB are allowed.
 			</p>
 	
+			<div id="file-upload-notification"></div>
 			<form class="file-upload" action="fileupload.php" method="post" enctype="multipart/form-data" onsubmit="return validateFiles()">
 				<?php for($i = 0; $i < 4; $i++){ 
 					$name = "file" . ($i + 1); ?>

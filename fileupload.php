@@ -3,7 +3,9 @@
 	require_once 'includes/filevalidation.include.php';
 
 	$redirect_page = "make.php";
+	$targetID = "#file-upload-notification";
 	$upload_directory = "uploads";
+
 
 	$return_data = [];
 	if(isset($_FILES) &&
@@ -46,13 +48,15 @@
 		}
 	}
 
+	$redirect_page .= "?";
 	if(count($return_data) > 0){
-		$redirect_page .= "?";
 		foreach($return_data as $key => $value){
 			$redirect_page .= $key . "=" . $value . "&";
 		}
 		$redirect_page = rtrim($redirect_page, "&");
+	}else{
+		$redirect_page .= "success=true";
 	}
 	
-	header("Location: " . $redirect_page);
+	header("Location: " . $redirect_page . $targetID);
 ?>
