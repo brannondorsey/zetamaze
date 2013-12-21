@@ -5,6 +5,7 @@ var canvas;
 var mousePressed = false;
 var prevMousePos;
 var dragToolEnabled = false;
+var fb; //color picker
 
 function hideMenus() {
   $('#colorpicker').hide();
@@ -32,21 +33,22 @@ function getMousePos(canvas, evt) {
 function bindEvents(){
 
      //color picker bindings
-     var fb = $.farbtastic('#colorpicker',setColor);
      $('#colorpicker').hide();
      $('#color_swatch').click(function(){ 
         sketcher.context.globalCompositeOperation = 'source-over';
-        hideMenus();
+        //hideMenus();
         $('#colorpicker').toggle();
      });
 
      //drag bindings
-    $(".drag_button").click(function(){
+    $("#tool_button").click(function(){
         sketcher.setEnabled(dragToolEnabled); //this is done before the toggle
         dragToolEnabled = !dragToolEnabled;
         hideMenus();
         $('#sketch').toggleClass('grab');
-        $(this).toggleClass('tool-selected');
+        $('#sketch').toggleClass('drawing');
+        $('#tool_button').toggleClass('drag_button');
+        $('#tool_button').toggleClass('draw_button');
     });
 
     canvas.addEventListener('mousemove', function(evt) {
@@ -93,6 +95,11 @@ $(document).ready(function(e) {
     }
 
     wallDrawing = new WallDrawing(hostname, canvas, 650);
+
+    //start color picker at random color
+    fb = $.farbtastic('#colorpicker', setColor);
+    var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
+    fb.setColor(randomColor);
 
     bindEvents();
 

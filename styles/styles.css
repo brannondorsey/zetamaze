@@ -153,18 +153,15 @@ form.file-upload input.button{
 	margin-top: 40px;
 }
 
+/*color picker*/
+#colorpicker{
+	position: absolute;
+}
+
 /*sketcher*/
 
 #sketcher{
 	position: relative;
-}
-
-#color_swatch{
-  width:30px;
-  height:30px;
-  background-color:black;
-  border:1px solid gray;
-  display: inline-block;
 }
 
 #sketch{
@@ -173,24 +170,30 @@ form.file-upload input.button{
   border-radius: 0px;
 }
 
+#color_swatch, #tool_button{
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff;
+  background-size: 100%;
+  border: 1px solid #888888;
+  display: inline-block;
+  cursor: pointer;
+
+}
+
 ul.tools{
 	padding: 0px;
 	margin: 0px;
 	padding-bottom: 2px;
-	float: left;
+	margin: auto;
 }
 
-.drag_button{
-  width:30px;
-  height:30px;
-  background-color:black;
-  border: 1px solid gray;
-  display: inline-block;
+.drag_button {
+  background-image: url("../images/sketcher/hand_icon.png");
 }
 
-.drag_button img{
-  width: inherit;
-  height: inherit;
+.draw_button {
+  background-image: url("../images/sketcher/marker_icon.png");
 }
 
 .grab {
@@ -203,6 +206,6 @@ ul.tools{
   cursor: -moz-grabbing; 
 }
 
-.tool-selected{
-  border:1px solid orange;
+.drawing {
+	cursor: url('../images/sketcher/marker_cursor.png') 0 30, default;
 }

@@ -32,14 +32,12 @@
 			<img id="default-brush-image" style="visibility:hidden" src="images/sketcher/tip3.png">
 			  
 	       	<ul class="tools">
-	          	<div class="drag_button">
-	              	<img src="images/hand_icon.png">
-	            </div>
-	            <div id="color_swatch"></div>
+	          	<div id="tool_button" title="tools" class="draw_button"></div>
+	            <div id="color_swatch" title="color picker"></div>
 	            <div id="colorpicker" style="position:absolute;"></div>
 	        </ul>
 
-			<canvas id="sketch" width="960" height="512"></canvas>
+			<canvas id="sketch" class="drawing" width="960" height="512"></canvas>
 
 			<p style="text-align: center; padding-top: 20px">Finished drawing? Try and <a href="play.php">find</a> it.</p>
 			

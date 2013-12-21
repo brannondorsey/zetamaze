@@ -7,20 +7,20 @@
 - Add 3D maze instructions
 - Add menu to `play.php`
 - better instructions in `make.php`
-- Better tool handling in `draw.php`
+- ~~Better tool handling in `draw.php`~~
 - Detailed about/instructions/more info page
 - Make collisions better (at least fix bug where a player can get stuck)
 - Add maze2D error if start and end are too close
 - Style upload buttons
 - Add meaningful meta tags in head include
-- Get sponsorship
 - Check backend file upload validation
 - Set direction of 3D player so that they never start facing a wall
 - Build end of game `.zip` download system
 - Review all copy
 - Come up with canvas maze reload process to prevent large overwrites
 - Do ^ with sketcher
-- Use random color on sketcher page load
+- ~~Use random color on sketcher page load~~
+- ~~Add marker icon~~
 - Come up with better system for 2D maze error handling. Currently it has the possibility to block the maze.
 - Better feedback when using file upload on make.php. Do not us alerts.
 - Remove all `console.log()` occurrences before launch.
