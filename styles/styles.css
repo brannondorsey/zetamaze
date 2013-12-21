@@ -223,11 +223,11 @@ ul.tools{
 }
 
 /*upload notifications*/
-.error-text {
+.error-text, .error-text a, .success-text a:link, .error-text a:hover, .error-text a:visited {
 	color: #fc1d00;
 }
 
-.success-text {
+.success-text, .success-text a, .success-text a:link, .success-text a:hover, .success-text a:visited {
 	color: #22de0d;
 }
 

@@ -57,6 +57,11 @@
 		$mazeData = json_encode($json->data[0]);
 	}else die("Database error");
 
+	//vars that hold upload messages from GET
+	$maze_upload_success = false;
+	$file_upload_success = false;
+	$file_upload_errors = array();
+	
 	//if GET...
 	if(isset($_GET) &&
 	   !empty($_GET)){
@@ -64,17 +69,16 @@
 		//if maze upload was a success
 		if (isset($_GET['maze-upload-success']) &&
 			      $_GET['maze-upload-success'] == "true"){
-
+			$maze_upload_success = true;
 		}
 		//if file upload was a success
 		else if(isset($_GET['file-upload-success']) &&
 				$_GET['file-upload-success'] == "true"){
-
+			$file_upload_success = true;
 		}
 		//if file upload was a failure
 		else{
-			$file_upload_errors = array();
-
+			
 			for($i = 0; $i < $numb_files; $i++){
 
 				$filename = "file" . ($i + 1);
@@ -112,14 +116,16 @@
 		<script type="text/javascript" src="scripts/canvas/maze/classes/ErrorHandler.js"></script>
 		<script>
 			var fileInputVals = [];
-			var allowedExtensions = <?php echo $allowed_exts_JSON ?> ;//don't forget semi
+			var allowedExtensions = <?php echo $allowed_exts_JSON ?> ; //don't forget semi
 			var errors = [];
-
 			var fileUploadSelector = '.file-upload input[type=file]';
 			var fileUploadNotificationSelector = '#file-upload-notification';
 
+			var fileUploadSuccess = <?php echo json_encode($file_upload_success) ?>; //don't forget semi
+			var mazeUploadSuccess = <?php echo json_encode($maze_upload_success) ?>;
+
 			$(document).ready(function(){
-				console.log("wassp");
+
 				var i = 1;
 				$(fileUploadSelector).each(function(){
 					$(this).change(function(){
@@ -127,6 +133,17 @@
 					});
 					i++;
 				});
+
+				//if a maze was saved successfully
+				if(mazeUploadSuccess){
+					$("#instructions").html("Maze updated, go <a href=\"play.php\">play</a>!");
+					$("#instructions").addClass('success-text');
+				}
+
+				if(fileUploadSuccess){
+					$(fileUploadNotificationSelector).html("Upload successful!");
+					$(fileUploadNotificationSelector).addClass("success-text");
+				}
 
 				notifyIfUploadFailed();
 			});
@@ -167,8 +184,7 @@
 
 			function notifyIfUploadFailed(){
 
-				<?php if(isset($file_upload_errors) &&
-					     !empty($file_upload_errors)){ ?>
+				<?php if(!empty($file_upload_errors)){ ?>
 					 var errors_from_get = <?php echo $file_upload_errors ?> ; //don't forget semi
 				<?php } ?>
 
@@ -185,8 +201,8 @@
 	<body>
 		<?php require_once('includes/navbar.include.php'); ?>
 		<div class="content">
-
-			<p style="text-align:center">
+			<div id="maze-upload-notification"></div>
+			<p id="instructions" style="text-align:center">
 			   Click to edit walls &amp; drag to move icons. <br/> 
 			   Press save below to update the <a href="play.php">3D maze</a>.
 			<p>
@@ -216,7 +232,7 @@
 			</script>
 			<script defer="defer" type="text/javascript" src="scripts/canvas/maze/canvas-maze.js">//code for 2D editable maze</script>
 
-			<form id="maze-form" method="post" action="" onsubmit="return saveMaze()">
+			<form id="maze-form" method="post" action="make.php?maze-upload-success=true" onsubmit="return saveMaze()">
 				<?php 
 				$input_columns = explode(", ", API::format_comma_delimited($columns));
 				unset($input_columns[0]);
@@ -225,7 +241,7 @@
 				foreach ($input_columns as $column) {?>
 					<input <?php if(strstr($column, "file") !== false){ echo "id='file" . ceil($i/4) . "'"; $i++; }?>name="<?php echo $column ?>" type="hidden" value="">
 				<?php }?>
-				<input type="submit" value="save" class="button">
+				<input id="save" type="submit" value="save" class="button">
 			</form>
 
 			<p>

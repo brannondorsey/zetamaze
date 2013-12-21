@@ -55,7 +55,7 @@
 		}
 		$redirect_page = rtrim($redirect_page, "&");
 	}else{
-		$redirect_page .= "success=true";
+		$redirect_page .= "file-upload-success=true";
 	}
 	
 	header("Location: " . $redirect_page . $targetID);

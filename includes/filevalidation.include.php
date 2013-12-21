@@ -8,6 +8,7 @@
 						'pdf',
 						'jpg', //image
 						'jpeg',
+						'JPG',
 						'png',
 						'gif',
 						'tiff',
