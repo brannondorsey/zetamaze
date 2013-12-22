@@ -223,7 +223,6 @@ ul.tools{
 }
 
 /*upload notifications and instructions*/
-
 .instructions{
 	opacity: 0;
 	-webkit-transition: opacity 1s,  color 1s;  
@@ -232,7 +231,7 @@ ul.tools{
     transition: opacity 1s,  color 1s;
 }
 
-.instructions-show, .opacity-reset{
+.instructions-show{
 	opacity: 1;
 }
 
@@ -253,4 +252,6 @@ ul.tools{
 	color: #22de0d;
 	opacity: 1;
 }
+
+
 

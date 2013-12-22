@@ -5,12 +5,12 @@
 	$redirect_page = "make.php";
 	$targetID = "#file-upload-notification";
 	$upload_directory = "uploads";
-
-
+	
 	$return_data = [];
-	if(isset($_FILES) &&
-	   !empty($_FILES)){
+	$files_uploaded = files_present($_FILES);
 
+	if($files_uploaded){
+		
 	   	$numb_files = count($_FILES);
 		for($i = 0; $i < $numb_files; $i++){
 
@@ -30,7 +30,6 @@
 							$return_data[$filename] = urlencode($file["error"]);
 						}else{ //the file is good!
 
-
 							  //delete the old file
 							  $current_files = scandir($upload_directory);
 
@@ -48,15 +47,31 @@
 		}
 	}
 
-	$redirect_page .= "?";
-	if(count($return_data) > 0){
-		foreach($return_data as $key => $value){
-			$redirect_page .= $key . "=" . $value . "&";
-		}
-		$redirect_page = rtrim($redirect_page, "&");
-	}else{
-		$redirect_page .= "file-upload-success=true";
+	
+	if(!$files_uploaded){
+		$return_data['no_files'] = "true";
 	}
 	
+	if(count($return_data) == 0){
+		$return_data["file_upload_success"] = "true";
+	}
+
+	$redirect_page .= "?";
+	foreach($return_data as $key => $value){
+		$redirect_page .= $key . "=" . $value . "&";
+	}
+	$redirect_page = rtrim($redirect_page, "&");
+	
 	header("Location: " . $redirect_page . $targetID);
+
+	function files_present($files){
+		if(isset($files) &&
+		   !empty($files)){
+			$numb_empty = 0;
+			foreach($files as $file){
+				if($file['name'] == '') $numb_empty++;
+			}
+			return ($numb_empty == count($files)) ? false : true;
+		}return false;
+	}
 ?>

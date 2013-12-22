@@ -67,18 +67,23 @@
 	   !empty($_GET)){
 
 		//if maze upload was a success
-		if (isset($_GET['maze-upload-success']) &&
-			      $_GET['maze-upload-success'] == "true"){
+		if (isset($_GET['maze_upload_success']) &&
+			      $_GET['maze_upload_success'] == "true"){
 			$maze_upload_success = true;
 		}
 		//if file upload was a success
-		else if(isset($_GET['file-upload-success']) &&
-				$_GET['file-upload-success'] == "true"){
+		else if(isset($_GET['file_upload_success']) &&
+				$_GET['file_upload_success'] == "true"){
 			$file_upload_success = true;
+		}
+		//if no files were sent but "upload" was pressed
+		else if(isset($_GET['no_files']) &&
+				$_GET['no_files'] == "true"){
+			$file_upload_errors[] = "No files selected";
 		}
 		//if file upload was a failure
 		else{
-			
+		
 			for($i = 0; $i < $numb_files; $i++){
 
 				$filename = "file" . ($i + 1);
@@ -93,8 +98,6 @@
 					}
 				}
 			}
-
-			if(!empty($file_upload_errors)) $file_upload_errors = json_encode($file_upload_errors);
 		}
 	}
 
@@ -191,18 +194,19 @@
 			function notifyIfUploadFailed(){
 
 				<?php if(!empty($file_upload_errors)){ ?>
-					 var errors_from_get = <?php echo $file_upload_errors ?> ; //don't forget semi
+					 var errorsFromGet = <?php echo json_encode($file_upload_errors) ?> ; //don't forget semi
+					 console.log(errorsFromGet);
 				<?php } ?>
 
-				if(typeof errors_from_get !== 'undefined'){
-					$(fileUploadNotificationSelector).html(errors_from_get.join("<br/>") + "<br/>" + "If you uploaded other files they were uploaded successfully");
+				if(typeof errorsFromGet !== 'undefined'){
+					$(fileUploadNotificationSelector).html(errorsFromGet.join("<br/>") + "<br/>" + "If you uploaded other files they were uploaded successfully");
 					$(fileUploadNotificationSelector).addClass('error-text');
 				}
 			}
 
 			function onFilesSubmit(){
-				$(fileUploadNotificationSelector).removeClass('error-text');
-				$(fileUploadNotificationSelector).removeClass('success-text');	
+				$(fileUploadNotificationSelector).removeClass();
+				$(fileUploadNotificationSelector).addClass('file-upload-notification');	
 			}
 			
 		</script>
@@ -242,7 +246,7 @@
 			</script>
 			<script defer="defer" type="text/javascript" src="scripts/canvas/maze/canvas-maze.js">//code for 2D editable maze</script>
 
-			<form id="maze-form" method="post" action="make.php?maze-upload-success=true" onsubmit="return saveMaze();">
+			<form id="maze-form" method="post" action="make.php?maze_upload_success=true" onsubmit="return saveMaze();">
 				<?php 
 				$input_columns = explode(", ", API::format_comma_delimited($columns));
 				unset($input_columns[0]);
