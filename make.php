@@ -134,10 +134,16 @@
 					i++;
 				});
 
+				//fade in instructions
+				setTimeout(function(){
+					$(".instructions").addClass('instructions-show');
+				}, 200);
+				
+
 				//if a maze was saved successfully
 				if(mazeUploadSuccess){
-					$("#instructions").html("Maze updated, go <a href=\"play.php\">play</a>!");
-					$("#instructions").addClass('success-text');
+					$(".instructions").html("Maze updated, go <a href=\"play.php\">play</a>!");
+					$(".instructions").addClass('success-text');
 				}
 
 				if(fileUploadSuccess){
@@ -160,7 +166,7 @@
 				});
 				
 				if(errors.length > 0){
-					var errorString = (errors.length == 1) ? errors[0] : errors.join("\n");
+					var errorString = (errors.length == 1) ? errors[0] : errors.join("<br/>");
 					$(fileUploadNotificationSelector).html(errorString);
 					$(fileUploadNotificationSelector).addClass('error-text');
 					errors = [];
@@ -189,10 +195,14 @@
 				<?php } ?>
 
 				if(typeof errors_from_get !== 'undefined'){
-					console.log("got in here");
 					$(fileUploadNotificationSelector).html(errors_from_get.join("<br/>") + "<br/>" + "If you uploaded other files they were uploaded successfully");
 					$(fileUploadNotificationSelector).addClass('error-text');
 				}
+			}
+
+			function onFilesSubmit(){
+				$(fileUploadNotificationSelector).removeClass('error-text');
+				$(fileUploadNotificationSelector).removeClass('success-text');	
 			}
 			
 		</script>
@@ -202,7 +212,7 @@
 		<?php require_once('includes/navbar.include.php'); ?>
 		<div class="content">
 			<div id="maze-upload-notification"></div>
-			<p id="instructions" style="text-align:center">
+			<p class="instructions" style="text-align:center">
 			   Click to edit walls &amp; drag to move icons. <br/> 
 			   Press save below to update the <a href="play.php">3D maze</a>.
 			<p>
@@ -232,7 +242,7 @@
 			</script>
 			<script defer="defer" type="text/javascript" src="scripts/canvas/maze/canvas-maze.js">//code for 2D editable maze</script>
 
-			<form id="maze-form" method="post" action="make.php?maze-upload-success=true" onsubmit="return saveMaze()">
+			<form id="maze-form" method="post" action="make.php?maze-upload-success=true" onsubmit="return saveMaze();">
 				<?php 
 				$input_columns = explode(", ", API::format_comma_delimited($columns));
 				unset($input_columns[0]);
@@ -250,8 +260,8 @@
 				less than 5MB are allowed.
 			</p>
 	
-			<div id="file-upload-notification"></div>
-			<form class="file-upload" action="fileupload.php" method="post" enctype="multipart/form-data" onsubmit="return validateFiles()">
+			<div id="file-upload-notification" class="file-upload-notification"><!--note: class and id duplicates are not a mistake--></div>
+			<form class="file-upload" action="fileupload.php" method="post" enctype="multipart/form-data" onsubmit="onFilesSubmit(); return validateFiles();">
 				<?php for($i = 0; $i < 4; $i++){ 
 					$name = "file" . ($i + 1); ?>
 				<div class="file-upload-input-container">
@@ -261,7 +271,6 @@
 				<?php } ?>
 				<input type="submit" name="submit" value="upload" class="button">
 			</form>
-
 
 			<p style="text-align: center">Finished editing the structure of the maze? You should <a href="draw.php">draw</a> or <a href="play.php">play</a>!</p>
 		</div>

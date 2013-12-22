@@ -22,7 +22,7 @@
 - ~~Use random color on sketcher page load~~
 - ~~Add marker icon~~
 - Come up with better system for 2D maze error handling. Currently it has the possibility to block the maze.
-- Better feedback when using file upload on make.php. Do not us alerts.
+- ~~Better feedback when using file upload on make.php. Do not us alerts.~~
 - Remove all `console.log()` occurrences before launch.
 - Setup a cron job to auto back things up.
 - FAQ page?

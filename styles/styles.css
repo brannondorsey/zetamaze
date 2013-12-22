@@ -222,12 +222,35 @@ ul.tools{
 	cursor: url('../images/sketcher/marker_cursor.png') 0 30, default;
 }
 
-/*upload notifications*/
+/*upload notifications and instructions*/
+
+.instructions{
+	opacity: 0;
+	-webkit-transition: opacity 1s,  color 1s;  
+    -moz-transition: opacity 1s,  color 1s;  
+    -o-transition: opacity 1s,  color 1s;  
+    transition: opacity 1s,  color 1s;
+}
+
+.instructions-show, .opacity-reset{
+	opacity: 1;
+}
+
+.file-upload-notification {
+	opacity: 0;
+	-webkit-transition: opacity 1s,  color 1s;  
+    -moz-transition: opacity 1s,  color 1s;  
+    -o-transition: opacity 1s,  color 1s;  
+    transition: opacity 1s,  color 1s;
+}
+
 .error-text, .error-text a, .success-text a:link, .error-text a:hover, .error-text a:visited {
 	color: #fc1d00;
+	opacity: 1;
 }
 
 .success-text, .success-text a, .success-text a:link, .success-text a:hover, .success-text a:visited {
 	color: #22de0d;
+	opacity: 1;
 }
 
