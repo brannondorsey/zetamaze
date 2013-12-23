@@ -22,6 +22,11 @@ body {
 	padding-top: 0px;
 }
 
+/*only shows up on play page*/
+.navbar-insert {
+	display: none;
+}
+
 .content a{
 	color: #000000;
 }
@@ -133,7 +138,7 @@ div.error-box ul li{
 }
 
 /*save button*/
-.button{
+.button, #instructions button, .navbar-insert button{
 	margin: 25px;
 	font-family: "Andale Mono", "Courier New", Courier, monospace;
 	background-color: #ffffff;
@@ -142,7 +147,7 @@ div.error-box ul li{
 	border: 1px solid #000000;
 }
 
-.button:hover, input.button:focus{
+.button:hover, input.button:focus, #instructions button:hover, #instructions button:focus, .navbar-insert button:hover, .navbar-insert button:focus{
 	background-color: #000000;
 	color: #ffffff;
 	cursor: pointer;

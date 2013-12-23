@@ -15,6 +15,7 @@ canvas{
         width: 100%;
         height: 100%;
         background-color: #000000;
+        text-align: center;
 }
 
 progress[value] {
@@ -29,6 +30,7 @@ progress[value] {
 
   width: 400px;
   height: 30px;
+  margin: auto;
   
   /* For IE10 */
   color: #ffffff; 
@@ -45,26 +47,13 @@ progress[value]::-moz-progress-bar{
 }
 
 #instructions{
-
-        width: 100%;
-        height: 100%;
-
-        display: -webkit-box;
-        display: -moz-box;
-        display: box;
-
-        -webkit-box-orient: horizontal;
-        -moz-box-orient: horizontal;
-        box-orient: horizontal;
-
-        -webkit-box-pack: center;
-        -moz-box-pack: center;
-        box-pack: center;
-
-        -webkit-box-align: center;
-        -moz-box-align: center;
-        box-align: center;
-
+        display: none;
+        padding: 15px;
+        position: absolute;
+        background-color: white;
+        border: 3px solid black;
+        border-radius: 10px;
+        z-index: 2;
         color: #ffffff;
         cursor: default;
         text-align: center;
@@ -78,3 +67,28 @@ progress[value]::-moz-progress-bar{
 #instructions a:visited{
         color: #ffffff;
 }
+
+#instructions img{
+  width: 200px;
+  height: 200px;
+  margin: 7px;
+}
+
+#instructions button{
+  display: block;
+  margin: 10px auto;
+}
+
+/*show.navbar-insert*/
+.navbar-insert{
+  display: inline-block;
+  font-size: 10pt;
+  padding-top: 13px;
+}
+
+.navbar-insert button{ 
+  font-size: 12pt;
+  padding: 2px 5px;
+  margin: 0px;
+}
+

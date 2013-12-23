@@ -23,32 +23,49 @@
 		<script>
 			var hostname = <?php echo "'" . $HOSTNAME . "'"?>;
 			$(document).ready(function(){
+
 				if(!Detector.webgl){
-					$('div#instructions').html("Ooops, it looks like your browser doesn't support WebGL. Trying using Google Chrome.");
+					instructions.html("Oops, it looks like your browser doesn't support WebGL. Trying using Google Chrome.");
 				}
+
+				//position progress bar in center of screen
+				$('progress').css({ marginTop: window.innerHeight - $(this).height() / 2 });
+
+				//postion instructions box in center of screen
+				centerInstructions();
+
+				//register resize event
+				window.onresize = function(event){
+					centerInstructions();
+				}
+
 			});
 		</script>
 	</head>
 
 	<body>
 		<?php require_once('includes/navbar.include.php'); ?>
-		
-		<div id="blocker">
-			<div id="instructions">
-				<progress value="0" max="100"></progress>
-			</div>
+		<div id="instructions">
+			<img src="images/maze/move_instructions.png" alt="Move using the W, A, S, and D keys"/>
+			<img src="images/maze/look_instructions.png" alt="Look using the mouse or the arrow keys"/>
+			<button type="button" onclick="hideInstructions()">got it!</button>	
 		</div>
+		<div id="blocker">
+			<progress value="0" max="100"></progress>
+		</div>
+		
+		
 
 
 		<script>
 
 			//globals
+			var element = document.body; //used for pointer lock
 			var renderer, scene, camera, clock, character, stats, displayStats, maze3D;
 			scene = new THREE.Scene();
 
-			var blocker = document.getElementById( 'blocker' );
-			var instructions = document.getElementById( 'instructions' );
 			var progress = $('progress');
+			var instructions = $("#instructions");
 			var isLoaded = false;
 			
 			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
@@ -83,7 +100,9 @@
 				//renderer
 				var heightSubtractor = $('#navbar').height();
 				renderer.setSize(window.innerWidth, window.innerHeight - heightSubtractor);
-				document.body.appendChild(renderer.domElement);
+				var domElement = renderer.domElement;
+				domElement.onclick = lockPointer;
+				document.body.appendChild(domElement);
 			    
 			    //camera
 			    scene.add(camera);
@@ -118,7 +137,6 @@
 					stats.domElement.style.zIndex = 100;
 					document.body.appendChild( stats.domElement );
 				}
-
 			}
 
 			function animate() {
@@ -131,7 +149,10 @@
 				   isLoaded = maze3D.isLoaded();
 				   //just loaded!
 				   if(isLoaded){
+				   		$('#blocker').remove();
+						showInstructions();
 				   		startGame();
+				   		
 				   }
 				}
 				maze3D.update(delta);
@@ -140,109 +161,72 @@
 
 			}
 
-			//called once loading bar
+			//called once loading bar finishes
 			function startGame(){
 
-				var canvas = document.getElementsByTagName("canvas")[0];
-				//for some reason a weird error "jquery failed to load" error is thrown when
-				//the below event is bound to anything but the document (i.e. the canvas)
-				document.addEventListener( 'click', function ( event ) {
-
-					var havePointerLock = 'pointerLockElement' in document ||
-									   'mozPointerLockElement' in document ||
-									'webkitPointerLockElement' in document;
-					
-					if ( !havePointerLock ) return;
-
-					if ( document.pointerLockElement === element || 
-						 document.mozPointerLockElement === element || 
-						 document.webkitPointerLockElement === element ) {
-
-							blocker.style.display = 'none';
-
-						} else {
-
-							blocker.style.display = '-webkit-box';
-							blocker.style.display = '-moz-box';
-							blocker.style.display = 'box';
-
-							instructions.style.display = '';
-						}
-					
-					var element = document.body;
-					// Ask the browser to lock the pointer
-					element.requestPointerLock = element.requestPointerLock ||
-											  element.mozRequestPointerLock ||
-										   element.webkitRequestPointerLock;
-
-					// Ask the browser to lock the pointer
-					element.requestPointerLock();
-
-					function pointerlockerror(){
-						instructions.style.display = '';
-					}
-					
-					// Hook pointer lock state change events
-					document.addEventListener(      'pointerlockchange', pointerLockChange, false);
-					document.addEventListener(   'mozpointerlockchange', pointerLockChange, false);
-					document.addEventListener('webkitpointerlockchange', pointerLockChange, false);
-
-					document.addEventListener( 'pointerlockerror', pointerlockerror, false );
-					document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
-					document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
-
-					instructions.addEventListener( 'click', function ( event ) {
-
-						instructions.style.display = 'none';
-
-						// Ask the browser to lock the pointer
-						element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
-
-						if ( /Firefox/i.test( navigator.userAgent ) ) {
-
-							var fullscreenchange = function ( event ) {
-
-								if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
-
-									document.removeEventListener( 'fullscreenchange', fullscreenchange );
-									document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
-
-									element.requestPointerLock();
-								}
-							}
-
-							document.addEventListener( 'fullscreenchange', fullscreenchange, false );
-							document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
-
-							element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
-
-							element.requestFullscreen();
-
-						} else {
-
-							element.requestPointerLock();
-						}
-
-					}, false );
-				}, false);
-				instructions.click();
 			}
 
-			function pointerLockChange(event){
+			function centerInstructions(){
+				instructions.css({
+					top: window.innerHeight / 2 - instructions.height() / 2,
+					left: window.innerWidth / 2 - instructions.width() / 2,
+				});
+			}
 
-				var element = document.body;
-				if (document.pointerLockElement       === element ||
-				    document.mozPointerLockElement    === element ||
-			        document.webkitPointerLockElement === element) {
+			function showInstructions(){
+				instructions.show();
+			}
 
-					// Pointer was just locked, enable the mousemove listener
-					document.addEventListener("mousemove", mouseMove, false);
-				} 
-				else {
-					// Pointer was just unlocked, disable the mousemove listener
-					document.removeEventListener("mousemove", mouseMove, false);
+			function hideInstructions(){
+				instructions.hide();
+			}
+
+			function lockPointer() {
+
+				var havePointerLock = 'pointerLockElement' in document ||
+								   'mozPointerLockElement' in document ||
+								'webkitPointerLockElement' in document;
+				
+				if ( !havePointerLock ) return;
+				
+				// Ask the browser to lock the pointer
+				element.requestPointerLock = element.requestPointerLock ||
+										  element.mozRequestPointerLock ||
+									   element.webkitRequestPointerLock;
+
+				// Ask the browser to lock the pointer
+				element.requestPointerLock();
+
+				function pointerlockerror(){
+					console.log('pointer lock error');
+					// instructions.style.display = '';
+				}
+				
+				// Hook pointer lock state change events
+				document.addEventListener(      'pointerlockchange', pointerLockChange, false);
+				document.addEventListener(   'mozpointerlockchange', pointerLockChange, false);
+				document.addEventListener('webkitpointerlockchange', pointerLockChange, false);
+
+				document.addEventListener( 'pointerlockerror', pointerlockerror, false );
+				document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
+				document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
+
+				function pointerLockChange(event){
+
+					if (document.pointerLockElement       === element ||
+					    document.mozPointerLockElement    === element ||
+				        document.webkitPointerLockElement === element) {
+
+						// Pointer was just locked, enable the mousemove listener
+						document.addEventListener("mousemove", mouseMove, false);
+					} 
+					else {
+						// Pointer was just unlocked, disable the mousemove listener
+						document.removeEventListener("mousemove", mouseMove, false);
+					}
 				}
 			}
+
 
 			function mouseMove(e){
 				character.mouseMove(e);
