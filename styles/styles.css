@@ -14,7 +14,12 @@ body {
 	margin: auto;
 	padding-bottom: 40px;
 	font-family: "Andale Mono", "Courier New", Courier, monospace;
+	padding-top: 40px;
 	font-size: 12pt;
+}
+
+#navbar .content{
+	padding-top: 0px;
 }
 
 .content a{
@@ -28,7 +33,6 @@ body {
 	color: #ffffff;
 	font-size: 14pt;
 	background-color: #000000;
-	margin-bottom: 40px;
 }
 
 /*title*/

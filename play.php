@@ -4,7 +4,7 @@
 		<?php require_once "includes/config.include.php";
 			  require_once "includes/head.include.php";
 	     ?>
-
+	    <link rel="stylesheet" type="text/css" href="styles/styles.css">
 		<link rel="stylesheet" type="text/css" href="styles/maze3d.css">
 		<script src="scripts/three/three.js"></script>
 		<script src="scripts/jquery-1.10.2.min.js"></script>
@@ -31,11 +31,14 @@
 	</head>
 
 	<body>
+		<?php require_once('includes/navbar.include.php'); ?>
+		
 		<div id="blocker">
 			<div id="instructions">
 				<progress value="0" max="100"></progress>
 			</div>
 		</div>
+
 
 		<script>
 
@@ -71,14 +74,15 @@
 			
 			function init(maze3D){
 
-				renderer = new THREE.WebGLRenderer({antialias:true}); 
+				renderer = new THREE.WebGLRenderer({ antialias: true }); 
 				camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 26);
 				clock = new THREE.Clock();
 
 				displayStats = true;
 
 				//renderer
-				renderer.setSize(window.innerWidth, window.innerHeight);
+				var heightSubtractor = $('#navbar').height();
+				renderer.setSize(window.innerWidth, window.innerHeight - heightSubtractor);
 				document.body.appendChild(renderer.domElement);
 			    
 			    //camera
@@ -103,7 +107,7 @@
 				character.registerCollisionObjects(maze3D.getBlockMeshes(), maze3D.getBlockSize());
 
 				//bind resize event
-				THREEx.WindowResize(renderer, camera);
+				THREEx.WindowResize(renderer, camera, heightSubtractor);
 
 				//stants
 				if(displayStats){
@@ -139,6 +143,9 @@
 			//called once loading bar
 			function startGame(){
 
+				var canvas = document.getElementsByTagName("canvas")[0];
+				//for some reason a weird error "jquery failed to load" error is thrown when
+				//the below event is bound to anything but the document (i.e. the canvas)
 				document.addEventListener( 'click', function ( event ) {
 
 					var havePointerLock = 'pointerLockElement' in document ||
