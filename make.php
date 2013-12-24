@@ -117,9 +117,11 @@
 		<script type="text/javascript" src="scripts/canvas/maze/classes/Maze2D.js"></script>
 		<script type="text/javascript" src="scripts/canvas/maze/classes/Location.js"></script>
 		<script type="text/javascript" src="scripts/canvas/maze/classes/ErrorHandler.js"></script>
-		<script>
+		<script type="text/javascript">
+
 			var fileInputVals = [];
 			var allowedExtensions = <?php echo $allowed_exts_JSON ?> ; //don't forget semi
+			var maxFileSize = <?php echo $max_size ?> ; //don't forget semi
 			var errors = [];
 			var fileUploadSelector = '.file-upload input[type=file]';
 			var fileUploadNotificationSelector = '#file-upload-notification';
@@ -127,15 +129,15 @@
 			var fileUploadSuccess = <?php echo json_encode($file_upload_success) ?>; //don't forget semi
 			var mazeUploadSuccess = <?php echo json_encode($maze_upload_success) ?>;
 
-			$(document).ready(function(){
+			<?php if(!empty($file_upload_errors)){ ?>
+				 var errorsFromGet = <?php echo json_encode($file_upload_errors) ?> ; //don't forget semi
+			<?php } ?>
 
-				var i = 1;
-				$(fileUploadSelector).each(function(){
-					$(this).change(function(){
-						fileInputVals['file' + i] = $(this).val();
-					});
-					i++;
-				});
+		</script>
+		<script type="text/javascript" src="scripts/fileupload.js">//front end file upload code</script>
+		<script type="text/javascript">
+
+			$(document).ready(function(){
 
 				//fade in instructions
 				setTimeout(function(){
@@ -148,67 +150,7 @@
 					$(".instructions").html("Maze updated, go <a href=\"play.php\">play</a>!");
 					$(".instructions").addClass('success-text');
 				}
-
-				if(fileUploadSuccess){
-					$(fileUploadNotificationSelector).html("Upload successful!");
-					$(fileUploadNotificationSelector).addClass("success-text");
-				}
-
-				notifyIfUploadFailed();
 			});
-
-			function validateFiles(){
-
-				var i = 1;
-				$(fileUploadSelector).each(function(){
-					var filePath = $(this).val();
-					console.log(filePath);
-					if(filePath != '' &&
-					   !allowedFileType(filePath)) errors.push('Item ' + i + ' is not an allowed file type');
-					i++;
-				});
-				
-				if(errors.length > 0){
-					var errorString = (errors.length == 1) ? errors[0] : errors.join("<br/>");
-					$(fileUploadNotificationSelector).html(errorString);
-					$(fileUploadNotificationSelector).addClass('error-text');
-					errors = [];
-					return false;
-				}else return true;
-			}
-
-			//bool
-			function allowedFileType(filePath){
-				var periodIndex = filePath.lastIndexOf('.');
-				var ext = filePath.substring(periodIndex + 1);
-				var inArray = false;
-				for(var i = 0; i < allowedExtensions.length; i++){
-					if(ext == allowedExtensions[i]){
-						inArray = true;
-						break;
-					}
-				}
-				return inArray;
-			}
-
-			function notifyIfUploadFailed(){
-
-				<?php if(!empty($file_upload_errors)){ ?>
-					 var errorsFromGet = <?php echo json_encode($file_upload_errors) ?> ; //don't forget semi
-					 console.log(errorsFromGet);
-				<?php } ?>
-
-				if(typeof errorsFromGet !== 'undefined'){
-					$(fileUploadNotificationSelector).html(errorsFromGet.join("<br/>") + "<br/>" + "If you uploaded other files they were uploaded successfully");
-					$(fileUploadNotificationSelector).addClass('error-text');
-				}
-			}
-
-			function onFilesSubmit(){
-				$(fileUploadNotificationSelector).removeClass();
-				$(fileUploadNotificationSelector).addClass('file-upload-notification');	
-			}
-			
 		</script>
 	</head>
 
@@ -265,7 +207,7 @@
 			</p>
 	
 			<div id="file-upload-notification" class="file-upload-notification"><!--note: class and id duplicates are not a mistake--></div>
-			<form class="file-upload" action="fileupload.php" method="post" enctype="multipart/form-data" onsubmit="onFilesSubmit(); return validateFiles();">
+			<form class="file-upload" action="fileupload.php" method="post" enctype="multipart/form-data" onsubmit="return onFilesSubmit()">
 				<?php for($i = 0; $i < 4; $i++){ 
 					$name = "file" . ($i + 1); ?>
 				<div class="file-upload-input-container">

@@ -1,5 +1,5 @@
 <?php
-
+	
 	require_once 'includes/filevalidation.include.php';
 
 	$redirect_page = "make.php";
@@ -61,7 +61,7 @@
 		$redirect_page .= $key . "=" . $value . "&";
 	}
 	$redirect_page = rtrim($redirect_page, "&");
-	
+
 	header("Location: " . $redirect_page . $targetID);
 
 	function files_present($files){
@@ -71,7 +71,11 @@
 			foreach($files as $file){
 				if($file['name'] == '') $numb_empty++;
 			}
+			
 			return ($numb_empty == count($files)) ? false : true;
-		}return false;
+		}else{
+			
+			return false;
+		}
 	}
 ?>

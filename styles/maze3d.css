@@ -46,7 +46,7 @@ progress[value]::-moz-progress-bar{
         background-color: #ffffff;
 }
 
-#instructions{
+#instructions, #end-container{
         display: none;
         padding: 15px;
         position: absolute;
@@ -54,7 +54,7 @@ progress[value]::-moz-progress-bar{
         border: 3px solid black;
         border-radius: 10px;
         z-index: 2;
-        color: #ffffff;
+        
         cursor: default;
         text-align: center;
         font-family: "Andale Mono", helvetica, arial, sans-serif;
@@ -87,7 +87,6 @@ progress[value]::-moz-progress-bar{
 }
 
 .navbar-insert span{
-
   opacity: 0;
 }
 
@@ -104,5 +103,17 @@ progress[value]::-moz-progress-bar{
 .navbar-insert button:hover, .navbar-insert button:focus{
   background-color: #ffffff;
   color: #000000;
-} 
+}
+
+/* Zip file upload */
+/* temp */
+#end-container {
+  display: block;
+  width: 500px;
+}
+
+#end-container p{
+  text-align: left;
+}
+
 

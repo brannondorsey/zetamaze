@@ -32,11 +32,11 @@
 				$('progress').css({ marginTop: window.innerHeight - $(this).height() / 2 });
 
 				//postion instructions box in center of screen
-				centerInstructions();
+				centerBoxes();
 
 				//register resize event
 				window.onresize = function(event){
-					centerInstructions();
+					centerBoxes();
 				}
 
 			});
@@ -45,17 +45,28 @@
 
 	<body>
 		<?php require_once('includes/navbar.include.php'); ?>
-		<div id="instructions">
+		<div id="instructions" class="centered-box">
 			<img src="images/maze/move_instructions.png" alt="Move using the W, A, S, and D keys"/>
 			<img src="images/maze/look_instructions.png" alt="Look using the mouse or the arrow keys"/>
 			<button type="button" onclick="hideInstructions()">got it!</button>	
 		</div>
+		<div id="end-container" class="centered-box">
+			<p>
+				You found the Finder's Folder! A <code>.zip</code> containing 25 files has been downloaded to your computer.
+			 	Each of these files was uploaded by someone else who found the Finder's Folder. Now its your turn to upload.
+			</p>
+			<div id="file-upload-notification" class="file-upload-notification"><!--note: class and id duplicates are not a mistake--></div>
+			<form class="zip-file-upload" action="fileupload.php" method="post" enctype="multipart/form-data" onsubmit="onFilesSubmit(); return validateFiles();">
+				<div class="file-upload-input-container">
+					<label for="end-file">File</label>
+					<input type="file" name="end" id="end-file">
+				</div>
+				<input type="submit" name="submit" value="upload" class="button">
+			</form>
+		</div>
 		<div id="blocker">
 			<progress value="0" max="100"></progress>
 		</div>
-		
-		
-
 
 		<script>
 
@@ -66,6 +77,7 @@
 
 			var progress = $('progress');
 			var instructions = $("#instructions");
+
 			var isLoaded = false;
 			var isPointerLocked = false;
 			
@@ -167,10 +179,12 @@
 
 			}
 
-			function centerInstructions(){
-				instructions.css({
-					top: window.innerHeight / 2 - instructions.height() / 2,
-					left: window.innerWidth / 2 - instructions.width() / 2,
+			function centerBoxes(){
+				$('.centered-box').each(function(){
+					$(this).css({
+						top: window.innerHeight / 2 - $(this).height() / 2,
+						left: window.innerWidth / 2 - $(this).width() / 2,
+					});
 				});
 			}
 
