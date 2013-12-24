@@ -4,9 +4,9 @@
 - ~~Exchange rects with images~~
 - ~~Add server side maze data validation~~
 - Add safeguard from image attacks
-- Add 3D maze instructions
-- Add menu to `play.php`
-- better instructions in `make.php`
+- ~~Add 3D maze instructions~~
+- ~~Add menu to `play.php`~~
+- ~~better instructions in `make.php`~~
 - ~~Better tool handling in `draw.php`~~
 - Detailed about/instructions/more info page
 - Make collisions better (at least fix bug where a player can get stuck)

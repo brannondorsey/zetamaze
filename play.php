@@ -67,6 +67,7 @@
 			var progress = $('progress');
 			var instructions = $("#instructions");
 			var isLoaded = false;
+			var isPointerLocked = false;
 			
 			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
 			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
@@ -213,17 +214,23 @@
 
 				function pointerLockChange(event){
 
+					
 					if (document.pointerLockElement       === element ||
 					    document.mozPointerLockElement    === element ||
 				        document.webkitPointerLockElement === element) {
 
 						// Pointer was just locked, enable the mousemove listener
 						document.addEventListener("mousemove", mouseMove, false);
+						isPointerLocked = true;
 					} 
 					else {
 						// Pointer was just unlocked, disable the mousemove listener
 						document.removeEventListener("mousemove", mouseMove, false);
+						isPointerLocked = false;
 					}
+
+					var opacity = (isPointerLocked) ? 1 : 0;
+					$('.navbar-insert span').css({opacity: opacity});
 				}
 			}
 

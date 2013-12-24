@@ -79,16 +79,30 @@ progress[value]::-moz-progress-bar{
   margin: 10px auto;
 }
 
-/*show.navbar-insert*/
+/*show-navbar-insert*/
 .navbar-insert{
   display: inline-block;
   font-size: 10pt;
-  padding-top: 13px;
+  padding-top: 16px;
+}
+
+.navbar-insert span{
+
+  opacity: 0;
 }
 
 .navbar-insert button{ 
-  font-size: 12pt;
+  float: right;
+  font-size: 10pt;
   padding: 2px 5px;
   margin: 0px;
+  color: #ffffff;
+  background-color: #000000;
+  border-color: #ffffff;
 }
+
+.navbar-insert button:hover, .navbar-insert button:focus{
+  background-color: #ffffff;
+  color: #000000;
+} 
 
