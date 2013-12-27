@@ -1,3 +1,9 @@
+<?php
+	require_once "includes/filevalidation.include.php";
+
+	
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -19,7 +25,18 @@
 		<script src="scripts/three/OBJMTLLoader.js"></script>
 		<script src="scripts/three/Stats.js"></script>
 		<script src="scripts/three/classes/CharacterController.js"></script>
-		
+		<script type="text/javascript">
+
+			var fileInputVals = [];
+			var allowedExtensions = <?php echo $allowed_exts_JSON ?> ; //don't forget semi
+			var maxFileSize = <?php echo $max_size ?> ; //don't forget semi
+			var errors = [];
+			var fileUploadSelector = '.file-upload-input-container input[type=file]';
+			var fileUploadNotificationSelector = '#file-upload-notification';
+			var endContainerSelector = '#end-container';
+
+		</script>
+		<script type="text/javascript" src="scripts/fileupload.js"></script>
 		<script>
 			var hostname = <?php echo "'" . $HOSTNAME . "'"?>;
 			$(document).ready(function(){
@@ -27,9 +44,6 @@
 				if(!Detector.webgl){
 					instructions.html("Oops, it looks like your browser doesn't support WebGL. Trying using Google Chrome.");
 				}
-
-				//position progress bar in center of screen
-				$('progress').css({ marginTop: window.innerHeight - $(this).height() / 2 });
 
 				//postion instructions box in center of screen
 				centerBoxes();
@@ -39,7 +53,46 @@
 					centerBoxes();
 				}
 
-			});
+				//register file upload button click event
+				$('#end-container button').click(function() {
+
+                    
+	                if(onFilesSubmit()){
+
+	                	var data = new FormData();
+	                    data.append('end',$(".file-upload-input-container [type='file']").get(0).files[0]);
+
+	                    $.ajax({
+	                        url:'fileupload.php?redirect=false',
+	                        type:'POST',
+	                        processData: false,
+	                        contentType: false,
+	                        data:data,
+	                        success:function(response){
+	                            
+	                            //resultsArray will contain responses from fileupload.php
+	                            //as properties and values in an object. I tried making them
+	                            //an assoc array but that didn't work. For this reason, instead
+	                            //of handling lots of conditionals to report backend file upload
+	                            //errors all errors are handled frontend.
+	                            console.log(response);
+	                            console.log("success");
+	                            for(var parameter in response){
+	                            	
+	                            	//if the upload was a success!
+	                            	if(parameter == "file_upload_success" &&
+	                            	   response[parameter] == "true"){
+
+	                            		displayFileUploadSuccess();
+	                            	}
+	                            }    
+	                        }
+	                    });
+		            }
+	            });
+            
+            });
+
 		</script>
 	</head>
 
@@ -55,17 +108,18 @@
 				You found the Finder's Folder! A <code>.zip</code> containing 25 files has been downloaded to your computer.
 			 	Each of these files was uploaded by someone else who found the Finder's Folder. Now its your turn to upload.
 			</p>
-			<div id="file-upload-notification" class="file-upload-notification"><!--note: class and id duplicates are not a mistake--></div>
-			<form class="zip-file-upload" action="fileupload.php" method="post" enctype="multipart/form-data" onsubmit="onFilesSubmit(); return validateFiles();">
+
+		<div id="file-upload-notification" class="file-upload-notification"><!--note: class and id duplicates are not a mistake--></div>
+			<form class="zip-file-upload" action="" method="post" enctype="multipart/form-data">
 				<div class="file-upload-input-container">
 					<label for="end-file">File</label>
 					<input type="file" name="end" id="end-file">
 				</div>
-				<input type="submit" name="submit" value="upload" class="button">
 			</form>
+			<button>Upload</button>
 		</div>
 		<div id="blocker">
-			<progress value="0" max="100"></progress>
+			<progress value="0" max="100" class="centered-box"></progress>
 		</div>
 
 		<script>
@@ -186,6 +240,9 @@
 						left: window.innerWidth / 2 - $(this).width() / 2,
 					});
 				});
+
+				//position progress bar in center of screen
+				$('progress').css({ marginTop: window.innerHeight - $(this).height() / 2 });
 			}
 
 			function showInstructions(){
@@ -194,6 +251,22 @@
 
 			function hideInstructions(){
 				instructions.hide();
+			}
+
+			function displayFileUploadSuccess(){
+				
+				$(endContainerSelector).html('Upload Success!');
+				$(endContainerSelector).addClass('success-text');
+				centerBoxes();
+				setTimeout(function(){
+					$(endContainerSelector).fadeOut(500, function(){
+						$(endContainerSelector).css({display: "none"});
+					});
+				}, 1500);
+			}
+
+			function onEndReached(){
+				$(endContainerSelector).css({display: "block"});
 			}
 
 			function lockPointer() {

@@ -30,7 +30,6 @@ progress[value] {
 
   width: 400px;
   height: 30px;
-  margin: auto;
   
   /* For IE10 */
   color: #ffffff; 
@@ -108,7 +107,7 @@ progress[value]::-moz-progress-bar{
 /* Zip file upload */
 /* temp */
 #end-container {
-  display: block;
+  display: none;
   width: 500px;
 }
 

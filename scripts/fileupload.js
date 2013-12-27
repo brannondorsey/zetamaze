@@ -8,7 +8,6 @@
 	maxFileSize
 
 	The following variables are optional:
-	mazeUploadSuccess
 	errorsFromGet
  */
 
@@ -19,11 +18,6 @@ $(document).ready(function(){
 			fileInputVals[$(this).attr('name')] = $(this).val();
 		});
 	});
-
-	if(fileUploadSuccess){
-		$(fileUploadNotificationSelector).html("Upload successful!");
-		$(fileUploadNotificationSelector).addClass("success-text");
-	}
 
 	notifyIfUploadFailed();
 });

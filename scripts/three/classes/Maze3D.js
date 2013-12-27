@@ -179,7 +179,8 @@ Maze3D.prototype._initLocations = function(){
 	config.objPath = this.pathToModelsFolder + 'zip.obj';
 	config.matPath = this.pathToModelsFolder + 'zip.mtl';
 	config.onHitFunc = function(){
-		console.log('hit the end!');
+		self._promptFileDownload('zip');
+		onEndReached(); //global function in make.php
 	}
 	this.locations3D['end'] = new Location3D(config);
 
@@ -235,27 +236,32 @@ Maze3D.prototype._promptFileDownload = function(filename){
 
 	//note: filename at the point that it is passed in does not include extension!
 	var self = this;
-	$.ajax({
-		url: self.hostname + '/itemnames.php',
-		method: 'post',
-		data: filename,
-		success: function(response){
+	if(filename == "zip"){
+		//download the file! 
+		window.location = self.hostname + "/promptdownload.php?filename=findersfolder.zip";
+	}else{
+		$.ajax({
+			url: self.hostname + '/itemnames.php',
+			method: 'post',
+			data: filename,
+			success: function(response){
 
-			console.log("first response succeeded!");
-			var itemNames = response;
-			console.log(itemNames);
-			for(var i = 0; i < itemNames.length; i++){
+				console.log("first response succeeded!");
+				var itemNames = response;
+				console.log(itemNames);
+				for(var i = 0; i < itemNames.length; i++){
 
-				var periodIndex = itemNames[i].indexOf('.');
-				var filenameWithExt = itemNames[i].substring(0, periodIndex);
+					var periodIndex = itemNames[i].indexOf('.');
+					var filenameWithExt = itemNames[i].substring(0, periodIndex);
 
-				if(filename == filenameWithExt){
+					if(filename == filenameWithExt){
 
-					//download the file! 
-					window.location = self.hostname + "/promptdownload.php?filename=" + itemNames[i];
+						//download the file! 
+						window.location = self.hostname + "/promptdownload.php?filename=" + itemNames[i];
+					}
 				}
 			}
-		}
-	});
+		});
+	}
 }
 

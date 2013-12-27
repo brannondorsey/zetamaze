@@ -12,4 +12,5 @@ images/maze/textures/*
 !images/maze/textures/.gitkeep
 uploads/*
 !uploads/.gitkeep
+!uploads/findersfolder/.gitkeep
 includes/config.include.php
