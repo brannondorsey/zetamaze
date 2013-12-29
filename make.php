@@ -151,14 +151,21 @@
 					$(".instructions").addClass('success-text');
 				}
 
-				// //hover event hanlder for 2D maze error box
-				// $('.error-box').mouseenter(function(){
-				// 	$(this).hide();
-				// 	var self = this;
-				// 	setTimeout(function(){$(self).show()}, 300);
-				// });
-
+				throb('.error-box', 500, 900);
+				$('.error-box ul').hover(function(){console.log("I hovered!");});
 			});
+
+			function throb(selector, speed, millisToStayOn){
+
+				$(selector).fadeIn(speed, function(){
+					if(typeof millisToStayOn !== 'undefined'){
+						setTimeout(function(){
+							$(selector).fadeOut(speed, function(){throb(selector, speed, millisToStayOn)})
+						}, millisToStayOn);
+					}else $(selector).fadeOut(speed, function(){throb(selector, speed, millisToStayOn)});
+				});
+			}
+
 		</script>
 	</head>
 

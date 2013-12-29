@@ -118,11 +118,9 @@ div.maze-container{
 	width: 800px;
 }
 
-div.error-box:hover{
-	
-}
 
 div.error-box ul{
+	pointer-events: none;
 	background: #ffffff;
 	color: #ff0000;
 	border: 2px solid #ff0000;

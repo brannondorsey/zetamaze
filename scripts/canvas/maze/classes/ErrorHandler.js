@@ -1,6 +1,6 @@
 function ErrorHandler(){
 	this._errors = [];
-	this._errorHTMLParent = $("div.maze-container div.error-box");
+	this._errorHTMLParent = $("div.error-box");
 }
 
 //----------------------------------------------------------------
