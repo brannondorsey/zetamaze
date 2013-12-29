@@ -216,8 +216,8 @@
 			</form>
 
 			<p>
-				Each time a player in the maze picks up an item, a file is downloaded to their computer. You can choose 
-				what those files are. You are free to change (or not change) as many files as you like. Most file types
+				When a player in the maze picks up an item, a file is downloaded to their computer. You can choose 
+				what those files are. Change (or don't change) as many files as you like. Most file types
 				less than 5MB are allowed.
 			</p>
 	

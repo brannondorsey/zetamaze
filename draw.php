@@ -19,14 +19,21 @@
 		<script src="scripts/canvas/sketcher/classes/WallSegment.js"></script>
 		<script>var hostname = <?php echo '"' . $HOSTNAME . '"'?>;</script>
 		<script src="scripts/canvas/sketcher/sketcher.js">//this is the script that does stuff</script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				//fade in instructions
+				setTimeout(function(){
+					$(".instructions").addClass('instructions-show');
+				}, 200);
+			});
+		</script>
 	</head>
 
 	<body>
 		<?php require_once 'includes/navbar.include.php'; ?>
 		<div class="content">
-			<p>
-			You can draw on the walls of the maze here. Each new drawing is sketched on top of the others. 
-			Be careful, there is no eraser!
+			<p class="instructions" style="text-align:center">
+			Draw on the walls of the maze. Be careful, there is no eraser!
 			<p>
 
 			<img id="default-brush-image" style="visibility:hidden" src="images/sketcher/tip3.png">
