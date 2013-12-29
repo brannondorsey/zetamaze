@@ -75,8 +75,8 @@ function bindEvents(){
         }
     }, false);
 
-    canvas.addEventListener('mouseup', function(evt){
-        
+    //the mouse up event must be tied to the document, not the canvas
+    document.addEventListener('mouseup', function(evt){    
         if(dragToolEnabled){
           $('canvas').toggleClass('grabbing', false);
         }else{ //save images
