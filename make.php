@@ -150,6 +150,14 @@
 					$(".instructions").html("Maze updated, go <a href=\"play.php\">play</a>!");
 					$(".instructions").addClass('success-text');
 				}
+
+				// //hover event hanlder for 2D maze error box
+				// $('.error-box').mouseenter(function(){
+				// 	$(this).hide();
+				// 	var self = this;
+				// 	setTimeout(function(){$(self).show()}, 300);
+				// });
+
 			});
 		</script>
 	</head>

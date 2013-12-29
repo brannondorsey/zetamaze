@@ -9,13 +9,14 @@
 - ~~better instructions in `make.php`~~
 - ~~Better tool handling in `draw.php`~~
 - Detailed about/instructions/more info page
-- Make collisions better (at least fix bug where a player can get stuck)
+- ~~Make collisions better (at least fix bug where a player can get stuck)~~ they could still be better...
 - Add maze2D error if start and end are too close
 - Style upload buttons
 - Add meaningful meta tags in head include
 - Check backend file upload validation
 - Set direction of 3D player so that they never start facing a wall
-- Build end of game `.zip` download system
+- ~~Build end of game `.zip` download system~~
+- Extensively test end of game `.zip` download system
 - Review all copy
 - Come up with canvas maze reload process to prevent large overwrites
 - Do ^ with sketcher

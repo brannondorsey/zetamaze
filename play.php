@@ -38,6 +38,7 @@
 		</script>
 		<script type="text/javascript" src="scripts/fileupload.js"></script>
 		<script>
+
 			var hostname = <?php echo "'" . $HOSTNAME . "'"?>;
 			$(document).ready(function(){
 
@@ -207,10 +208,11 @@
 			}
 
 			function animate() {
-
+		
 				var delta = clock.getDelta();
 				requestAnimationFrame( animate );
 				if(displayStats) stats.update();
+
 				if(!isLoaded){
 				   progress.val(maze3D.getPercentLoaded());
 				   isLoaded = maze3D.isLoaded();
@@ -222,10 +224,10 @@
 				   		
 				   }
 				}
+
 				maze3D.update(delta);
 				character.update(delta);
 				renderer.render( scene, camera );
-
 			}
 
 			//called once loading bar finishes

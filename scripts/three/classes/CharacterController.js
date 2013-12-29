@@ -3,7 +3,8 @@ function CharacterController(scene, camera, position){
 	this.speed = 3.5;
 	this.lookSpeed = 100;
 	this.flyEnabled = true;
-	this.colliderPadding = 0.3;
+	this.colliderPadding = 0.35;
+	this.previousPosition;
 
 	this.camera = camera;
 
@@ -28,7 +29,8 @@ CharacterController.prototype.registerCollisionObjects = function(collisionObjec
 
 CharacterController.prototype.update = function(delta){
 
-	var moveDistance = this.speed * delta; // 200 pixels per second  // should be velocity?
+	var moveDistance = Math.min(this.speed * delta, this.colliderPadding - 0.01); // 200 pixels per second  // should be velocity?
+	if(moveDistance > this.colliderPadding) console.log(moveDistance);
 	var rotateAngle = Math.PI / 4 * delta;   // pi/4 radians (45 degrees) per second
 	var cursorSpeed = this.cursorSpeed * delta;	
 	
@@ -77,22 +79,27 @@ CharacterController.prototype.update = function(delta){
 
 	if(collisions == false ||
 	   this._allowMovement(move, collisions)){
+		//save this as a safe position
+	   	if(collisions == false) this.previousPosition = this.body.position.clone();
 		this._move(move);
 		this.body.updateMatrix();
-	}
+
+		this.camera.rotateX( -rotateAngle * this.mouseLook.y * 0.05 );
+		this.mouseLook.y = 0;
 			
-	// process data from mouse look
-	//  (if inactive, there will be no change)
-	this.camera.rotateX( -rotateAngle * this.mouseLook.y * 0.05 );
-	this.mouseLook.y = 0;
-		
-	// limit camera to +/- 45 degrees (0.7071 radians) or +/- 60 degrees (1.04 radians)
-	this.camera.rotation.x = THREE.Math.clamp( this.camera.rotation.x, -1.04, 1.04 );
-	// pressing both buttons moves look angle to horizon
-	if ( this.keyboard.pressed('R') && this.keyboard.pressed('F') )
-		this.camera.rotateX( -6 * this.camera.rotation.x * rotateAngle );
-	
-	this.body.updateMatrix();
+		// limit camera to +/- 45 degrees (0.7071 radians) or +/- 60 degrees (1.04 radians)
+		this.camera.rotation.x = THREE.Math.clamp( this.camera.rotation.x, -1.04, 1.04 );
+		this.body.updateMatrix();
+
+	}else{ //there are collisions or movement isn't allowed...
+
+		for(var i = 0; i < collisions.length; i++){
+			var collider = collisions[i];
+			//if the character is inside the collider (not just the padding) then 
+			//bring it to the last safe position. This is hacky but I don't know how else to do this
+			if(this._insideCollider(false, collider)) this.body.position = this.previousPosition;
+		}	
+	}
 }
 
 CharacterController.prototype.getX = function(){
@@ -125,21 +132,8 @@ CharacterController.prototype.getCollisions = function(){
 	if(this.colliderMeshes != undefined){
 
 		for(var i = 0; i < this.colliderMeshes.length; i++){
-
 			var colliderMesh = this.colliderMeshes[i];
-			var minX = colliderMesh.position.x - this.blockSize/2 - this.colliderPadding;
-			var maxX = colliderMesh.position.x + this.blockSize/2 + this.colliderPadding;
-			var minZ = colliderMesh.position.z - this.blockSize/2 - this.colliderPadding;
-			var maxZ = colliderMesh.position.z + this.blockSize/2 + this.colliderPadding;
-
-			//if collision has occurred
-			if(this.getX() < maxX &&
-			   this.getX() > minX &&
-			   this.getZ() < maxZ &&
-			   this.getZ() > minZ){
-
-				colliders.push(colliderMesh);
-			}
+			if(this._insideCollider(true, colliderMesh)) colliders.push(colliderMesh);
 		}
 	}
 	return colliders.length > 0 ? colliders : false;
@@ -158,16 +152,7 @@ CharacterController.prototype._allowMovement = function(movementObj, colliders){
 	for(var i = 0; i < colliders.length; i++){
 
 		var collider = colliders[i]; 
-		var minX = collider.position.x - this.blockSize/2 - this.colliderPadding;
-		var maxX = collider.position.x + this.blockSize/2 + this.colliderPadding;
-		var minZ = collider.position.z - this.blockSize/2 - this.colliderPadding;
-		var maxZ = collider.position.z + this.blockSize/2 + this.colliderPadding;
-
-		//if collision has occurred
-		if(x < maxX &&
-		   x > minX &&
-		   z < maxZ &&
-		   z > minZ){
+		if(this._insideCollider(true, collider, x, z)){
 			allowMovement = false;
 			break;
 		}
@@ -189,3 +174,28 @@ CharacterController.prototype._unMove = function(movementObj){
 	reverseMovementObj.yAngle = -movementObj.yAngle;
 	this._move(reverseMovementObj);
 }
+
+CharacterController.prototype._insideCollider = function(usePadding, colliderMesh, x, z){
+
+	var padding = (usePadding) ? this.colliderPadding : 0; 
+
+	var minX = colliderMesh.position.x - this.blockSize/2 - padding;
+	var maxX = colliderMesh.position.x + this.blockSize/2 + padding;
+	var minZ = colliderMesh.position.z - this.blockSize/2 - padding;
+	var maxZ = colliderMesh.position.z + this.blockSize/2 + padding;
+	
+	if(typeof x == 'undefined' &&
+	   typeof z == 'undefined'){
+		var x = this.getX();
+		var z = this.getZ();
+	}
+
+	//if collision has occurred
+	if(x < maxX &&
+	   x > minX &&
+	   z < maxZ &&
+	   z > minZ){
+	   	return true;
+	}else return false;
+}
+

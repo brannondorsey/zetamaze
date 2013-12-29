@@ -118,6 +118,10 @@ div.maze-container{
 	width: 800px;
 }
 
+div.error-box:hover{
+	
+}
+
 div.error-box ul{
 	background: #ffffff;
 	color: #ff0000;
@@ -127,12 +131,8 @@ div.error-box ul{
 	z-index: 2;
 	top: 350px;
 	left: 260px;
-}
-
-div.error-box ul{
 	list-style-type: none;
 	display: inline-block;
-	padding: 10px 10px;
 }
 
 div.error-box ul li{
