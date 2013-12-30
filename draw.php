@@ -35,8 +35,6 @@
 			<p class="instructions" style="text-align:center">
 			Draw on the walls of the maze. Be careful, there is no eraser!
 			<p>
-
-			<img id="default-brush-image" style="visibility:hidden" src="images/sketcher/tip3.png">
 			  
 	       	<ul class="tools">
 	          	<div id="tool_button" title="tools" class="draw_button"></div>

@@ -1,7 +1,9 @@
-function SketchPad( canvasID, brushImage ) {
+function SketchPad( canvasID, brushImagePath, brushLoadCallback ) {
 	this.points = [];
-    this.renderFunction = (brushImage == null || brushImage == undefined) ? this.updateCanvasByLine : this.updateCanvasByBrush;
-	this.brush = brushImage;
+    this.renderFunction = this.updateCanvasByBrush;
+	this.brush = new Image();
+	this.brush.src = brushImagePath;
+	this.brush.onload = brushLoadCallback;
 	this.touchSupported = ('ontouchstart' in window); 
 	this.canvasID = canvasID;
 	this.canvas = $("#"+canvasID);
@@ -125,6 +127,7 @@ SketchPad.prototype.drawLine = function (start, end){
           var point = s(t);
           var x = point[0] - halfBrushW;
           var y = point[1] - halfBrushH;
+            console.log(this.brush);
         	this.context.drawImage(this.brush, x, y);
 
         }
@@ -137,10 +140,12 @@ SketchPad.prototype.drawLine = function (start, end){
 		for ( var z=0; z <= distance - 1; z++ ){
 			x = start.x + ( cos_a * z ) - halfBrushW;
 			y = start.y + ( sin_a * z ) - halfBrushH;
+			console.log(this.brush);
 			this.context.drawImage(this.brush, x, y);
 		}
 
 	} else {
+		console.log(this.brush);
       	this.context.drawImage(this.brush, start.x - halfBrushW, start.y - halfBrushH);
     }
 }

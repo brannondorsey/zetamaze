@@ -24,8 +24,9 @@
 - ~~Add marker icon~~
 - ~~Fix drawing bug that erases last image if mouse exits canvas~~
 - ~~Come up with better system for 2D maze error handling. Currently it has the possibility to block the maze.~~
-- Reduce number of texture images to the max possible.
+- ~~Reduce number of texture images to the max possible.~~
 - ~~Better feedback when using file upload on make.php. Do not us alerts.~~
+- Check out what is going on with maze error handling. It is being glitchy, giving false negatives and positives.
 - Remove all `console.log()` occurrences before launch.
 - Setup a cron job to auto back things up.
 - FAQ page?

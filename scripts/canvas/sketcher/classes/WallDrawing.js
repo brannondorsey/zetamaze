@@ -1,7 +1,7 @@
-function WallDrawing(hostname, canvas, numbImages){
+function WallDrawing(hostname, canvas, numbImages, initImagesLoadedCallback){
 
 	//pick a random wallIndex to start on
-	this.currentImageIndex = Math.ceil(Math.random()*numbImages-2);
+	this.currentImageIndex = Math.ceil(Math.random()*numbImages-1);
 	//this.currentImageIndex = 3;
 	this.wallSize = 512;
 	this.wallSegments = [];

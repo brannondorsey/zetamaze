@@ -12,8 +12,10 @@ function hideMenus() {
 }
 
 function installBrush(img, color) {
+  console.log(sketcher.brush);
   brush = new MarkerMaker(img, color);
   sketcher.brush = brush;
+  console.log(sketcher.brush);
   sketcher.renderFunction = sketcher.updateCanvasByBrush;
 }
 
@@ -89,21 +91,23 @@ function bindEvents(){
 $(document).ready(function(e) {
 	
     canvas = $("#sketch")[0];
-	  sketcher = new SketchPad("sketch", $("#default-brush-image")[0]);
+	  sketcher = new SketchPad("sketch", "images/sketcher/tip.png", function(){
+     
+      wallDrawing = new WallDrawing(hostname, canvas, 720);
+      //start color picker at random color
+      fb = $.farbtastic('#colorpicker', setColor);
+      var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
+      fb.setColor(randomColor);
+      bindEvents();
+
+    });
     sketcher.preOnCanvasMouseDown = function(){
        hideMenus();
     }
 
-    wallDrawing = new WallDrawing(hostname, canvas, 720);
-
-    //start color picker at random color
-    fb = $.farbtastic('#colorpicker', setColor);
-    var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
-    fb.setColor(randomColor);
-
-    bindEvents();
-
     //constantly check if init images have been loaded
+    //There is a better way to do this with callbacks but
+    //this works for now
     var interValID = setInterval(function(){
       if(wallDrawing.initImagesLoaded()){
         wallDrawing.display();
