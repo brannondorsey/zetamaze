@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<?php require_once("includes/head.include.php"); ?>
+		<?php require_once "includes/config.include.php"; ?>
+		<?php require_once "includes/head.include.php"; ?>
 		<link rel="stylesheet" type="text/css" href="styles/index.css">
 		<style>
 			div#links{

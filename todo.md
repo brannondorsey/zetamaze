@@ -12,7 +12,7 @@
 - ~~Make collisions better (at least fix bug where a player can get stuck)~~ they could still be better...
 - Add maze2D error if start and end are too close
 - Style upload buttons
-- Add meaningful meta tags in head include
+- ~~Add meaningful meta tags in head include~~
 - Check backend file upload validation
 - Set direction of 3D player so that they never start facing a wall
 - ~~Build end of game `.zip` download system~~

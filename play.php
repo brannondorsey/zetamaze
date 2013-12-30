@@ -1,7 +1,5 @@
 <?php
 	require_once "includes/filevalidation.include.php";
-
-	
 ?>
 
 <!DOCTYPE html>
