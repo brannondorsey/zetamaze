@@ -10,8 +10,8 @@
 		<?php require_once 'includes/navbar.include.php'; ?>
 		<div class="content">
 			<p>
-				Zeta was created by <a href="http://brannondorsey.com">Brannon Dorsey</a>, a Chicago-based New Media artist 
-				whose interactive works encourage collaboration and play. With it, he created a space and a proposition, 
+				Zeta was created by <a href="http://twitter.com/brannondorsey">Brannon Dorsey</a>, a Chicago-based New Media artist 
+				whose <a href="http://brannondorsey.com">interactive works</a> encourage collaboration and play. With it, he has created a space and a proposition, 
 				what happens next is up to the Internet.
 			</p>
 			<div class="frequently-asked-questions">

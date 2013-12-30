@@ -11,7 +11,6 @@
 - ~~Detailed about/instructions/more info page~~
 - ~~Make collisions better (at least fix bug where a player can get stuck)~~ they could still be better...
 - Add maze2D error if start and end are too close
-- Style upload buttons
 - ~~Add meaningful meta tags in head include~~
 - Check backend file upload validation
 - ~~Set direction of 3D player so that they never start facing a wall~~
@@ -30,4 +29,4 @@
 - Check out what is going on with maze error handling. It is being glitchy, giving false negatives and positives.
 - Remove all `console.log()` occurrences before launch.
 - Setup a cron job to auto back things up.
-- FAQ page?
+- ~~FAQ page?~~ its now on the info page
