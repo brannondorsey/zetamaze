@@ -14,7 +14,7 @@
 - Style upload buttons
 - ~~Add meaningful meta tags in head include~~
 - Check backend file upload validation
-- Set direction of 3D player so that they never start facing a wall
+- ~~Set direction of 3D player so that they never start facing a wall~~
 - ~~Build end of game `.zip` download system~~
 - Extensively test end of game `.zip` download system
 - Review all copy
@@ -24,6 +24,7 @@
 - ~~Add marker icon~~
 - ~~Fix drawing bug that erases last image if mouse exits canvas~~
 - ~~Come up with better system for 2D maze error handling. Currently it has the possibility to block the maze.~~
+- Reduce number of texture images to the max possible.
 - ~~Better feedback when using file upload on make.php. Do not us alerts.~~
 - Remove all `console.log()` occurrences before launch.
 - Setup a cron job to auto back things up.

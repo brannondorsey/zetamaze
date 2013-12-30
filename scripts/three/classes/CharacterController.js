@@ -4,9 +4,11 @@ function CharacterController(scene, camera, position){
 	this.lookSpeed = 100;
 	this.flyEnabled = true;
 	this.colliderPadding = 0.35;
+	this.startRotation = 0;
 	this.previousPosition;
 
 	this.camera = camera;
+	this.scene = scene;
 
 	this.body = new THREE.Object3D();
 	this.body.add(this.camera);
@@ -18,6 +20,7 @@ function CharacterController(scene, camera, position){
 
 	scene.add(this.body);
 
+
 	this.mouseLook = {x: 0, y: 0}
 	this.keyboard = new THREEx.KeyboardState();
 }
@@ -25,6 +28,12 @@ function CharacterController(scene, camera, position){
 CharacterController.prototype.registerCollisionObjects = function(collisionObjects, blockSize){
 	this.colliderMeshes = collisionObjects;
 	this.blockSize = blockSize;
+	var self = this;
+	setTimeout(function(){
+		self._setInitRotation();
+	}, 500);
+
+	
 }
 
 CharacterController.prototype.update = function(delta){
@@ -137,6 +146,24 @@ CharacterController.prototype.getCollisions = function(){
 		}
 	}
 	return colliders.length > 0 ? colliders : false;
+}
+
+//uses raycasting to make sure that a player doesn't start facing a wall
+CharacterController.prototype._setInitRotation = function(){
+	
+	this.body.rotateOnAxis(new THREE.Vector3(0, -1, 0), this.startRotation * (Math.PI/180));
+	
+	//forward
+	var direction = new THREE.Vector3(0, 0, -1);
+	direction.applyQuaternion(this.body.quaternion);
+
+	var ray = new THREE.Raycaster(this.body.position, direction, 0, this.blockSize/2 + 1);
+	var intersects = ray.intersectObjects(this.colliderMeshes);
+	if(intersects.length > 0){
+		
+		this.startRotation += 90;
+		this._setInitRotation();
+	}
 }
 
 //boolean

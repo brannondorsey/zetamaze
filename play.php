@@ -225,6 +225,8 @@
 
 				maze3D.update(delta);
 				character.update(delta);
+				// console.log("x: " + character.getX());
+				// console.log("z: " + character.getZ());
 				renderer.render( scene, camera );
 			}
 
@@ -320,7 +322,6 @@
 					$('.navbar-insert span').css({opacity: opacity});
 				}
 			}
-
 
 			function mouseMove(e){
 				character.mouseMove(e);

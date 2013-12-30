@@ -94,7 +94,7 @@ $(document).ready(function(e) {
        hideMenus();
     }
 
-    wallDrawing = new WallDrawing(hostname, canvas, 650);
+    wallDrawing = new WallDrawing(hostname, canvas, 720);
 
     //start color picker at random color
     fb = $.farbtastic('#colorpicker', setColor);
