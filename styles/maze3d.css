@@ -82,7 +82,7 @@ progress[value]::-moz-progress-bar{
 .navbar-insert{
   display: inline-block;
   font-size: 10pt;
-  padding-top: 16px;
+  padding-top: 17px;
 }
 
 .navbar-insert span{

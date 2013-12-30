@@ -26,7 +26,7 @@ body {
 .navbar-insert {
 
 	display: none;
-	width: 600px;
+	width: 520px;
 }
 
 .content a{
@@ -42,6 +42,13 @@ body {
 	background-color: #000000;
 }
 
+#navbar a{
+	color: #ffffff;
+	font-family: "Lobster", helvetica, arial, sans-serif;
+	font-size: 14pt;
+	text-decoration: none;
+}
+
 /*title*/
 #navbar h1{
 	float: left;
@@ -51,16 +58,21 @@ body {
 }
 
 /*beta title*/
-#navbar h1 span{
+#navbar span{
 	font-family: "Andale Mono", "Courier New", Courier, monospace;
 	font-size: 10pt;
 }
 
-#navbar .content a{
-	font-family: "Lobster", helvetica, arial, sans-serif;
-	color: #ffffff;
-	font-size: 14pt;
-	text-decoration: none;
+#navbar span a{
+	font-family: "Andale Mono", "Courier New", Courier, monospace;
+	font-size: 12pt;
+	float: left;
+	margin-left: 20px;
+	margin-top: 19px;
+}
+
+#navbar h1 span{
+	font-size: 10pt;
 }
 
 #navbar .content a:hover{
@@ -71,7 +83,7 @@ body {
 #navbar .content div#links{
 	float: right;
 	padding-right: 25px;
-	margin-top: 15px;
+	margin-top: 16px;
 }
 
 /*page name*/

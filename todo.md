@@ -8,7 +8,7 @@
 - ~~Add menu to `play.php`~~
 - ~~better instructions in `make.php`~~
 - ~~Better tool handling in `draw.php`~~
-- Detailed about/instructions/more info page
+- ~~Detailed about/instructions/more info page~~
 - ~~Make collisions better (at least fix bug where a player can get stuck)~~ they could still be better...
 - Add maze2D error if start and end are too close
 - Style upload buttons
@@ -26,6 +26,7 @@
 - ~~Come up with better system for 2D maze error handling. Currently it has the possibility to block the maze.~~
 - ~~Reduce number of texture images to the max possible.~~
 - ~~Better feedback when using file upload on make.php. Do not us alerts.~~
+- Release pointer lock when Finder's Folder is found.
 - Check out what is going on with maze error handling. It is being glitchy, giving false negatives and positives.
 - Remove all `console.log()` occurrences before launch.
 - Setup a cron job to auto back things up.

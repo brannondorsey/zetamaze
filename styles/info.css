@@ -1,0 +1,16 @@
+.frequently-asked-questions h2{
+	text-align: center;
+	font-family: "Andale Mono", "Courier New", Courier, monospace;
+}
+
+.question-divider{
+	margin: 20px 0px;
+}
+
+#question{
+	padding: 4px;
+	margin-bottom: 10px;
+	text-align: center;
+	color: #ffffff;
+	background-color: #000000;
+}
