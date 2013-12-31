@@ -11,6 +11,7 @@
 - ~~Detailed about/instructions/more info page~~
 - ~~Make collisions better (at least fix bug where a player can get stuck)~~ they could still be better...
 - Add maze2D error if start and end are too close
+- Add maze2D error if locations are on top of each other
 - ~~Add meaningful meta tags in head include~~
 - Check backend file upload validation
 - ~~Set direction of 3D player so that they never start facing a wall~~

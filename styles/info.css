@@ -1,16 +1,26 @@
+.frequently-asked-questions{
+	padding-top: 20px;
+}
+
 .frequently-asked-questions h2{
 	text-align: center;
 	font-family: "Andale Mono", "Courier New", Courier, monospace;
 }
 
 .question-divider{
-	margin: 20px 0px;
+	margin: 35px 0px;
 }
 
 #question{
 	padding: 4px;
-	margin-bottom: 10px;
+	/*comment below and uncomment what is commented to switch style*/
+	font-size: 14pt;
+	font-style: italic;
+	text-align: left;
+	/*
+	margin-bottom: 15px;
 	text-align: center;
 	color: #ffffff;
 	background-color: #000000;
+	 */
 }

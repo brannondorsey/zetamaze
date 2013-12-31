@@ -189,6 +189,7 @@
 				//var startPosition = new THREE.Vector3(4, 20, 5);
 				var beginPosition = maze3D.getBeginPosition();
 				character = new CharacterController(scene, camera, beginPosition);
+				character.setEnabled(false);
 				character.registerCollisionObjects(maze3D.getBlockMeshes(), maze3D.getBlockSize());
 
 				//bind resize event
@@ -219,7 +220,6 @@
 				   		$('#blocker').remove();
 						showInstructions();
 				   		startGame();
-				   		
 				   }
 				}
 
@@ -232,7 +232,7 @@
 
 			//called once loading bar finishes
 			function startGame(){
-
+				character.setEnabled(true);
 			}
 
 			function centerBoxes(){

@@ -168,7 +168,7 @@ div.error-box ul li{
 /*file upload*/
 form.file-upload{
 	display: block;
-	padding-top: 40px;
+	padding-top: 30px;
 	width: 350px;
 	margin: auto;
 }
@@ -183,7 +183,7 @@ form.file-upload label{
 }
 
 form.file-upload input.button{
-	margin-top: 40px;
+	margin-top: 35px;
 }
 
 /*color picker*/
@@ -257,6 +257,7 @@ ul.tools{
 }
 
 .file-upload-notification {
+	margin-top: 20px;
 	opacity: 0;
 	-webkit-transition: opacity 1s,  color 1s;  
     -moz-transition: opacity 1s,  color 1s;  
