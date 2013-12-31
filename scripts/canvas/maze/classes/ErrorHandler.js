@@ -69,10 +69,27 @@ ErrorHandler.prototype._addError = function(message){
 }
 
 ErrorHandler.prototype._checkLocationvalidity = function(maze, locations){
+
+	var errorMessage = "this location is not allowed";
 	for(var key in locations){
 		var location = locations[key];
+
+		//make sure the location isn't on top of
+		//other locations
+		for(var key2 in locations){
+
+			if(location.mazeX == locations[key2].mazeX &&
+			   location.mazeY == locations[key2].mazeY &&
+			   key != key2){
+				this._addError(errorMessage);
+				return;
+			}
+		}
+
+		//make sure the location isn't on a wall
 		if(maze[location.mazeY][location.mazeX] == 1){
-			this._addError("This location is not allowed");
+			this._addError(errorMessage);
+			break;
 		}
 	}
 }
