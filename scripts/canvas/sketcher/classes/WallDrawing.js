@@ -1,31 +1,37 @@
-function WallDrawing(hostname, canvas, numbImages, initImagesLoadedCallback){
+function WallDrawing(hostname, canvas, wallSize, numbImages, initImageIndex, initImageOffset){
 
-	//pick a random wallIndex to start on
-	this.currentImageIndex = Math.ceil(Math.random()*numbImages-1);
-	//this.currentImageIndex = 3;
-	this.wallSize = 512;
+	if(typeof initImageIndex !== 'undefined' &&
+	   initImageIndex <= numbImages){
+		this.initImageIndex = initImageIndex;
+	}else this.initImageIndex = Math.ceil(Math.random()*numbImages-1);
+	this.wallSize = wallSize;
 	this.wallSegments = [];
 	this.canvas = canvas;
 	this.context = this.canvas.getContext('2d');
-	this.numbInitImagesToLoad = 10; //must be odd number
-	this._initImagesLoaded = false;
+	this.numbInitImagesToLoad = 8; //must be odd number
 	this.initWallSegments = [];
 
-	var startX = this.canvas.width/2 - this.currentImageIndex * this.wallSize;
+	var startX = this.canvas.width/2 - this.initImageIndex * this.wallSize + this.wallSize / 2;
+	if(typeof initImageOffset !== "undefined") startX += initImageOffset;
 	var x = startX;
 
 	for(var i = 0; i < numbImages; i++){
 		var shouldLoad;
-		if(i > this.currentImageIndex - this.numbInitImagesToLoad/2 &&
-		   i < this.currentImageIndex + this.numbInitImagesToLoad/2){
+		if(i > this.initImageIndex - this.numbInitImagesToLoad/2 &&
+		   i < this.initImageIndex + this.numbInitImagesToLoad/2){
 			shouldLoad = true;
 		}else shouldLoad = false;
+
 		this.wallSegments[i] = new WallSegment(hostname, this.context, x, 0, this.wallSize, i + 1, shouldLoad);
 		if(shouldLoad){
 			this.initWallSegments.push(this.wallSegments[i]);
 		}
 		x += this.wallSize;
 	}
+}
+
+WallDrawing.prototype.getInitImageIndex = function(){
+	return this.initImageIndex;
 }
 
 WallDrawing.prototype.updateImages = function(){
@@ -87,6 +93,7 @@ WallDrawing.prototype.drag = function(previousMouseX, mouseX){
 
 	//if dragged wall right
 	if(previousMouseX < mouseX){
+		console.log(this.wallSegments[0].x)
 		if(this.wallSegments[0].x < 0){
 			canDrag = true;
 		}
@@ -123,20 +130,42 @@ WallDrawing.prototype.notifyNeedsUpdate = function(previousMouseX, mouseX){
 //returns true if initial images are loaded and checks 
 //again if they arent
 WallDrawing.prototype.initImagesLoaded = function(){
-	if(this._initImagesLoaded) return true;
-	else{
-		var numbLoaded = 0;
-		for(i = 0; i < this.initWallSegments.length; i++){
-			var initWallSegment = this.initWallSegments[i];
-			if(initWallSegment.isLoaded()) numbLoaded++;
-		}
 
-		//if all initial images have been loaded...
-		if(numbLoaded != 0 &&
-		   numbLoaded == this.initWallSegments.length) return true;
-		else return false;
+	var numbLoaded = 0;
+	for(i = 0; i < this.initWallSegments.length; i++){
+		var initWallSegment = this.initWallSegments[i];
+		if(initWallSegment.isLoaded()) numbLoaded++;
 	}
+
+	//if all initial images have been loaded...
+	if(numbLoaded != 0 &&
+	   numbLoaded == this.initWallSegments.length) return true;
+	else return false;
 }
+
+WallDrawing.prototype.getMiddleWall = function(){
+	var visibleWalls = this._getVisibleWalls();
+	var middleWall = visibleWalls[0];
+	for(var i = 1; i < visibleWalls.length; i++){
+		var visibleWall = visibleWalls[i];
+		var centerX = this.canvas.width / 2;
+		//if visibleWall is closer to the center of the 
+		//canvas than the current middleWall
+		if(Math.min(
+			Math.abs((visibleWall.x + visibleWall.size / 2) - centerX),
+			Math.abs((middleWall.x + middleWall.size / 2) - centerX)
+		) < Math.abs((middleWall.x + middleWall.size / 2) - centerX)){
+			middleWall = visibleWall;
+		}
+	}
+	return middleWall;
+}
+
+WallDrawing.prototype.getMiddleWallOffset = function(){
+	var middleWall = this.getMiddleWall();
+	return (middleWall.x + middleWall.size / 2) - (this.canvas.width / 2);
+}
+
 
 //------------------------------------------------------------------------
 //PROTECTED FUNCTIONS

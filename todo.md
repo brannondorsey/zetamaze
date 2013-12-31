@@ -19,7 +19,7 @@
 - Extensively test end of game `.zip` download system
 - Review all copy
 - Come up with canvas maze reload process to prevent large overwrites
-- Do ^ with sketcher
+- ~~Do ^ with sketcher~~
 - ~~Use random color on sketcher page load~~
 - ~~Add marker icon~~
 - ~~Fix drawing bug that erases last image if mouse exits canvas~~

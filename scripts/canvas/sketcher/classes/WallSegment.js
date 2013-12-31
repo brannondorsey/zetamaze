@@ -89,11 +89,14 @@ WallSegment.prototype.saveImage = function(){
 WallSegment.prototype.loadImage = function(){
 	var self = this;
 	this.image = new Image();
-	this.image.src = this.imageURL;
+	this.image.src = this.imageURL + '?' + new Date().getTime();
 	this.image.height = this.size;
 	this.image.width = this.size;
 	this.image.onload = function() {
     	self._isLoaded = true;
+	}
+	this.image.onerror = function(){
+		window.location.href = hostname + '/redirect.php?url=' + encodeURIComponent(hostname + '/draw.php?load_error=true');
 	}		  
 }
 

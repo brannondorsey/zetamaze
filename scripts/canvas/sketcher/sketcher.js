@@ -6,16 +6,17 @@ var mousePressed = false;
 var prevMousePos;
 var dragToolEnabled = false;
 var fb; //color picker
+var reloadRate = 120; //in seconds
+var reloadTimeout;
 
 function hideMenus() {
   $('#colorpicker').hide();
 }
 
 function installBrush(img, color) {
-  console.log(sketcher.brush);
+
   brush = new MarkerMaker(img, color);
   sketcher.brush = brush;
-  console.log(sketcher.brush);
   sketcher.renderFunction = sketcher.updateCanvasByBrush;
 }
 
@@ -30,6 +31,20 @@ function getMousePos(canvas, evt) {
     x: evt.clientX - rect.left,
     y: evt.clientY - rect.top
   };
+}
+
+function setReloadTimeout(){
+
+    if(typeof reloadTimeout !== 'undefined') clearTimeout(reloadTimeout);
+    reloadTimeout = setTimeout(function(){
+
+      var url = location.href;
+      var qIndex = url.indexOf('?');
+      if(qIndex != -1) url = url.substring(0, qIndex);
+      url = url + '?drawing=' + wallDrawing.getMiddleWall().imageIndex + '&color=' + fb.color.substring(1);
+      url = url + '&offset=' + wallDrawing.getMiddleWallOffset() + '&t=' + new Date().getTime();
+      window.location.href = 'redirect.php?url=' + encodeURIComponent(url);
+    },reloadRate * 1000);
 }
 
 function bindEvents(){
@@ -53,7 +68,12 @@ function bindEvents(){
         $('#tool_button').toggleClass('draw_button');
     });
 
+    document.addEventListener('mousemove', function(evt){
+      setReloadTimeout();
+    });
+
     canvas.addEventListener('mousemove', function(evt) {
+        
         if(mousePressed){
 
           var currentMousePos = getMousePos(canvas, evt);
@@ -69,6 +89,7 @@ function bindEvents(){
     }, false);
 
     canvas.addEventListener('mousedown', function(evt){
+
         mousePressed = true;
         prevMousePos = getMousePos(canvas, evt);
 
@@ -79,6 +100,7 @@ function bindEvents(){
 
     //the mouse up event must be tied to the document, not the canvas
     document.addEventListener('mouseup', function(evt){    
+
         if(dragToolEnabled){
           $('canvas').toggleClass('grabbing', false);
         }else{ //save images
@@ -92,15 +114,16 @@ $(document).ready(function(e) {
 	
     canvas = $("#sketch")[0];
 	  sketcher = new SketchPad("sketch", "images/sketcher/tip.png", function(){
-     
-      wallDrawing = new WallDrawing(hostname, canvas, 720);
+      
+      wallDrawing = new WallDrawing(hostname, canvas, imageSize, numbImages, initImageIndex, initImageOffset);
       //start color picker at random color
       fb = $.farbtastic('#colorpicker', setColor);
-      var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
-      fb.setColor(randomColor);
+      fb.setColor(initColor);
+      setReloadTimeout();
       bindEvents();
 
     });
+
     sketcher.preOnCanvasMouseDown = function(){
        hideMenus();
     }
@@ -109,7 +132,8 @@ $(document).ready(function(e) {
     //There is a better way to do this with callbacks but
     //this works for now
     var interValID = setInterval(function(){
-      if(wallDrawing.initImagesLoaded()){
+      var isLoaded = wallDrawing.initImagesLoaded();
+      if(isLoaded){
         wallDrawing.display();
         clearInterval(interValID);
       }
