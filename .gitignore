@@ -9,6 +9,8 @@ error_log
 500.shtml
 test_images/
 images/maze/textures/*
+images/maze/textures_use/*
+images/maze/textures_test/*
 !images/maze/textures/.gitkeep
 uploads/*
 !uploads/.gitkeep

@@ -18,7 +18,7 @@
 - ~~Build end of game `.zip` download system~~
 - Extensively test end of game `.zip` download system
 - Review all copy
-- Come up with canvas maze reload process to prevent large overwrites
+- ~~Come up with canvas maze reload process to prevent large overwrites~~
 - ~~Do ^ with sketcher~~
 - ~~Use random color on sketcher page load~~
 - ~~Add marker icon~~

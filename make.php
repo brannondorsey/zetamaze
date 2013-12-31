@@ -125,6 +125,8 @@
 			var errors = [];
 			var fileUploadSelector = '.file-upload input[type=file]';
 			var fileUploadNotificationSelector = '#file-upload-notification';
+			var reloadTimeout;
+			var reloadRate = 8 * 60; //in seconds
 
 			var fileUploadSuccess = <?php echo json_encode($file_upload_success) ?>; //don't forget semi
 			var mazeUploadSuccess = <?php echo json_encode($maze_upload_success) ?>;
@@ -144,7 +146,6 @@
 					$(".instructions").addClass('instructions-show');
 				}, 200);
 				
-
 				//if a maze was saved successfully
 				if(mazeUploadSuccess){
 					$(".instructions").html("Maze updated, go <a href=\"play.php\">play</a>!");
@@ -153,6 +154,10 @@
 
 				throb('.error-box', 500, 900);
 				$('.error-box ul').hover(function(){console.log("I hovered!");});
+
+				document.addEventListener('mousemove', function(evt){
+			      setReloadTimeout();
+			    });
 			});
 
 			function throb(selector, speed, millisToStayOn){
@@ -164,6 +169,13 @@
 						}, millisToStayOn);
 					}else $(selector).fadeOut(speed, function(){throb(selector, speed, millisToStayOn)});
 				});
+			}
+
+			function setReloadTimeout(){
+			    if(typeof reloadTimeout !== 'undefined') clearTimeout(reloadTimeout);
+			    reloadTimeout = setTimeout(function(){
+			      window.location.href = 'redirect.php?url=' + encodeURIComponent(window.location.href);
+			    },reloadRate * 1000);
 			}
 
 		</script>
