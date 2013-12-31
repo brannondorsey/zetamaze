@@ -26,7 +26,7 @@
 - ~~Reduce number of texture images to the max possible.~~
 - ~~Better feedback when using file upload on make.php. Do not us alerts.~~
 - Release pointer lock when Finder's Folder is found.
-- Check out what is going on with maze error handling. It is being glitchy, giving false negatives and positives.
+- ~~Check out what is going on with maze error handling. It is being glitchy, giving false negatives and positives.~~
 - Remove all `console.log()` occurrences before launch.
 - Setup a cron job to auto back things up.
 - ~~FAQ page?~~ its now on the info page

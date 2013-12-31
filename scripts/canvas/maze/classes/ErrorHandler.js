@@ -44,6 +44,19 @@ ErrorHandler.prototype.checkErrors = function(maze, locations){
 	return false; //no errors were found
 }
 
+//prints a maze to the console. Used for debugging.
+ErrorHandler.prototype.printMaze = function(maze)
+{
+    for (var y = 0; y < maze[0].length; y++){
+        var row = "";
+        for(var x = 0; x < maze.length; x++){
+            row += maze[y][x].toString();
+        }
+        console.log(row);
+    }
+    console.log();
+}
+
 //----------------------------------------------------------------
 //PROTECTED
 
@@ -70,8 +83,8 @@ ErrorHandler.prototype._checkWallsConnected = function(maze){
 
 	var currentX = 0;
 	var currentY = 0;
-
-	this._floodFill(maze, 1, 2);
+	
+	this._floodFill(maze, 0, 0);
 
 	var islandsExist = false;
 	for(var y = 0; y < maze.length; y++){
@@ -97,7 +110,7 @@ ErrorHandler.prototype._floodFill = function(maze, x, y){
 	
 	if(y > 0)									      var up = maze[y - 1][x];
     if(y > 0 && x < maze[0].length - 1) 		      var upRight = maze[y - 1][x + 1];
-    if(x < maze[0].length - 1) 					      var  right = maze[y][x + 1];
+    if(x < maze[0].length - 1) 					      var right = maze[y][x + 1];
     if(y < maze.length - 1 && x < maze[0].length - 1) var rightDown = maze[y + 1][x + 1];
     if(y < maze.length - 1) 					      var down = maze[y + 1][x];
     if(y < maze.length - 1 && x > 0) 			      var downLeft  = maze[y + 1][x - 1];
