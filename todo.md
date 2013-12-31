@@ -28,6 +28,11 @@
 - ~~Better feedback when using file upload on make.php. Do not us alerts.~~
 - Release pointer lock when Finder's Folder is found.
 - ~~Check out what is going on with maze error handling. It is being glitchy, giving false negatives and positives.~~
-- Remove all `console.log()` occurrences before launch.
 - Setup a cron job to auto back things up.
 - ~~FAQ page?~~ its now on the info page
+
+#Right Before Launch
+- Pick 25 finders folder folder files and 4 item files
+- Change number of finder folder images in `fileupload.php` from `5` to `25`
+- Make a list of people to email/fb message
+- Remove all `console.log()` occurrences

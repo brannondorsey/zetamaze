@@ -36,7 +36,17 @@ ErrorHandler.prototype.checkErrors = function(maze, locations){
 										locations['begin'].mazeY,
 										locations[key].mazeX,
 										locations[key].mazeY);
-			if(!solver.isSolvable()) this._addError(key.capitalize() + " cannot be reached");	
+			if(!solver.isSolvable()){
+
+				//don't use the key names for front end stuff...
+				var locationName;
+				if(key == 'begin') locationName = "Start";
+				else if(key == 'end') locationName = "End";
+				else{
+					locationName = key.replace("file", "Item ");
+				}
+				this._addError(locationName + " cannot be reached");	
+			} 
 		}
 
 		if(this._errorsExist()) return true;
