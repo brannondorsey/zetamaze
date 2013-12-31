@@ -33,7 +33,7 @@ Block3D.prototype._getMaterial = function(textureNames){
             this._numbTextures++;
     	}else{
     		material = new THREE.MeshLambertMaterial({
-    			color: 0x000000
+    			color: 0xe0e0e0 //color of empty walls
     		})
     	}
     	materialArray.push(material);

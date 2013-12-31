@@ -13,7 +13,7 @@
 - ~~Add maze2D error if start and end are too close~~ not doing this
 - ~~Add maze2D error if locations are on top of each other~~
 - ~~Add meaningful meta tags in head include~~
-- Check backend file upload validation
+- ~~Check backend file upload validation~~
 - ~~Set direction of 3D player so that they never start facing a wall~~
 - ~~Build end of game `.zip` download system~~
 - Extensively test end of game `.zip` download system

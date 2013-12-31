@@ -34,15 +34,6 @@
 							$return_data[$filename] = urlencode($file["error"]);
 						}else{ //the file is good!
 
-							  //delete the old file
-							  $current_files = scandir($upload_directory);
-
-							  for($j = 0; $j < count($current_files); $j++){
-							  	if(strstr($current_files[$j], $filename) != false){
-							  		unlink($upload_directory . "/" . $current_files[$j]);
-							  	}
-							  }
-
 							  //if this file belongs in the finder's folder .zip
 							  if($filename == "end"){
 							  	
@@ -51,9 +42,13 @@
 							  	$current_filenames = file_get_contents($HOSTNAME . "/itemnames.php?directory=uploads/findersfolder");
 								$current_filenames = json_decode($current_filenames);
 								$current_filenames = array_slice ($current_filenames, 0, $numb_finders_folder_files); //just in case...
-								unset($current_filenames[count($current_filenames) - 1]); //delete the last file
+								
+								//delete the last file
+								$last_file = $current_filenames[count($current_filenames) - 1];
+								unlink($finders_folder_directory . "/" . $last_file);
+								unset($last_file); 
 
-								for($i = count($current_filenames); $i > 0; $i--){
+								for($i = count($current_filenames) - 1; $i > 0; $i--){
 									
 									$prefix = strstr($current_filenames[$i - 1], ".", true);
 									
@@ -80,6 +75,16 @@
 								$result = create_zip($current_filenames, $upload_directory . "/findersfolder.zip", true);
 
 							  }else{ //if this file is an item
+
+							  	//delete the old file
+							    $current_files = scandir($upload_directory);
+
+								for($j = 0; $j < count($current_files); $j++){
+									if(strstr($current_files[$j], $filename) != false){
+								 		unlink($upload_directory . "/" . $current_files[$j]);
+								  	}
+								}
+
 							  	move_uploaded_file($file["tmp_name"], $upload_directory . "/" . $filename . "." . $extension);
 							  }
 						}
