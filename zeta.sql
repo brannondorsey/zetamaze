@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `zeta`
+-- Database: `zetamaze.com`
 --
-CREATE DATABASE IF NOT EXISTS `zeta` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `zeta`;
+CREATE DATABASE IF NOT EXISTS `zetamaze.com` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `zetamaze.com`;
 
 -- --------------------------------------------------------
 
@@ -58,5 +58,5 @@ CREATE TABLE IF NOT EXISTS `mazes` (
   `file4MazeX` int(11) NOT NULL,
   `file4MazeY` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=318 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
