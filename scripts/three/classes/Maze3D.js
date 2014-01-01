@@ -179,8 +179,8 @@ Maze3D.prototype._initLocations = function(){
 	config.objPath = this.pathToModelsFolder + 'zip.obj';
 	config.matPath = this.pathToModelsFolder + 'zip.mtl';
 	config.onHitFunc = function(){
-		self._promptFileDownload('zip');
 		onEndReached(); //global function in make.php
+		self._promptFileDownload('zip');
 	}
 	this.locations3D['end'] = new Location3D(config);
 

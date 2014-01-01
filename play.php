@@ -52,8 +52,13 @@
 					centerBoxes();
 				}
 
+				//register "No thanks" button click event
+				$('#end-container button#no-submit').click(function(){
+					hideEndContainer(0);
+				});
+
 				//register file upload button click event
-				$('#end-container button').click(function() {
+				$('#end-container button#submit').click(function() {
 
                     
 	                if(onFilesSubmit()){
@@ -96,11 +101,11 @@
 	</head>
 
 	<body>
-		<?php require_once('includes/navbar.include.php'); ?>
+		<?php require_once 'includes/navbar.include.php'; ?>
 		<div id="instructions" class="centered-box">
 			<img src="images/maze/move_instructions.png" alt="Move using the W, A, S, and D keys"/>
 			<img src="images/maze/look_instructions.png" alt="Look using the mouse or the arrow keys"/>
-			<button type="button" onclick="hideInstructions()">got it!</button>	
+			<button type="button" onclick="hideInstructions()">got it!</button>
 		</div>
 		<div id="end-container" class="centered-box">
 			<p>
@@ -115,7 +120,8 @@
 					<input type="file" name="end" id="end-file">
 				</div>
 			</form>
-			<button>Upload</button>
+			<button id="submit">Upload</button>
+			<button id="no-submit">No thanks</button>
 		</div>
 		<div id="blocker">
 			<progress value="0" max="100" class="centered-box"></progress>
@@ -255,19 +261,38 @@
 				instructions.hide();
 			}
 
+			function hideEndContainer(delay){
+				setTimeout(function(){
+					$(endContainerSelector).fadeOut(500, function(){
+						$(endContainerSelector).css({display: "none"});
+					});
+				}, delay);
+			}
+
 			function displayFileUploadSuccess(){
 				
 				$(endContainerSelector).html('Upload Success!');
 				$(endContainerSelector).addClass('success-text');
 				centerBoxes();
-				setTimeout(function(){
-					$(endContainerSelector).fadeOut(500, function(){
-						$(endContainerSelector).css({display: "none"});
-					});
-				}, 1500);
+				hideEndContainer(1500);
 			}
 
 			function onEndReached(){
+
+				var havePointerLock = 'pointerLockElement' in document ||
+								   'mozPointerLockElement' in document ||
+								'webkitPointerLockElement' in document;
+				
+				if (havePointerLock){
+					// Ask the browser to release the pointer
+					document.exitPointerLock = document.exitPointerLock ||
+											   document.mozExitPointerLock ||
+											   document.webkitExitPointerLock;
+
+					// Ask the browser to release the pointer
+					document.exitPointerLock();
+				}
+				
 				$(endContainerSelector).css({display: "block"});
 			}
 

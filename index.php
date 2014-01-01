@@ -15,7 +15,7 @@
 		<div id="description">
 
 			<p>
-			Zeta, is a collaborative 3D maze game. You can <a href="make.php">edit</a>, 
+			Zeta is a collaborative 3D maze game. You can <a href="make.php">edit</a>, 
 			<a href="draw.php">draw on</a>, and <a href="play.php">explore</a> the maze. 
 			Any changes you make will affect the next player's experience. That is, until
 			someone else overwrites them.

@@ -39,11 +39,11 @@ WallDrawing.prototype.updateImages = function(){
 	var visibleWalls = this._getVisibleWalls();
 	for(var i = 0; i < visibleWalls.length; i++){
 		var visibleWall = visibleWalls[i];
-		console.log("Image number: " + visibleWall.imageIndex);
 		if(visibleWall.needsUpdate()){
 			visibleWalls[i].updateImage();
 		}
 	}
+	console.log("drawing: " + this.getMiddleWall().imageIndex);
 }
 
 //called onMouseUp if dragging tool was enabled. 
@@ -93,7 +93,6 @@ WallDrawing.prototype.drag = function(previousMouseX, mouseX){
 
 	//if dragged wall right
 	if(previousMouseX < mouseX){
-		console.log(this.wallSegments[0].x)
 		if(this.wallSegments[0].x < 0){
 			canDrag = true;
 		}

@@ -127,7 +127,6 @@ SketchPad.prototype.drawLine = function (start, end){
           var point = s(t);
           var x = point[0] - halfBrushW;
           var y = point[1] - halfBrushH;
-            console.log(this.brush);
         	this.context.drawImage(this.brush, x, y);
 
         }
@@ -144,7 +143,6 @@ SketchPad.prototype.drawLine = function (start, end){
 		}
 
 	} else {
-		console.log(this.brush);
       	this.context.drawImage(this.brush, start.x - halfBrushW, start.y - halfBrushH);
     }
 }

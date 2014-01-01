@@ -77,7 +77,7 @@ WallSegment.prototype.saveImage = function(){
 		method: 'post',
 		data: data,
 		success: function(response){
-			console.log("image saved");
+			console.log(response);
 		},
 		error: function(err){
 			console.log(err)
