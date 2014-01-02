@@ -80,8 +80,12 @@
 	            <div id="color_swatch" title="color picker"></div>
 	            <div id="colorpicker" style="position:absolute;"></div>
 	        </ul>
-
-			<canvas id="sketch" class="drawing" width="960" height="512"></canvas>
+	        <div class="sketch-container">
+	        	<div class="loading">
+	        		<img src="images/sketcher/loading.gif">
+	        	</div>
+				<canvas id="sketch" class="drawing" width="960" height="512"></canvas>
+			</div>
 
 			<p style="text-align: center; padding-top: 20px">Finished drawing? Try and <a href="play.php">find</a> it.</p>
 			

@@ -193,6 +193,19 @@ form.file-upload input.button{
 
 /*sketcher*/
 
+.sketch-container{
+	position: relative;
+}
+
+.sketch-container div.loading{
+	position: absolute;
+	top: 240px;
+	left: 400px;
+	background-color: #ffffff;
+	border: 1px solid #000000;
+	padding: 0px 10px;
+}
+
 #sketcher{
 	position: relative;
 }

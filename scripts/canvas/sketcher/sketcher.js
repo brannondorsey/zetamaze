@@ -8,6 +8,7 @@ var dragToolEnabled = false;
 var fb; //color picker
 var reloadRate = 120; //in seconds
 var reloadTimeout;
+var loading;
 
 function hideMenus() {
   $('#colorpicker').hide();
@@ -80,7 +81,11 @@ function bindEvents(){
 
           if(dragToolEnabled){ //dragging...
             if(wallDrawing.drag(prevMousePos.x, currentMousePos.x) == false){
-              console.log("LOADING"); 
+              loading = true;
+              $('.loading').show();
+            }else{
+              loading = false;
+              $('.loading').hide();
             }
             wallDrawing.loadImages(prevMousePos.x, currentMousePos.x);
           }else{ //drawing...
