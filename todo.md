@@ -9,6 +9,7 @@
 - ~~better instructions in `make.php`~~
 - ~~Better tool handling in `draw.php`~~
 - ~~Detailed about/instructions/more info page~~
+- ~~use 256x256 textures in `play.php`~~
 - ~~Make collisions better (at least fix bug where a player can get stuck)~~ they could still be better...
 - ~~Add maze2D error if start and end are too close~~ not doing this
 - ~~Add maze2D error if locations are on top of each other~~
@@ -17,7 +18,6 @@
 - ~~Set direction of 3D player so that they never start facing a wall~~
 - ~~Build end of game `.zip` download system~~
 - Extensively test end of game `.zip` download system
-- Review all copy
 - ~~Come up with canvas maze reload process to prevent large overwrites~~
 - ~~Do ^ with sketcher~~
 - ~~Use random color on sketcher page load~~
@@ -36,3 +36,4 @@
 - Change number of finder folder images in `fileupload.php` from `5` to `25`
 - Make a list of people to email/fb message
 - Remove all `console.log()` occurrences
+- Review all copy
