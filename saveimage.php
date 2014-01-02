@@ -24,6 +24,7 @@
 			$base64String = str_replace('data:image/png;base64,', '', $base64String);
 			$image = base64_decode($base64String);
 			$bytes_written = file_put_contents($images_folder . "/" . $filename, $image);
+			var_dump($bytes_written);
 			if($bytes_written !== false){
 				$image = new SimpleImage();
 				$image->load(base64_decode($base64String), true);
@@ -31,9 +32,8 @@
 				$image->save($small_images_folder . "/" . $filename, IMAGETYPE_PNG, 9);
 				die("success"); 
 			}
-			echo "and here";                  
+			echo "got here";                  
 		}
-		echo "got here ";
 	}
 	echo "failure";
 ?>
