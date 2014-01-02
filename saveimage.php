@@ -25,15 +25,16 @@
 			$image = base64_decode($base64String);
 			$bytes_written = file_put_contents($images_folder . "/" . $filename, $image);
 			var_dump($bytes_written);
+			echo $images_folder . "/" . $filename;
+			echo " ";
 			if($bytes_written !== false){
 				$image = new SimpleImage();
 				$image->load(base64_decode($base64String), true);
 				$image->resize($small_image_size, $small_image_size);
 				$image->save($small_images_folder . "/" . $filename, IMAGETYPE_PNG, 9);
-				die("success"); 
-			}
-			echo "got here";                  
+				die("saved image to the server"); 
+			}              
 		}
 	}
-	echo "failure";
+	echo "failed to save image to the server";
 ?>
