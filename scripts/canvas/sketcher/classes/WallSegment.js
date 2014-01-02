@@ -97,6 +97,7 @@ WallSegment.prototype.loadImage = function(){
     	self._isLoaded = true;
     	self._isLoading = false;
     	console.log("Loaded image " + self.imageIndex);
+    	self.display();
 	}
 	this.image.onerror = function(){
 		console.log("Error loading image " + self.imageIndex);

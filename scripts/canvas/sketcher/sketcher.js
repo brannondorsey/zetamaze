@@ -126,17 +126,5 @@ $(document).ready(function(e) {
 
     sketcher.preOnCanvasMouseDown = function(){
        hideMenus();
-    }
-
-    //constantly check if init images have been loaded
-    //There is a better way to do this with callbacks but
-    //this works for now
-    var interValID = setInterval(function(){
-      var isLoaded = wallDrawing.initImagesLoaded();
-      if(isLoaded){
-        wallDrawing.display();
-        clearInterval(interValID);
-      }
-    }, 100);
-    
+    }    
 });
