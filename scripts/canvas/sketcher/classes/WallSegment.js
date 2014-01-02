@@ -80,7 +80,7 @@ WallSegment.prototype.saveImage = function(){
 			console.log(response);
 		},
 		error: function(err){
-			console.log(err)
+			console.log(err);
 		}
 	});
 	//}
@@ -94,8 +94,10 @@ WallSegment.prototype.loadImage = function(){
 	this.image.width = this.size;
 	this.image.onload = function() {
     	self._isLoaded = true;
+    	console.log("image loaded");
 	}
 	this.image.onerror = function(){
+		console.log("Error loading image " + self.imageIndex);
 		window.location.href = hostname + '/redirect.php?url=' + encodeURIComponent(hostname + '/draw.php?load_error=true');
 	}		  
 }
