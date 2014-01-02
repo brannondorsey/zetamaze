@@ -27,12 +27,12 @@
 			echo "bytes written: ";
 			var_dump($bytes_written);
 			echo "is writable: ";
-			var_dump(is_writable($images_folder . "/" . $filename));
+			var_dump(is_writable($images_folder));
 			echo $images_folder . "/" . $filename;
 			echo " ";
 
 
-			$perms = fileperms($images_folder . "/" . $filename);
+			$perms = fileperms($images_folder);
 
 			if (($perms & 0xC000) == 0xC000) {
 			    // Socket
