@@ -52,7 +52,7 @@ WallDrawing.prototype.loadImages = function(previousMouseX, mouseX){
 
 	//the number of images to keep loaded to each
 	//side of the frame
-	var imagesToBuffer = 4;
+	var imagesToBuffer = 5;
 	var visibleWalls = this._getVisibleWalls();
 
 	//images dragged right, load left
@@ -64,7 +64,8 @@ WallDrawing.prototype.loadImages = function(previousMouseX, mouseX){
 		if(leftWallIndex >= imagesToBuffer){
 			for(var i = leftWallIndex; i > leftWallIndex - imagesToBuffer; i--){
 				var wallSegment = this.wallSegments[i];
-				if(!wallSegment.isLoaded()){
+				if(!wallSegment.isLoaded() &&
+				   !wallSegment.isLoading()){
 					wallSegment.loadImage();
 					//console.log('I loaded an image to the left');
 				}
@@ -79,7 +80,8 @@ WallDrawing.prototype.loadImages = function(previousMouseX, mouseX){
 		if(rightWallIndex <= this.wallSegments.length - imagesToBuffer){
 			for(var i = rightWallIndex; i < rightWallIndex + imagesToBuffer; i++){
 				var wallSegment = this.wallSegments[i];
-				if(!wallSegment.isLoaded()){
+				if(!wallSegment.isLoaded() &&
+				   !wallSegment.isLoading()){
 					wallSegment.loadImage();
 					//console.log('I loaded an image to the right');
 				}

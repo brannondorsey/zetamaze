@@ -7,6 +7,7 @@ function WallSegment(hostname, context, x, y, size, imageIndex, bShouldLoad){
 	this.imageIndex = imageIndex;
 	this.image = null;
 	this._isLoaded = false;
+	this._isLoading = false;
 	this._needsUpdate = false;
 	this.filename = 'test_image_' + zeroPad(this.imageIndex, 4) + '.png';
 	this.imageURL = this.hostname + '/images/maze/textures/' + this.filename;
@@ -94,16 +95,23 @@ WallSegment.prototype.loadImage = function(){
 	this.image.width = this.size;
 	this.image.onload = function() {
     	self._isLoaded = true;
-    	console.log("image loaded");
+    	self._isLoading = false;
+    	console.log("Loaded image " + self.imageIndex);
 	}
 	this.image.onerror = function(){
 		console.log("Error loading image " + self.imageIndex);
 		window.location.href = hostname + '/redirect.php?url=' + encodeURIComponent(hostname + '/draw.php?load_error=true');
-	}		  
+	}
+	this._isLoading = true;
+	console.log("Loading image " + this.imageIndex); 
 }
 
 WallSegment.prototype.isLoaded = function(){
 	return this._isLoaded;
+}
+
+WallSegment.prototype.isLoading = function(){
+	return this._isLoading;
 }
 
 WallSegment.prototype.notifyNeedsUpdate = function(){
