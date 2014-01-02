@@ -24,7 +24,10 @@
 			$base64String = str_replace('data:image/png;base64,', '', $base64String);
 			$image = base64_decode($base64String);
 			$bytes_written = file_put_contents($images_folder . "/" . $filename, $image);
+			echo "bytes written: ";
 			var_dump($bytes_written);
+			echo "is writable: ";
+			var_dump(is_writable($images_folder . "/" . $filename));
 			echo $images_folder . "/" . $filename;
 			echo " ";
 			if($bytes_written !== false){
