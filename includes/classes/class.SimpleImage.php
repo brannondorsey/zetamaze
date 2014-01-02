@@ -15,6 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
  * GNU General Public License for more details: 
  * http://www.gnu.org/licenses/gpl.html
+ *
+ * Modified January 2, 2014 by Brannon Dorsey <brannon@brannondorsey.com>
  */
 
 class SimpleImage {
@@ -28,19 +30,23 @@ class SimpleImage {
 		}
 	}
 
-	function load($filename)
+	function load($filename, $useString=false)
 	{
-		$image_info = getimagesize($filename);
-		$this->image_type = $image_info[2];
-
-		if ($this->image_type == IMAGETYPE_JPEG) {
+		
+		if($useString){
+			$this->image = imagecreatefromstring($filename);
+		}else{
+			$image_info = getimagesize($filename);
+			$this->image_type = $image_info[2];
+			if ($this->image_type == IMAGETYPE_JPEG) {
 			$this->image = imagecreatefromjpeg($filename);
-		} elseif ($this->image_type == IMAGETYPE_GIF) {
-			$this->image = imagecreatefromgif($filename);
-		} elseif ($this->image_type == IMAGETYPE_PNG) {
-			$this->image = imagecreatefrompng($filename);
-		} else {
-			throw new Exception("The file you're trying to open is not supported");
+			} elseif ($this->image_type == IMAGETYPE_GIF) {
+				$this->image = imagecreatefromgif($filename);
+			} elseif ($this->image_type == IMAGETYPE_PNG) {
+				$this->image = imagecreatefrompng($filename);
+			} else {
+				throw new Exception("The file you're trying to open is not supported");
+			}
 		}
 	}
 

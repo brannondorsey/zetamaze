@@ -1,13 +1,13 @@
 <?php
-	// used for batch resizing images (and cropping them 1 pixel less on each side)
+	// //used for batch resizing images (and cropping them 1 pixel less on each side)
 	// require_once 'includes/classes/class.SimpleImage.php';
-	// $load_directory = "images/maze/textures_same";
+	// $load_directory = "images/maze/textures";
 	// $save_directory = "images/maze/textures_small";
 
 	// $numb_images = 1000;
 	// $size = 256;
 
-	// set_time_limit (1965);
+	// set_time_limit (1000); //in minutes
 
 	// for($i = 1; $i <= $numb_images; $i++){
 	// 	$image = new SimpleImage();

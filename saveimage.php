@@ -25,9 +25,8 @@
 			$image = base64_decode($base64String);
 			$bytes_written = file_put_contents($images_folder . "/" . $filename, $image);
 			if($bytes_written !== false){
-
 				$image = new SimpleImage();
-				$image->load($images_folder . "/" . $filename);
+				$image->load(base64_decode($base64String), true);
 				$image->resize($small_image_size, $small_image_size);
 				$image->save($small_images_folder . "/" . $filename, IMAGETYPE_PNG, 9);
 				die("success"); 
