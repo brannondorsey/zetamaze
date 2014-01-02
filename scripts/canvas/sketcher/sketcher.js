@@ -79,7 +79,9 @@ function bindEvents(){
           var currentMousePos = getMousePos(canvas, evt);
 
           if(dragToolEnabled){ //dragging...
-            wallDrawing.drag(prevMousePos.x, currentMousePos.x);
+            if(wallDrawing.drag(prevMousePos.x, currentMousePos.x) == false){
+              console.log("LOADING"); 
+            }
             wallDrawing.loadImages(prevMousePos.x, currentMousePos.x);
           }else{ //drawing...
             wallDrawing.notifyNeedsUpdate(prevMousePos.x, currentMousePos.x);
