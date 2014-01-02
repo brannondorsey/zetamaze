@@ -30,8 +30,10 @@
 				$image->resize($small_image_size, $small_image_size);
 				$image->save($small_images_folder . "/" . $filename, IMAGETYPE_PNG, 9);
 				die("success"); 
-			}                    
+			}
+			echo "and here";                  
 		}
+		echo "got here ";
 	}
 	echo "failure";
 ?>
