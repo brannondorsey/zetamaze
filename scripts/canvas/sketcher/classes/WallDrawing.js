@@ -97,22 +97,30 @@ WallDrawing.prototype.drag = function(previousMouseX, mouseX){
 	//if dragged wall right
 	if(previousMouseX < mouseX){
 		if(this.wallSegments[0].x < 0){
-			var middleWall = this.getMiddleWall();
-			//if the two images to the left are loaded...
-			if(this.wallSegments[middleWall.imageIndex - 1].isLoaded() &&
-		       this.wallSegments[middleWall.imageIndex - 2].isLoaded()){
-				canDrag = true;
-			}else return false;
+
+			//not too close to the first wall (used for loading gif) 
+			if(this._getLeftMostWall(this._getVisibleWalls()).imageIndex > 2){
+				var middleWall = this.getMiddleWall();
+				//if the two images to the left are loaded...
+				if(this.wallSegments[middleWall.imageIndex - 1].isLoaded() &&
+			       this.wallSegments[middleWall.imageIndex - 2].isLoaded()){
+					canDrag = true;
+				}else return false;
+			}else canDrag = true;
 		}
 	}else if(previousMouseX > mouseX){ //if dragged left
 		var lastWallSegment = this.wallSegments[this.wallSegments.length - 1];
 		if(lastWallSegment.x + lastWallSegment.size > this.canvas.width){
-			var middleWall = this.getMiddleWall();
-			//if the two images to the right are loaded...
-			if(this.wallSegments[middleWall.imageIndex].isLoaded() &&
-		       this.wallSegments[middleWall.imageIndex + 1].isLoaded()){
-				canDrag = true;
-			}else return false; //loading
+
+			//not too close to the last wall (used for loading gif) 
+			if(this._getRightMostWall(this._getVisibleWalls()).imageIndex < this.wallSegments.length - 2){
+				var middleWall = this.getMiddleWall();
+				//if the two images to the right are loaded...
+				if(this.wallSegments[middleWall.imageIndex].isLoaded() &&
+			       this.wallSegments[middleWall.imageIndex + 1].isLoaded()){
+					canDrag = true;
+				}else return false; //loading
+			}else canDrag = true;
 		}
 	}
 
