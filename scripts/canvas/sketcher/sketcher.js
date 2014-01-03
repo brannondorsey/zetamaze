@@ -112,7 +112,8 @@ function bindEvents(){
 
         if(dragToolEnabled){
           $('canvas').toggleClass('grabbing', false);
-        }else{ //save images
+        }else if(!loading &&
+                 sketcher.isEnabled()){ //save images
           wallDrawing.updateImages();
         }
         mousePressed = false;
