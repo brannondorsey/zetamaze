@@ -136,10 +136,11 @@ $(document).ready(function(e) {
     //constantly check if first images are loaded
     //this is a kind of gross way to do it but oh
     //well at least I said it
-    setTimeout(function(){
+    var intervalID = setInterval(function(){
       if(wallDrawing.initImagesLoaded()){
         sketcher.setEnabled(true);
         $('.loading').hide();
+        clearInterval(intervalID);
       }
     }, 100);
 
