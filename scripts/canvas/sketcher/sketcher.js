@@ -9,6 +9,7 @@ var fb; //color picker
 var reloadRate = 120; //in seconds
 var reloadTimeout;
 var loading = true;
+var drawingStartedWhileLoading = false;
 
 function hideMenus() {
   $('#colorpicker').hide();
@@ -98,13 +99,18 @@ function bindEvents(){
 
     canvas.addEventListener('mousedown', function(evt){
 
-        mousePressed = true;
         prevMousePos = getMousePos(canvas, evt);
-
+        mousePressed = true;
+        
         if(dragToolEnabled){
           sketcher.setEnabled(false);
           $('canvas').toggleClass('grabbing', true);
-        }else if(!loading) sketcher.setEnabled(true);
+        }else if(loading){
+          drawingStartedWhileLoading = true;
+        }else{
+          drawingStartedWhileLoading = false;
+          sketcher.setEnabled(true);
+        }
 
     }, false);
 
@@ -114,7 +120,8 @@ function bindEvents(){
         if(dragToolEnabled){
           $('canvas').toggleClass('grabbing', false);
         }else if(!loading &&
-                 sketcher.isEnabled()){ //save images
+                 sketcher.isEnabled() &&
+                 !drawingStartedWhileLoading){ //save images
           wallDrawing.updateImages();
         }
         mousePressed = false;
