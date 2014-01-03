@@ -81,7 +81,6 @@ function bindEvents(){
 
           if(dragToolEnabled){ //dragging...
             if(wallDrawing.drag(prevMousePos.x, currentMousePos.x) == false){
-              setLoadChecker();
               loading = true;
               $('.loading').show();
               setTimeout(function(){$('.loading').hide()}, 1500);
@@ -103,8 +102,10 @@ function bindEvents(){
         prevMousePos = getMousePos(canvas, evt);
 
         if(dragToolEnabled){
+          sketcher.setEnabled(false);
           $('canvas').toggleClass('grabbing', true);
-        }
+        }else sketcher.setEnabled(true);
+        
     }, false);
 
     //the mouse up event must be tied to the document, not the canvas
