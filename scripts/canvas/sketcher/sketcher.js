@@ -8,7 +8,7 @@ var dragToolEnabled = false;
 var fb; //color picker
 var reloadRate = 120; //in seconds
 var reloadTimeout;
-var loading;
+var loading = true;
 
 function hideMenus() {
   $('#colorpicker').hide();
@@ -83,7 +83,7 @@ function bindEvents(){
             if(wallDrawing.drag(prevMousePos.x, currentMousePos.x) == false){
               loading = true;
               $('.loading').show();
-              setTimeout(function(){$('.loading').hide()}, 1500);
+              setTimeout(function(){$('.loading').hide()}, 2000);
             }else{
               loading = false;
               if(sketcher.isEnabled()) $('.loading').hide();
@@ -104,8 +104,8 @@ function bindEvents(){
         if(dragToolEnabled){
           sketcher.setEnabled(false);
           $('canvas').toggleClass('grabbing', true);
-        }else sketcher.setEnabled(true);
-        
+        }else if(!loading) sketcher.setEnabled(true);
+
     }, false);
 
     //the mouse up event must be tied to the document, not the canvas
@@ -142,6 +142,7 @@ $(document).ready(function(e) {
       if(wallDrawing.initImagesLoaded()){
         sketcher.setEnabled(true);
         $('.loading').hide();
+        loading = false;
         clearInterval(intervalID);
       }
     }, 100);
