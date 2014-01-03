@@ -121,7 +121,7 @@ $(document).ready(function(e) {
 	
     canvas = $("#sketch")[0];
 	  sketcher = new SketchPad("sketch", "images/sketcher/tip.png", function(){
-      
+      sketcher.setEnabled(false);
       wallDrawing = new WallDrawing(hostname, canvas, imageSize, numbImages, initImageIndex, initImageOffset);
       //start color picker at random color
       fb = $.farbtastic('#colorpicker', setColor);
@@ -130,6 +130,16 @@ $(document).ready(function(e) {
       bindEvents();
 
     });
+
+    //constantly check if first images are loaded
+    //this is a kind of gross way to do it but oh
+    //well at least I said it
+    setTimeout(function(){
+      if(wallDrawing.initImagesLoaded()){
+        sketcher.setEnabled(true);
+        $('.loading').hide();
+      }
+    }, 100);
 
     sketcher.preOnCanvasMouseDown = function(){
        hideMenus();

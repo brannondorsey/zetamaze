@@ -82,7 +82,7 @@
 	        </ul>
 	        <div class="sketch-container">
 	        	<div class="loading">
-	        		<img src="images/sketcher/loading.gif">
+	        		<img src="images/sketcher/loading_2.gif">
 	        	</div>
 				<canvas id="sketch" class="drawing" width="960" height="512"></canvas>
 			</div>

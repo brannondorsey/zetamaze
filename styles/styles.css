@@ -189,6 +189,7 @@ form.file-upload input.button{
 /*color picker*/
 #colorpicker{
 	position: absolute;
+	z-index: 2;
 }
 
 /*sketcher*/
@@ -201,8 +202,8 @@ form.file-upload input.button{
 	position: absolute;
 	top: 240px;
 	left: 400px;
-	background-color: #ffffff;
-	border: 1px solid #000000;
+	background-color: #000000;
+	border-radius: 2px;
 	padding: 0px 10px;
 }
 
@@ -211,7 +212,7 @@ form.file-upload input.button{
 }
 
 #sketch{
-  border: 2px solid #888888; 
+  border: 2px solid #000000; 
   background-color: #EEEEEE;
   border-radius: 0px;
 }
