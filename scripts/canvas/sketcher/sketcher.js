@@ -81,11 +81,13 @@ function bindEvents(){
 
           if(dragToolEnabled){ //dragging...
             if(wallDrawing.drag(prevMousePos.x, currentMousePos.x) == false){
+              setLoadChecker();
               loading = true;
               $('.loading').show();
+              setTimeout(function(){$('.loading').hide()}, 1500);
             }else{
               loading = false;
-              $('.loading').hide();
+              if(sketcher.isEnabled()) $('.loading').hide();
             }
             wallDrawing.loadImages(prevMousePos.x, currentMousePos.x);
           }else{ //drawing...
