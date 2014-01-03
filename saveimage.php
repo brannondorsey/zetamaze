@@ -27,7 +27,7 @@
 			echo "bytes written: ";
 			var_dump($bytes_written);
 			echo "is writable: ";
-			var_dump(is_writable($images_folder));
+			var_dump(is_writable($images_folder . "/" . $filename));
 			echo $images_folder . "/" . $filename;
 			echo " ";
 
