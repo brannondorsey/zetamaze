@@ -13,6 +13,9 @@ echo "backups: $backups_dir"
 echo "textures: $textures_dir"
 echo "textures small: $textures_small_dir"
 
+touch "/home/brannondorsey/test.txt"
+touch test_2.txt
+
 backup_dir="$backups_dir/$date"
 if [ ! -d $backup_dir ]
 then
