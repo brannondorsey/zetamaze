@@ -37,3 +37,7 @@
 - Make a list of people to email/fb message
 - Remove all `console.log()` occurrences
 - Review all copy
+
+#Beta test bugs
+- If start is near no walls game never loads
+- file upload error notification if user clicks "upload" before choosing a file when finder's folder is selected
