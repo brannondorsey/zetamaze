@@ -28,7 +28,7 @@
 - ~~Better feedback when using file upload on make.php. Do not us alerts.~~
 - ~~Release pointer lock when Finder's Folder is found.~~
 - ~~Check out what is going on with maze error handling. It is being glitchy, giving false negatives and positives.~~
-- Setup a cron job to auto back things up.
+- ~~Setup a cron job to auto back things up.~~
 - ~~FAQ page?~~ its now on the info page
 
 #Right Before Launch
@@ -41,3 +41,7 @@
 #Beta test bugs
 - If start is near no walls game never loads
 - file upload error notification if user clicks "upload" before choosing a file when finder's folder is selected
+- Change load bar color for firefox
+- Ghost image of models when items collected
+- 413 Request Entity Too Large
+- Gradient skybox
