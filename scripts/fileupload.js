@@ -19,7 +19,18 @@ $(document).ready(function(){
 		});
 	});
 
-	notifyIfUploadFailed();
+	if(fileUploadSuccess){
+		$(fileUploadNotificationSelector).html("Upload successful!");
+		$(fileUploadNotificationSelector).addClass('success-text');
+	}
+
+	if(typeof errorsFromGet !== 'undefined'){
+		console.log(errorsFromGet);
+		var errorMessage = (errorsFromGet[0] == 'No files selected') ? errorsFromGet[0] : errorsFromGet.join("<br/>") + "<br/>" + "If you uploaded other files they were uploaded successfully";
+		$(fileUploadNotificationSelector).html(errorMessage);
+		$(fileUploadNotificationSelector).addClass('error-text');
+	}
+
 });
 
 function validateFiles(){
@@ -73,16 +84,6 @@ function allowedFileType(filePath){
 		}
 	}
 	return inArray;
-}
-
-function notifyIfUploadFailed(){
-
-	if(typeof errorsFromGet !== 'undefined'){
-		console.log(errorsFromGet);
-		var errorMessage = (errorsFromGet[0] == 'No files selected') ? errorsFromGet[0] : errorsFromGet.join("<br/>") + "<br/>" + "If you uploaded other files they were uploaded successfully";
-		$(fileUploadNotificationSelector).html(errorMessage);
-		$(fileUploadNotificationSelector).addClass('error-text');
-	}
 }
 
 function onFilesSubmit(){

@@ -13,7 +13,7 @@ echo "Which date would you like to restore? (yyyy-mm-dd)"
 read date
 restore_dir="backups/$date"
 
-if[ -d $restore_dir ]
+if[ -d "$restore_dir" ]
 then
 
 	#backup textures
