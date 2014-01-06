@@ -23,6 +23,27 @@
 		<script src="scripts/three/OBJMTLLoader.js"></script>
 		<script src="scripts/three/Stats.js"></script>
 		<script src="scripts/three/classes/CharacterController.js"></script>
+		<script type="x-shader/x-vertex" id="vertexShader">
+
+			varying vec3 vWorldPosition;
+			void main() {
+				vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+				vWorldPosition = worldPosition.xyz;
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+			}
+		</script>
+		<script type="x-shader/x-fragment" id="fragmentShader">
+
+			uniform vec3 topColor;
+			uniform vec3 bottomColor;
+			uniform float offset;
+			uniform float exponent;
+			varying vec3 vWorldPosition;
+			void main() {
+				float h = normalize( vWorldPosition + offset ).y;
+				gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( h, exponent ), 0.0 ) ), 1.0 );
+			}
+		</script>
 		<script type="text/javascript">
 
 			var fileInputVals = [];
@@ -186,9 +207,6 @@
 			    hemisphereLight.position.set(1, 1, 1).normalize();
 			    scene.add(hemisphereLight);
 
-			    //fog
-			    scene.fog = new THREE.Fog( 0xffffff, 16, 26);
-				
 				//maze3D
 				maze3D.addToScene();
 
@@ -199,6 +217,36 @@
 				character = new CharacterController(scene, camera, beginPosition);
 				character.setEnabled(false);
 				character.registerCollisionObjects(maze3D.getBlockMeshes(), maze3D.getBlockSize());
+
+				//fog
+			   //scene.fog = new THREE.Fog( 0xffffff, 16, 26);
+
+				//skydome
+				var vertexShader = document.getElementById( 'vertexShader' ).textContent;
+				var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
+				var uniforms = {
+					topColor: 	 { type: "c", value: new THREE.Color( 0x0077ff ) },
+					bottomColor: { type: "c", value: new THREE.Color( 0xffffff ) },
+					offset:		 { type: "f", value: 33 },
+					exponent:	 { type: "f", value: 1.5 },
+					fogColor:    { type: "c", value: 0xffffff },
+    				fogNear:     { type: "f", value: 16 },
+    				fogFar:      { type: "f", value: 26 }
+				};
+				// uniforms.topColor.value.copy( hemiLight.color );
+
+				//scene.fog.color.copy( uniforms.bottomColor.value );
+
+				var skyGeo = new THREE.SphereGeometry( 26, 30, 30 );
+				var skyMat = new THREE.ShaderMaterial({ vertexShader: vertexShader,
+														fragmentShader: fragmentShader,
+														uniforms: uniforms, 
+														side: THREE.BackSide,
+														fog: true
+														});
+
+				var sky = new THREE.Mesh( skyGeo, skyMat );
+				character.body.add( sky );
 
 				//bind resize event
 				THREEx.WindowResize(renderer, camera, heightSubtractor);

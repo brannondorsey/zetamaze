@@ -39,7 +39,7 @@
 - Review all copy
 
 #Beta test bugs
-- If start is near no walls game never loads
+- ~~If start is near no walls game never loads~~
 - file upload error notification if user clicks "upload" before choosing a file when finder's folder is selected
 - Change load bar color for firefox
 - Ghost image of models when items collected
