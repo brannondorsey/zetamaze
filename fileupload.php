@@ -13,9 +13,6 @@
 	$return_data = array();
 	$files_uploaded = files_present($_FILES);
 
-	ini_set('post_max_size', '6M');
-	ini_set('upload_max_filesize', '6M');
-
 	if($files_uploaded){
 		
 	   	$numb_files = count($_FILES);

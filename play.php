@@ -32,6 +32,7 @@
 			var fileUploadSelector = '.file-upload-input-container input[type=file]';
 			var fileUploadNotificationSelector = '#file-upload-notification';
 			var endContainerSelector = '#end-container';
+			var fileUploadSuccess = false;
 
 		</script>
 		<script type="text/javascript" src="scripts/fileupload.js"></script>
@@ -153,6 +154,7 @@
 				success: function(response){
 					var block3Dsize = 5;
 					var mazeObj = response.data[0];
+					console.log(mazeObj);
 					maze3D = new Maze3D(hostname, scene, mazeObj, block3Dsize, "images/maze/textures_small/", "models/");
 
 					//do it!
@@ -164,7 +166,7 @@
 			function init(maze3D){
 
 				renderer = new THREE.WebGLRenderer({ antialias: true }); 
-				camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 26);
+				camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 26);
 				clock = new THREE.Clock();
 
 				displayStats = true;

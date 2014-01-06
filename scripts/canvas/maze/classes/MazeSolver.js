@@ -7,6 +7,7 @@ function MazeSolver(data, beginMazeX, beginMazeY, endMazeX, endMazeY){
     this.maze = this.getCopy(data); //data.slice(0); //make a copy not reference
     this.mazeHeight = this.maze.length;
     this.mazeWidth = this.maze[0].length;
+
     this.startingPoint = new Point(beginMazeX, beginMazeY);
     this.endingPoint = new Point(endMazeX, endMazeY);
 
@@ -168,6 +169,8 @@ MazeSolver.prototype._getMazeTravelData = function(){
     var mazeTravelData = [];
     var done = false;
     var imageIndex = 1;
+
+    this._reassignPoint(this.startingPoint);
 
     var startX = this.startingPoint.x;
     var startY = this.startingPoint.y;
@@ -348,4 +351,13 @@ MazeSolver.prototype._getForward = function(currentX, currentY, currentDir){
 MazeSolver.prototype._getFaceIndex = function(dir){
     var faceIndexes = [1, 5, 0, 4]; //[up, right, down, left] [1, 5, 0, 4]
     return faceIndexes[dir - 1];
+}
+
+//if point is not next to a wall it is reassigned to the right until it is 
+MazeSolver.prototype._reassignPoint = function(point, reassignLeft){
+    var dir = (typeof reassignLeft !== 'undefined' && reassignLeft) ? -1 : 1;
+    if(this.maze[point.y][point.x + dir] == this.free){
+        point.x += dir;
+        this._reassignPoint(point, reassignLeft);
+    } 
 }

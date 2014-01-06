@@ -48,6 +48,7 @@ function Maze3D(hostname, scene, mazeObj, block3DSize, pathToImagesFolder, pathT
 				}else textureNames[i] = 0;	
 			}
 			if(state){
+
 				this.blocks3D[z][x] = new Block3D(xPos, 
 												  yPos, 
 												  zPos, 
@@ -60,6 +61,7 @@ function Maze3D(hostname, scene, mazeObj, block3DSize, pathToImagesFolder, pathT
 												  	//console.log('I loaded an image');
 												  });
 				this._numbTexturesNeeded += this.blocks3D[z][x].getNumbTextures();
+				console.log(this.blocks3D[z][x]);
 			}
 			xPos += this.block3DSize;
 		}
