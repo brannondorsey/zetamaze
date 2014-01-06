@@ -157,6 +157,11 @@ div.error-box ul li{
 	padding: 5px 10px;
 	font-size: 14pt;
 	border: 1px solid #000000;
+	border-radius: 2px;
+	-webkit-transition: background-color .18s, color .18s; 
+    -moz-transition: background-color .18s, color .18s;  
+    -o-transition: background-color .18s, color .18s;  
+    transition: background-color .18s, color .18s;
 }
 
 .button:hover, .button:focus, button:hover, button:focus, button:hover, button:focus{

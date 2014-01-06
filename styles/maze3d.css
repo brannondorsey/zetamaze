@@ -43,7 +43,7 @@ progress[value]::-webkit-progress-value{
 
 /*same as above but with firefox*/
 progress[value]::-moz-progress-bar{
-        background-color: #ffffff;
+        background-color: #636363;
 }
 
 #instructions, #end-container{

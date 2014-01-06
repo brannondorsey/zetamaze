@@ -82,13 +82,19 @@
 	                            //errors all errors are handled frontend.
 	                            console.log(response);
 	                            console.log("success");
-	                            for(var parameter in response){
+	                            for(var property in response){
 	                            	
 	                            	//if the upload was a success!
-	                            	if(parameter == "file_upload_success" &&
-	                            	   response[parameter] == "true"){
-
+	                            	if(property == "file_upload_success" &&
+	                            	   response[property] == "true"){
 	                            		displayFileUploadSuccess();
+	                            	}
+
+	                            	//if no file was uploaded
+	                            	if(property == "no_files" &&
+	                            	   response[property] == "true"){
+	                            		$(fileUploadNotificationSelector).html("Please choose a file");
+										$(fileUploadNotificationSelector).addClass('error-text');
 	                            	}
 	                            }    
 	                        }
@@ -272,7 +278,7 @@
 
 			function displayFileUploadSuccess(){
 				
-				$(endContainerSelector).html('Upload Success!');
+				$(endContainerSelector).html('Upload Successful!');
 				$(endContainerSelector).addClass('success-text');
 				centerBoxes();
 				hideEndContainer(1500);

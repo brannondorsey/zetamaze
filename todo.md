@@ -3,7 +3,7 @@
 - Exchange cubes with models
 - ~~Exchange rects with images~~
 - ~~Add server side maze data validation~~
-- Add safeguard from image attacks
+- ~~Add safeguard from image attacks~~
 - ~~Add 3D maze instructions~~
 - ~~Add menu to `play.php`~~
 - ~~better instructions in `make.php`~~
@@ -39,9 +39,9 @@
 - Review all copy
 
 #Beta test bugs
-- If start is near no walls game never loads
-- file upload error notification if user clicks "upload" before choosing a file when finder's folder is selected
-- Change load bar color for firefox
+- ~~If start is near no walls game never loads~~
+- ~~file upload error notification if user clicks "upload" before choosing a file when finder's folder is selected~~
+- ~~Change load bar color for firefox~~
 - Ghost image of models when items collected
-- 413 Request Entity Too Large
+- ~~413 Request Entity Too Large~~
 - Gradient skybox
