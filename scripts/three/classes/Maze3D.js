@@ -68,7 +68,7 @@ function Maze3D(hostname, scene, mazeObj, block3DSize, pathToImagesFolder, pathT
 		xPos = 0;
 		zPos += this.block3DSize;
 	}
-	console.log("Loading " + this._numbTexturesNeeded + " images");
+	
 	this._initLocations();
 }
 
