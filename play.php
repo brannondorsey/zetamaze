@@ -69,7 +69,10 @@
 	                    data.append('end',$(".file-upload-input-container [type='file']").get(0).files[0]);
 
 	                    if(!responsePending){
-	                    	console.log("request sent");
+	           
+	                    	$(fileUploadNotificationSelector).html("Uploading...");
+	                    	$(fileUploadNotificationSelector).addClass('normal-text');
+	                    	
 	                    	$.ajax({
 		                        url:'fileupload.php?redirect=false',
 		                        type:'POST',

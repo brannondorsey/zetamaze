@@ -284,13 +284,18 @@ ul.tools{
     transition: opacity 1s,  color 1s;
 }
 
-.error-text, .error-text a, .success-text a:link, .error-text a:hover, .error-text a:visited {
+.error-text, .error-text a, .error-text a:link, .error-text a:hover, .error-text a:visited {
 	color: #fc1d00;
 	opacity: 1;
 }
 
 .success-text, .success-text a, .success-text a:link, .success-text a:hover, .success-text a:visited {
 	color: #22de0d;
+	opacity: 1;
+}
+
+.normal-text, .normal-text a, .sunormal-text a:link, .normal-text a:hover, .normal-text a:visited {
+	color: #000000;
 	opacity: 1;
 }
 
