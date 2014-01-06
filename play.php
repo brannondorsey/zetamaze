@@ -33,6 +33,7 @@
 			var fileUploadNotificationSelector = '#file-upload-notification';
 			var endContainerSelector = '#end-container';
 			var fileUploadSuccess = false;
+			var responsePending = false;
 
 		</script>
 		<script type="text/javascript" src="scripts/fileupload.js"></script>
@@ -67,38 +68,45 @@
 	                	var data = new FormData();
 	                    data.append('end',$(".file-upload-input-container [type='file']").get(0).files[0]);
 
-	                    $.ajax({
-	                        url:'fileupload.php?redirect=false',
-	                        type:'POST',
-	                        processData: false,
-	                        contentType: false,
-	                        data:data,
-	                        success:function(response){
-	                            
-	                            //resultsArray will contain responses from fileupload.php
-	                            //as properties and values in an object. I tried making them
-	                            //an assoc array but that didn't work. For this reason, instead
-	                            //of handling lots of conditionals to report backend file upload
-	                            //errors all errors are handled frontend.
-	                            console.log(response);
-	                            console.log("success");
-	                            for(var property in response){
-	                            	
-	                            	//if the upload was a success!
-	                            	if(property == "file_upload_success" &&
-	                            	   response[property] == "true"){
-	                            		displayFileUploadSuccess();
-	                            	}
+	                    if(!responsePending){
+	                    	console.log("request sent");
+	                    	$.ajax({
+		                        url:'fileupload.php?redirect=false',
+		                        type:'POST',
+		                        processData: false,
+		                        contentType: false,
+		                        data:data,
+		                        success:function(response){
+		                            responsePending = false;
+		                            //resultsArray will contain responses from fileupload.php
+		                            //as properties and values in an object. I tried making them
+		                            //an assoc array but that didn't work. For this reason, instead
+		                            //of handling lots of conditionals to report backend file upload
+		                            //errors all errors are handled frontend.
+		                            console.log(response);
+		                            console.log("success");
+		                            for(var property in response){
+		                            	
+		                            	//if the upload was a success!
+		                            	if(property == "file_upload_success" &&
+		                            	   response[property] == "true"){
+		                            		displayFileUploadSuccess();
+		                            	}
 
-	                            	//if no file was uploaded
-	                            	if(property == "no_files" &&
-	                            	   response[property] == "true"){
-	                            		$(fileUploadNotificationSelector).html("Please choose a file");
-										$(fileUploadNotificationSelector).addClass('error-text');
-	                            	}
-	                            }    
-	                        }
-	                    });
+		                            	//if no file was uploaded
+		                            	if(property == "no_files" &&
+		                            	   response[property] == "true"){
+		                            		$(fileUploadNotificationSelector).html("Please choose a file");
+											$(fileUploadNotificationSelector).addClass('error-text');
+		                            	}
+		                            }    
+		                        },
+		                        error: function(err){
+		                        	responsePending = false;
+		                        }
+		                    });
+							responsePending = true;
+	                    }
 		            }
 	            });
             
