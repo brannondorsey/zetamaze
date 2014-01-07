@@ -43,7 +43,8 @@
 			$(document).ready(function(){
 
 				if(!Detector.webgl){
-					instructions.html("Oops, it looks like your browser doesn't support WebGL. Trying using Google Chrome.");
+					var webGLError = '<p style="color: #ffffff">Oops, it looks like your browser doesn\'t support WebGL.<br>Trying using Google Chrome.</p>';
+					$('#blocker').html(webGLError);
 				}
 
 				//postion instructions box in center of screen
@@ -154,7 +155,7 @@
 
 			//globals
 			var element = document.body; //used for pointer lock
-			var renderer, scene, camera, clock, character, stats, displayStats, maze3D;
+			var renderer, scene, camera, clock, character, stats, statsEnabled, maze3D;
 			scene = new THREE.Scene();
 
 			var progress = $('progress');
@@ -190,7 +191,7 @@
 				camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 26);
 				clock = new THREE.Clock();
 
-				displayStats = true;
+				statsEnabled = false;
 
 				//renderer
 				var heightSubtractor = $('#navbar').height();
@@ -225,13 +226,8 @@
 				THREEx.WindowResize(renderer, camera, heightSubtractor);
 
 				//stants
-				if(displayStats){
-
-					stats = new Stats();
-					stats.domElement.style.position = 'absolute';
-					stats.domElement.style.bottom = '0px';
-					stats.domElement.style.zIndex = 100;
-					document.body.appendChild( stats.domElement );
+				if(statsEnabled){
+					showStats();
 				}
 			}
 
@@ -239,7 +235,7 @@
 		
 				var delta = clock.getDelta();
 				requestAnimationFrame( animate );
-				if(displayStats) stats.update();
+				if(statsEnabled) stats.update();
 
 				if(!isLoaded){
 				   progress.val(maze3D.getPercentLoaded());
@@ -324,6 +320,16 @@
 				}
 				
 				$(endContainerSelector).css({display: "block"});
+			}
+
+			function showStats(){
+
+				stats = new Stats();
+				stats.domElement.style.position = 'absolute';
+				stats.domElement.style.bottom = '0px';
+				stats.domElement.style.zIndex = 100;
+				document.body.appendChild( stats.domElement );
+				statsEnabled = true;
 			}
 
 			function lockPointer() {
