@@ -7,9 +7,9 @@
 			<span class='navbar-instructions'>Press ESC to get your mouse back</span>
 		</div>
 		<div id="links">
-			<a href="make.php">make</a> / 
-			<a href="draw.php">draw</a> /
-			<a href="play.php">play</a>
+			<a href="make.php" title="Edit the maze" >make</a> / 
+			<a href="draw.php" title="Draw on the maze walls" >draw</a> /
+			<a href="play.php" title="Explore the maze &amp; collect items" >play</a>
 		</div>
 	</div>
 </div>

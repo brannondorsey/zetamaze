@@ -8,9 +8,9 @@
 
 	<body>
 		<div id="links">
-			<a href="make.php" id="make">make</a> /
-			<a href="draw.php" id="draw">draw</a> /
-			<a href="play.php" id="play">play</a>
+			<a href="make.php" id="make" title="Edit the maze">make</a> /
+			<a href="draw.php" id="draw" title="Draw on the maze walls">draw</a> /
+			<a href="play.php" id="play" title="Explore the maze &amp; collect items">play</a>
 		</div>
 		<div id="description">
 

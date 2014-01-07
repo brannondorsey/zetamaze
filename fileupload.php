@@ -38,10 +38,9 @@
 							  if($filename == "end"){
 							  	
 							  	//increment all current filenames and name the new file "1.ext"
-							  	$numb_finders_folder_files = 5;
 							  	$current_filenames = file_get_contents($HOSTNAME . "/itemnames.php?directory=uploads/findersfolder");
 								$current_filenames = json_decode($current_filenames);
-								$current_filenames = array_slice ($current_filenames, 0, $numb_finders_folder_files); //just in case...
+								$current_filenames = array_slice ($current_filenames, 0, $FINDERS_FOLDER_SIZE); //just in case...
 								
 								//delete the last file
 								$last_file = $current_filenames[count($current_filenames) - 1];

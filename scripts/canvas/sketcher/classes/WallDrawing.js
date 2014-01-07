@@ -9,7 +9,7 @@ function WallDrawing(hostname, canvas, wallSize, numbImages, initImageIndex, ini
 	this.canvas = canvas;
 	this.context = this.canvas.getContext('2d');
 	this.numbInitImagesToLoad = 8; //must be odd number
-	console.log("Init image number: " + this.numbInitImagesToLoad);
+	
 	this.initWallSegments = [];
 
 	var startX = this.canvas.width/2 - this.initImageIndex * this.wallSize + this.wallSize / 2;
@@ -44,7 +44,7 @@ WallDrawing.prototype.updateImages = function(){
 			visibleWalls[i].updateImage();
 		}
 	}
-	//console.log("drawing: " + this.getMiddleWall().imageIndex);
+	console.log("drawing: " + this.getMiddleWall().imageIndex);
 }
 
 //called onMouseUp if dragging tool was enabled. 

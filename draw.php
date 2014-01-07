@@ -45,8 +45,7 @@
 			<?php if(isset($_GET["color"]) &&
 				     !empty($_GET["color"])){ ?>
 			var color = <?php  echo "'#" . $_GET["color"] . "'" ?>;
-			console.log(color);
-			console.log("here");
+			
 			//check if color is a valid color hex
 			if(/^#[0-9A-F]{6}$/i.test(color)) initColor = color;
 			<?php } ?>

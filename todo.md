@@ -33,7 +33,7 @@
 
 #Right Before Launch
 - Pick 25 finders folder folder files and 4 item files
-- Change number of finder folder images in `fileupload.php` from `5` to `25`
+- ~~Change number of finder folder images in `fileupload.php` from `5` to `25`~~ keeping as 5
 - Make a list of people to email/fb message
 - Remove all `console.log()` occurrences
 - Review all copy

@@ -96,7 +96,7 @@ WallSegment.prototype.loadImage = function(){
 	this.image.onload = function() {
     	self._isLoaded = true;
     	self._isLoading = false;
-    	console.log("Loaded image " + self.imageIndex);
+    	//console.log("Loaded image " + self.imageIndex);
     	self.display();
 	}
 	this.image.onerror = function(){
@@ -104,7 +104,7 @@ WallSegment.prototype.loadImage = function(){
 		window.location.href = hostname + '/redirect.php?url=' + encodeURIComponent(hostname + '/draw.php?load_error=true');
 	}
 	this._isLoading = true;
-	console.log("Loading image " + this.imageIndex); 
+	//console.log("Loading image " + this.imageIndex); 
 }
 
 WallSegment.prototype.isLoaded = function(){

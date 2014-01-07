@@ -127,7 +127,7 @@ ErrorHandler.prototype._checkWallsConnected = function(maze){
 		if(shouldBreak) break;
 	}
 
-	if(islandsExist) this._addError('All walls must be connected');
+	if(islandsExist) this._addError('All walls must be connected<br>No "islands" of any size are allowed');
 }
 
 ErrorHandler.prototype._floodFill = function(maze, x, y){
