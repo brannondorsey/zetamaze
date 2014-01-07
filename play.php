@@ -72,7 +72,7 @@
 	           
 	                    	$(fileUploadNotificationSelector).html("Uploading...");
 	                    	$(fileUploadNotificationSelector).addClass('normal-text');
-	                    	
+
 	                    	$.ajax({
 		                        url:'fileupload.php?redirect=false',
 		                        type:'POST',
@@ -127,7 +127,7 @@
 		</div>
 		<div id="end-container" class="centered-box">
 			<p>
-				You found the Finder's Folder! A <code>.zip</code> containing 25 files has been downloaded to your computer.
+				You found the Finder's Folder! <span>A <code>.zip</code> containing 25 files has been downloaded to your computer.</span>
 			 	Each of these files was uploaded by someone else who found the Finder's Folder. Now its your turn to upload.
 			</p>
 
@@ -142,7 +142,12 @@
 			<button id="no-submit">No thanks</button>
 		</div>
 		<div id="blocker">
-			<progress value="0" max="100" class="centered-box"></progress>
+			<p style="color: #000000">
+				Zetamaze downloads files to your computer when you pick up items. <br>
+				To opt-out of this feature
+				<span id="opt-out" onclick="optOutFileDownload()">click here</span>.
+			</p>
+			<progress class="centered-box" value="0" max="100"></progress>
 		</div>
 
 		<script>
@@ -259,7 +264,14 @@
 				character.setEnabled(true);
 			}
 
+			function optOutFileDownload(){
+				maze3D.setDownloadsEnabled(false);
+				$('#blocker p').css({ color: $('#blocker').css('color')});
+				$('#end-container span').css({textDecoration: 'line-through'});
+			}
+
 			function centerBoxes(){
+
 				$('.centered-box').each(function(){
 					$(this).css({
 						top: window.innerHeight / 2 - $(this).height() / 2,
@@ -268,7 +280,7 @@
 				});
 
 				//position progress bar in center of screen
-				$('progress').css({ marginTop: window.innerHeight - $(this).height() / 2 });
+				$('#blocker p').css({ marginTop: window.innerHeight - $(this).height() / 2 - 100});
 			}
 
 			function showInstructions(){

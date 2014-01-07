@@ -19,7 +19,8 @@ function Maze3D(hostname, scene, mazeObj, block3DSize, pathToImagesFolder, pathT
 
 	this._isLoaded = false;
 	this._numbTexturesLoaded = 0; //number of textures currently loaded
-	this._numbTexturesNeeded = 0; //max number of textures needed to load
+	this._numbTexturesNeeded = 0; //max number of textures needed to load'
+	this._downloadsEnabled = true;
 
 	this.locations3D = [];
 
@@ -142,6 +143,10 @@ Maze3D.prototype.isLoaded = function(){
 	return this._isLoaded;
 }
 
+Maze3D.prototype.setDownloadsEnabled = function(bool){
+	this._downloadsEnabled = bool
+}
+
 Maze3D.prototype.getPercentLoaded = function(){
 	var percentLoaded = mapRange(this._numbTexturesLoaded, 0, this._numbTexturesNeeded, 0, 100);
 	if(percentLoaded >= 99) this._isLoaded = true;
@@ -181,7 +186,7 @@ Maze3D.prototype._initLocations = function(){
 	config.matPath = this.pathToModelsFolder + 'zip.mtl';
 	config.onHitFunc = function(){
 		onEndReached(); //global function in make.php
-		self._promptFileDownload('zip');
+		if(self._downloadsEnabled) self._promptFileDownload('zip');
 	}
 	this.locations3D['end'] = new Location3D(config);
 
@@ -192,7 +197,7 @@ Maze3D.prototype._initLocations = function(){
 	config.objPath = this.pathToModelsFolder + 'file.obj';
 	config.matPath = this.pathToModelsFolder + 'file.mtl';
 	config.onHitFunc = function(){
-		self._promptFileDownload('file1');
+		if(self._downloadsEnabled) self._promptFileDownload('file1');
 	}
 	this.locations3D['file1'] = new Location3D(config);
 
@@ -202,7 +207,7 @@ Maze3D.prototype._initLocations = function(){
 	config.objPath = this.pathToModelsFolder + 'file.obj';
 	config.matPath = this.pathToModelsFolder + 'file.mtl';
 	config.onHitFunc = function(){
-		self._promptFileDownload('file2');
+		if(self._downloadsEnabled) self._promptFileDownload('file2');
 	}
 	this.locations3D['file2'] = new Location3D(config);
 
@@ -212,7 +217,7 @@ Maze3D.prototype._initLocations = function(){
 	config.objPath = this.pathToModelsFolder + 'file.obj';
 	config.matPath = this.pathToModelsFolder + 'file.mtl';
 	config.onHitFunc = function(){
-		self._promptFileDownload('file3');
+		if(self._downloadsEnabled) self._promptFileDownload('file3');
 	}
 	this.locations3D['file3'] = new Location3D(config);
 
@@ -222,7 +227,7 @@ Maze3D.prototype._initLocations = function(){
 	config.objPath = this.pathToModelsFolder + 'file.obj';
 	config.matPath = this.pathToModelsFolder + 'file.mtl';
 	config.onHitFunc = function(){
-		self._promptFileDownload('file4');
+		if(self._downloadsEnabled) self._promptFileDownload('file4');
 	}
 	this.locations3D['file4'] = new Location3D(config);
 	

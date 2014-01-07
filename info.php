@@ -14,6 +14,7 @@
 				whose <a href="http://brannondorsey.com">interactive works</a> encourage collaboration and play. With it, he has created a space and a proposition, 
 				what happens next is up to the Internet.
 			</p>
+
 			<div class="frequently-asked-questions">
 				<h2>FAQs</h2>
 				<div class="question-divider">
@@ -31,6 +32,13 @@
 						The Finder's Folder is sort of the equivalent to the treasure at the end of the maze. Unlike other 
 						aspects of the maze (which are editable by anyone) only those who find the folder while playing the game get to add 
 						to it. This adds value to the accomplishment of completing the maze.
+					</p>
+				</div>
+				<div class="question-divider">
+					<p id="question">What kinds of files should I upload?</p>
+					<p class="answer">
+						Anything you would like to share! Any art, music, or writing that you made is perfect. Don't make things? 
+						Share something that interests you. 
 					</p>
 				</div>
 				<div class="question-divider">
@@ -65,12 +73,21 @@
 				<div class="question-divider">
 					<p id="question">Open Source?</p>
 					<p class="answer">Yep! Zeta is published (c) 2014 Brannon Dorsey under the 
-						<a href="http://opensource.org/licenses/MIT">MIT License</a>. Code on 
+						<a href="license.txt">MIT License</a>. Code on 
 						<a href="http://github.com/brannondorsey/zetamaze">GitHub</a>.
 					</p>
 				</div>
 			</div>
-			
+			<p>
+				Because Zeta is an online game and its content (including all imagery and digital files) are controlled
+				by the public, Brannon Dorsey accepts no responsibility for the unwanted (1) experiences, (2) files/downloads, or (3) interactions
+				experienced on or as a result of this website. By using this website you agree to being in full compliance and understanding
+				with the above statement as well as this <a href="disclaimer.pdf">disclaimer</a>.
+			</p>
+			<br>
+			<p style="text-align:center">
+				Zeta is proudly supported by <a href="http://olab.io">olab.io</a>
+			</p>
 		</div>
 	</body>
 </html>

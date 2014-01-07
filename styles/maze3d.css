@@ -79,6 +79,15 @@ progress[value]::-moz-progress-bar{
   margin: 10px auto;
 }
 
+/*opt-out button*/
+#opt-out{
+  text-decoration: underline;
+}
+
+#opt-out:hover{
+  cursor: pointer;
+}
+
 /*show-navbar-insert*/
 .navbar-insert{
   display: inline-block;
