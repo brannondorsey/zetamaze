@@ -263,6 +263,7 @@
 			function optOutFileDownload(){
 				maze3D.setDownloadsEnabled(false);
 				$('#blocker p').css({ color: $('#blocker').css('color')});
+				$('#blocker p span').css({ cursor: 'default'});
 				$('#end-container span').css({textDecoration: 'line-through'});
 			}
 

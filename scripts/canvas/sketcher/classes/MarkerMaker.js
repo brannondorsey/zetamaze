@@ -1,4 +1,26 @@
 /*
+Copyright (c) tomazy <https://github.com/tomazy>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ */
+
+/*
 create a semi-transparent image to be used as a brush tip
 */
 function MarkerMaker(stamp_img,color) {
@@ -10,33 +32,7 @@ function MarkerMaker(stamp_img,color) {
    this.context.globalCompositeOperation = 'destination-in';
    this.context.drawImage(stamp_img,0,0);
    return this.canvas[0];
-   /*
-   tmp.onload = function() {
-      self.length = tmp.width;
-      self.canvas = $('<canvas width="'+this.length+'px" height="'+this.length+'px">');
-      self.context = self.canvas[0].getContext('2d');
-      self.context.fillStyle = color;
-      self.context.fillRect(0, 0, self.length, self.length);
-   }
-   tmp.src = stamp_url;
    
-   this.stamp = tmp; */
-
-/* create canvas of exact size 
-   this.canvas = $('<canvas width="'+this.length+'px" height="'+this.length+'px">');
-   this.context = this.canvas[0].getContext('2d');
-   this.context.fillStyle = color;
-   this.context.fillRect(0, 0, this.length, this.length);*/
- //  this.context.globalCompositeOperation = 'destination-in';
-//this.context.drawImage(this.stamp,0,0);
-
-  // return this.canvas[0];
-    /*
-    this.length = length || 30;
-    this.color = color || 'black';
-    this.canvas = $('<canvas width="'+length+'px" height="'+length+'px" style="border:1px solid gray;">');
-    this.context = this.canvas[0].getContext('2d');
-    this.make();*/
 }
 
 MarkerMaker.prototype.make = function () {

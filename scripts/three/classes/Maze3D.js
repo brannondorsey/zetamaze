@@ -78,13 +78,23 @@ Maze3D.prototype.update = function(delta){
 	this._walkLocations(function(location, key){
 		var characterX = character.getX();
 		var characterZ = character.getZ();
+		// console.log(characterX);
+		// console.log(characterZ);
 		if(location.hit(characterX, characterZ)){
-			location.destroy();
-			if(location.hasObject() &&
-			   location.isLoaded()){
-				location.onHitFunc();
+			// console.log("hit");
+			// console.log(characterX);
+			// console.log(characterZ);
+			// console.log(location.x);
+			// console.log(location.z);
+			if(!location.isGhosted()){
+				if(location.hasObject() &&
+				   location.isLoaded()){
+				   	location.ghost();
+					location.onHitFunc();
+					location.setGhosted(true);
+				}
 			}
-			delete self.locations3D[key];
+			//delete self.locations3D[key];
 		}else location.update(delta);
 	});
 }
@@ -169,7 +179,8 @@ Maze3D.prototype._initLocations = function(){
 	//set config defaults
 	var config = {
 		scene: this.scene,
-		y: 0
+		y: 0,
+		phisical: false
 	};
 
 	//begin
@@ -179,6 +190,7 @@ Maze3D.prototype._initLocations = function(){
 	this.locations3D['begin'] = new Location3D(config);
 
 	//end
+	config.phisical = true;
 	config.color = 0xff0000;
 	config.x = this._toMaze3DCoords(JSON.parse(this.mazeObj.endMazeX));
 	config.z = this._toMaze3DCoords(JSON.parse(this.mazeObj.endMazeY));

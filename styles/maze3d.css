@@ -19,6 +19,10 @@ canvas{
         text-align: center;
 }
 
+#blocker p:hover{
+  cursor: default;
+}
+
 progress[value] {
   
    /* Reset the default appearance */
