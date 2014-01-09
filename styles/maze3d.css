@@ -129,4 +129,24 @@ progress[value]::-moz-progress-bar{
   text-align: left;
 }
 
+/*Scores*/
+#score-container{
+  display: none;
+  position: absolute;
+  font-size: 14pt;
+  z-index: 2;
+  left: 25px;
+  top: 70px;
+}
+#score-container div{
+  width: 55px;
+  padding: 0px 4px;
+  float: left;
+}
+
+#score-container img{
+  width: 45px;
+  height: 45px;
+}
+
 

@@ -198,6 +198,7 @@ Maze3D.prototype._initLocations = function(){
 	config.matPath = this.pathToModelsFolder + 'zip.mtl';
 	config.onHitFunc = function(){
 		onEndReached(); //global function in make.php
+		incrementScore('#finders-folder-score');
 		if(self._downloadsEnabled) self._promptFileDownload('zip');
 	}
 	this.locations3D['end'] = new Location3D(config);
@@ -209,6 +210,7 @@ Maze3D.prototype._initLocations = function(){
 	config.objPath = this.pathToModelsFolder + 'file.obj';
 	config.matPath = this.pathToModelsFolder + 'file.mtl';
 	config.onHitFunc = function(){
+		incrementScore('#item-score');
 		if(self._downloadsEnabled) self._promptFileDownload('file1');
 	}
 	this.locations3D['file1'] = new Location3D(config);
@@ -219,6 +221,7 @@ Maze3D.prototype._initLocations = function(){
 	config.objPath = this.pathToModelsFolder + 'file.obj';
 	config.matPath = this.pathToModelsFolder + 'file.mtl';
 	config.onHitFunc = function(){
+		incrementScore('#item-score');
 		if(self._downloadsEnabled) self._promptFileDownload('file2');
 	}
 	this.locations3D['file2'] = new Location3D(config);
@@ -229,6 +232,7 @@ Maze3D.prototype._initLocations = function(){
 	config.objPath = this.pathToModelsFolder + 'file.obj';
 	config.matPath = this.pathToModelsFolder + 'file.mtl';
 	config.onHitFunc = function(){
+		incrementScore('#item-score');
 		if(self._downloadsEnabled) self._promptFileDownload('file3');
 	}
 	this.locations3D['file3'] = new Location3D(config);
@@ -239,6 +243,7 @@ Maze3D.prototype._initLocations = function(){
 	config.objPath = this.pathToModelsFolder + 'file.obj';
 	config.matPath = this.pathToModelsFolder + 'file.mtl';
 	config.onHitFunc = function(){
+		incrementScore('#item-score');
 		if(self._downloadsEnabled) self._promptFileDownload('file4');
 	}
 	this.locations3D['file4'] = new Location3D(config);

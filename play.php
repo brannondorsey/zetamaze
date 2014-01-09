@@ -121,6 +121,16 @@
 
 	<body>
 		<?php require_once 'includes/navbar.include.php'; ?>
+		<div id="score-container">
+			<div>
+				<img src="images/maze/zip.png">
+				<span id="finders-folder-score">0</span>/1
+			</div>
+			<div>
+				<img src="images/maze/file.png">
+				<span id="item-score">0</span>/4
+			</div>
+		</div>
 		<div id="instructions" class="centered-box">
 			<img src="images/maze/move_instructions.png" alt="Move using the W, A, S, and D keys"/>
 			<img src="images/maze/look_instructions.png" alt="Look using the mouse or the arrow keys"/>
@@ -244,6 +254,7 @@
 				   if(isLoaded){
 				   		$('#blocker').remove();
 						showInstructions();
+						$('#score-container').show();
 				   		startGame();
 				   }
 				}
@@ -265,6 +276,12 @@
 				$('#blocker p').css({ color: $('#blocker').css('color')});
 				$('#blocker p span').css({ cursor: 'default'});
 				$('#end-container span').css({textDecoration: 'line-through'});
+			}
+
+			function incrementScore(scoreSelector){
+				var score = parseInt($(scoreSelector).html());
+				score += 1;
+				$(scoreSelector).html(score);
 			}
 
 			function centerBoxes(){

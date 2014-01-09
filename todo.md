@@ -1,6 +1,6 @@
 #Zeta Todo
 
-- Exchange cubes with models
+- ~~Exchange cubes with models~~ 
 - ~~Exchange rects with images~~
 - ~~Add server side maze data validation~~
 - ~~Add safeguard from image attacks~~
