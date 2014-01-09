@@ -22,8 +22,8 @@
 					<p class="answer">
 						The idea came from reading "<a href="http://books.google.com/books?id=ILpgAAAAMAAJ">Mazes and Labyrinths</a>: A General Account of Their 
 						History and Developments". The book traces mazes far into the way back, and describes their intricate designs and structures in ways that 
-						show how each was relevant to the time that it was created. I was wondering what the absolute most contemporary maze would look like? I 
-						set out to create a maze about as 2014-as-possible, and now there is this.
+						show how each was relevant to the time that it was created. Zeta responds to the question of "what the absolute most contemporary maze would look like?" 
+						It sets out to create a maze about as 2014-as-possible.
 					</p>
 				</div>
 				<div class="question-divider">
@@ -57,7 +57,8 @@
 				<div class="question-divider">
 					<p id="question">What is the "all walls must be connected error" on the <a href="make.php">make</a> page?</p>
 					<p class="answer">
-						This means that you have an "island" of walls somewhere in the maze. In order to not make the maze too difficult, every wall
+						This means that you have an "island" (a section of walls that are isolated from the rest of the walls) 
+						somewhere in the maze. In order to not make the maze too difficult, every wall
 						must be connected adjacent or diagonally to the rest of the walls in the maze.
 					</p>
 				</div>

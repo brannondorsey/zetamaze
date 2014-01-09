@@ -154,7 +154,7 @@
 		</div>
 		<div id="blocker">
 			<p style="color: #ffffff">
-				Zetamaze downloads files to your computer when you pick up items. <br>
+				Zeta downloads files to your computer when you pick up items. <br>
 				To opt-out of this feature
 				<span id="opt-out" onclick="optOutFileDownload()">click here</span>.
 			</p>
