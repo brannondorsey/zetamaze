@@ -9,10 +9,17 @@
 	<body>
 		<?php require_once 'includes/navbar.include.php'; ?>
 		<div class="content">
+			<h2>About</h2>
 			<p>
 				Zeta was created by <a href="http://twitter.com/brannondorsey">Brannon Dorsey</a>, a Chicago-based New Media artist 
 				whose <a href="http://brannondorsey.com">interactive works</a> encourage collaboration and play. With it, he has created a space and a proposition, 
 				what happens next is up to the Internet.
+			</p>
+			<br>
+			<p>
+				The goal of Zeta is to create a situation that encourages online communication and collaboration in a setting that presents older ideas in truly contemporary ways. These concepts are ones of anonymous 
+				file sharing, mark making and virtual graffiti, and regarding the medium of video gaming itself; the value and process of item collection. 
+				These ideas overshadow their accessible platform; the maze. Zeta is meant to be fun and playable by all, but to present meaning and depth to those who look for it.
 			</p>
 
 			<div class="frequently-asked-questions">
@@ -81,8 +88,8 @@
 			</div>
 			<p>
 				Because Zeta is an online game and its content (including all imagery and digital files) are controlled
-				by the public, Brannon Dorsey accepts no responsibility for the unwanted (1) experiences, (2) files/downloads, or (3) interactions
-				experienced on or as a result of this website. By using this website you agree to being in full compliance and understanding
+				by the public, Brannon Dorsey accepts no responsibility for the unwanted (1) experiences, (2) files/downloads, or (3) interactions 
+				on or as a result of this website. By using this website you agree to being in full compliance and understanding
 				with the above statement as well as this <a href="disclaimer.pdf">disclaimer</a>.
 			</p>
 			<br>

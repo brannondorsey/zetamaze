@@ -5,7 +5,6 @@
 						'doc',
 						'docx',
 						'pages',
-						'pdf',
 						'jpg', //image
 						'jpeg',
 						'JPG',
