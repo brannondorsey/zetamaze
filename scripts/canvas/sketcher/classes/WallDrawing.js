@@ -4,6 +4,8 @@ function WallDrawing(hostname, canvas, wallSize, numbImages, initImageIndex, ini
 	   initImageIndex <= numbImages){
 		this.initImageIndex = initImageIndex;
 	}else this.initImageIndex = Math.ceil(Math.random()*numbImages-1);
+	if(this.initImageIndex <= 1) this.initImageIndex = 2;
+	else if(this.initImageIndex >= numbImages) this.initImageIndex = numbImages - 1;
 	this.wallSize = wallSize;
 	this.wallSegments = [];
 	this.canvas = canvas;

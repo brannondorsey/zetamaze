@@ -229,8 +229,8 @@
 
 			<p>
 				When a player in the maze picks up an item, a file is downloaded to their computer. You can choose 
-				what those files are. Change (or don't change) as many files as you like. Most file types
-				less than 5MB are allowed.
+				what those files are. Change (or don't change) as many files as you like. Most file less than 5MB 
+				are allowed.
 			</p>
 	
 			<div id="file-upload-notification" class="file-upload-notification"><!--note: class and id duplicates are not a mistake--></div>
