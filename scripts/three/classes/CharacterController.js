@@ -1,6 +1,6 @@
 function CharacterController(scene, camera, position){
 
-	this.speed = 3.6;
+	this.speed = 4;
 	this.mouseRotationSpeed = 1.15;
 	this.lookSpeed = 100;
 	this.flyEnabled = false;

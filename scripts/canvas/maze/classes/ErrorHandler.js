@@ -27,6 +27,7 @@ ErrorHandler.prototype.outputErrors = function(){
 ErrorHandler.prototype.checkErrors = function(maze, locations){
 	this._checkLocationvalidity(maze, locations);
 	this._checkWallsConnected(maze);
+	
 	if(this._errorsExist()) return true;
 	else{ //check for more errors
 		for(var key in locations){
@@ -80,6 +81,7 @@ ErrorHandler.prototype._addError = function(message){
 
 ErrorHandler.prototype._checkLocationvalidity = function(maze, locations){
 
+	var maze = this.getCopy(maze);
 	var errorMessage = "this location is not allowed";
 	for(var key in locations){
 		var location = locations[key];
@@ -95,7 +97,7 @@ ErrorHandler.prototype._checkLocationvalidity = function(maze, locations){
 				return;
 			}
 		}
-
+	
 		//make sure the location isn't on a wall
 		if(maze[location.mazeY][location.mazeX] == 1){
 			this._addError(errorMessage);
@@ -111,6 +113,7 @@ ErrorHandler.prototype._checkWallsConnected = function(maze){
 	var currentX = 0;
 	var currentY = 0;
 	
+	var maze = this.getCopy(maze);
 	this._floodFill(maze, 0, 0);
 
 	var islandsExist = false;
@@ -162,5 +165,15 @@ ErrorHandler.prototype._floodFill = function(maze, x, y){
        left == target) this._floodFill(maze, x - 1, y);
     if(typeof leftUp !== 'undefined' &&
        leftUp == target) this._floodFill(maze, x - 1, y - 1);
+}
+
+//because 2D arrays are passed by reference this function copies the maze
+//same function as MazeSolver.prototype.getCopy()
+ErrorHandler.prototype.getCopy = function(maze){
+    var arrayToReturn = [];
+    for(var i = 0; i < maze.length; i++){
+        arrayToReturn[i] = maze[i].slice();
+    }
+    return arrayToReturn;
 }
 
