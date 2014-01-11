@@ -138,7 +138,7 @@
 		</div>
 		<div id="end-container" class="centered-box">
 			<p>
-				You found the Finder's Folder! <span>A <code>.zip</code> containing <?php echo $FINDERS_FOLDER_SIZE ?> files has been downloaded to your computer.</span>
+				You found the Finder's Folder! <span>A <code>.zip</code> containing 5 files has been downloaded to your computer.</span>
 			 	Each of these files was uploaded by someone else who found the Finder's Folder. Now its your turn to upload.
 			</p>
 

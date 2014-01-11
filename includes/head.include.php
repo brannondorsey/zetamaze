@@ -1,4 +1,7 @@
-<?php $description = "A collaborative web game that allows users to edit, draw on, and explore a virtual maze"; ?>
+<?php 
+require_once 'includes/config.include.php';
+$description = "A collaborative web game that allows users to edit, draw on, and explore a virtual maze"; 
+?>
 
 <title>Zetamaze</title>
 <meta name="description" content="<?php echo $description?>"></meta>
