@@ -22,3 +22,5 @@ includes/config.include.php
 backups/*
 !backups/.gitkeep
 initial_files/*
+file_archive/*
+!file_archive/.gitkeep

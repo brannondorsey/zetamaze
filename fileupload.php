@@ -9,6 +9,7 @@
 	$targetID = "#file-upload-notification";
 	$upload_directory = "uploads";
 	$finders_folder_directory = "uploads/findersfolder";
+	$archive_directory = "file_archive";
 	
 	$return_data = array();
 	$files_uploaded = files_present($_FILES);
@@ -44,7 +45,8 @@
 								
 								//delete the last file
 								$last_file = $current_filenames[count($current_filenames) - 1];
-								unlink($finders_folder_directory . "/" . $last_file);
+								rename($finders_folder_directory . "/" . $last_file, $archive_directory . "/" . getRandomString() . "_" . $last_file );
+								//unlink($finders_folder_directory . "/" . $last_file);
 								unset($last_file); 
 
 								for($i = count($current_filenames) - 1; $i > 0; $i--){
@@ -80,7 +82,8 @@
 
 								for($j = 0; $j < count($current_files); $j++){
 									if(strstr($current_files[$j], $filename) != false){
-								 		unlink($upload_directory . "/" . $current_files[$j]);
+								 		//unlink($upload_directory . "/" . $current_files[$j]);
+								 		rename($upload_directory . "/" . $current_files[$j], $archive_directory . "/" . getRandomString() . "_" . $current_files[$j]);
 								  	}
 								}
 
@@ -175,6 +178,15 @@
 		{
 			return false;
 		}
+	}
+
+	function getRandomString($length = 12) {
+	    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	    $randomString = '';
+	    for ($i = 0; $i < $length; $i++) {
+	        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+	    }
+	    return $randomString;
 	}
 
 ?>
