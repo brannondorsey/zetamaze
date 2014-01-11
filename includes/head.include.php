@@ -17,6 +17,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="<?php echo $HOSTNAME ?>">
 <meta name="twitter:title" content="Zetamaze">
+<meta name="twitter:creator" content="@brannondorsey">
 <meta name="twitter:description" content="<?php echo $description ?>"/>
 <meta name="twitter:image" content="<?php echo $HOSTNAME ?>/images/social-thumbnail.jpg"/>
 
