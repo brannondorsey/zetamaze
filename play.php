@@ -208,6 +208,7 @@
 				renderer.setSize(window.innerWidth, window.innerHeight - heightSubtractor);
 				var domElement = renderer.domElement;
 				domElement.onclick = lockPointer;
+				renderer.setClearColor( 0xF3F3F3, 1 );
 				document.body.appendChild(domElement);
 			    
 			    //camera
@@ -219,7 +220,7 @@
 			    scene.add(hemisphereLight);
 
 			    //fog
-			    scene.fog = new THREE.Fog( 0xffffff, 16, 26);
+			    scene.fog = new THREE.Fog( 0xF3F3F3, 16, 26);
 				
 				//maze3D
 				maze3D.addToScene();
