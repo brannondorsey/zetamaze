@@ -24,3 +24,4 @@ backups/*
 initial_files/*
 file_archive/*
 !file_archive/.gitkeep
+screenshots/*
