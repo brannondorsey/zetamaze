@@ -263,13 +263,13 @@ Maze3D.prototype._promptFileDownload = function(filename){
 		//download the file! 
 		window.location = self.hostname + "/promptdownload.php?filename=findersfolder.zip";
 	}else{
+		
 		$.ajax({
 			url: self.hostname + '/itemnames.php',
 			method: 'post',
 			data: filename,
 			success: function(response){
 
-				console.log("first response succeeded!");
 				var itemNames = response;
 				console.log(itemNames);
 				for(var i = 0; i < itemNames.length; i++){

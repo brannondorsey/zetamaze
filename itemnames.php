@@ -5,17 +5,18 @@
 	
 	header('Content-type: application/json');
 
-	//Scan directory specified in GET
-	if(isset($_GET['directory']) && !empty($_GET['directory'])){
-		$upload_directory = $_GET['directory'];
+	$upload_directory = "uploads";
 
-		$file_names = preg_grep('/^([^.])/', scandir($upload_directory)); //filter .hidden files
-		$file_names = array_values($file_names); //preg_grep returns assoc array, convert to indexed array
-		echo json_encode($file_names);
+	//Scan subdirectory of uploads/ specified by GET
+	if(isset($_GET['directory']) && !empty($_GET['directory'])){
+		
+		if (is_dir($upload_directory . "/" . $_GET['directory'])) {
+			$file_names = preg_grep('/^([^.])/', scandir($upload_directory . "/" . $_GET['directory'])); //filter .hidden files
+			$file_names = array_values($file_names); //preg_grep returns assoc array, convert to indexed array
+			echo json_encode($file_names);
+		}
 
 	}else{ //use the default directory and only ouput filenames that include the string 'file'
-
-		$upload_directory = "uploads";
 
 		$file_names = scandir($upload_directory);
 		$item_names = array();

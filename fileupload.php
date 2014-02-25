@@ -39,7 +39,7 @@
 							  if($filename == "end"){
 							  	
 							  	//increment all current filenames and name the new file "1.ext"
-							  	$current_filenames = file_get_contents($HOSTNAME . "/itemnames.php?directory=uploads/findersfolder");
+							  	$current_filenames = file_get_contents($HOSTNAME . "/itemnames.php?directory=findersfolder");
 								$current_filenames = json_decode($current_filenames);
 								$current_filenames = array_slice ($current_filenames, 0, 5); //just in case...
 								
