@@ -9,9 +9,9 @@
 
 	//Scan subdirectory of uploads/ specified by GET
 	if(isset($_GET['directory']) && !empty($_GET['directory'])){
-		
-		if (is_dir($upload_directory . "/" . $_GET['directory'])) {
-			$file_names = preg_grep('/^([^.])/', scandir($upload_directory . "/" . $_GET['directory'])); //filter .hidden files
+		$subdirectory = str_replace(".", "", $_GET['directory']);
+		if (is_dir($upload_directory . "/" . $subdirectory)) {
+			$file_names = preg_grep('/^([^.])/', scandir($upload_directory . "/" . $subdirectory)); //filter .hidden files
 			$file_names = array_values($file_names); //preg_grep returns assoc array, convert to indexed array
 			echo json_encode($file_names);
 		}
